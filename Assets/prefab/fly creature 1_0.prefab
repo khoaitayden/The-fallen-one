@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4791946047367656869}
   - component: {fileID: 3317856903542505718}
   - component: {fileID: 3835627556300488324}
+  - component: {fileID: 1733210448088295191}
   m_Layer: 3
   m_Name: fly creature 1_0
-  m_TagString: Untagged
+  m_TagString: flycreature1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +117,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 0
 --- !u!60 &3317856903542505718
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -229,3 +230,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1733210448088295191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8533025809180451848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc38d1d376fedc74ea432c56cb2c66ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3835627556300488324}
+  obstaclecreature1: {fileID: 0}

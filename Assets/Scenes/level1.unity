@@ -334,7 +334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -566,6 +566,8 @@ MonoBehaviour:
   movingSpeed: 5
   minSpacing: 10
   maxSpacing: 50
+  poolcheckspawned: 0
+  animator: {fileID: 0}
 --- !u!1 &1583179608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,8 +1016,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackAction:
     m_Name: Attack
-    m_Type: 0
-    m_ExpectedControlType: 
+    m_Type: 1
+    m_ExpectedControlType: Button
     m_Id: bdf0d7bc-af71-4b0a-a3f1-e5d1900cb6ae
     m_Processors: 
     m_Interactions: 
@@ -1029,8 +1031,26 @@ MonoBehaviour:
       m_Action: Attack
       m_Flags: 0
     m_Flags: 0
+  FlyAction:
+    m_Name: Fly
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: efe2b21d-e3bb-4487-b150-403b7fa28b48
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 0c1f2d0d-f539-4b1c-83f1-e26047e76fcd
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fly
+      m_Flags: 0
+    m_Flags: 0
   animator: {fileID: 2002756355}
   attackCooldown: 1.5
+  obstaclecreature1: {fileID: 1571292682}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

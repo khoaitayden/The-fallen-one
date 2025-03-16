@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     {
         InputActionMovement.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        InputActionMovement.performed += _ => movement(); // Triggers flyup() when JumpAction is performed, ignoring event parameters.
+        InputActionMovement.performed += _ => movement(); 
     }
     void movement()
     {
@@ -20,9 +20,5 @@ public class PlayerController : MonoBehaviour
         Vector2 moveinput=InputActionMovement.ReadValue<Vector2>();
         rigidbody2d.linearVelocity=moveinput*strength;
 
-    }
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("hit");
     }
 }

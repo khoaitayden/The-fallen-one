@@ -14,6 +14,12 @@ public class ObstacleCreature1SpawnScript : MonoBehaviour
     [SerializeField] private float minSpacing;
     [SerializeField] private float maxSpacing;
     public bool poolcheckspawned=false;
+    [SerializeField] private Animator animator;
+    public float Speed
+    { 
+        get { return movingSpeed; }
+        set { movingSpeed = Mathf.Max(0, value); } // Ensure speed is not negative
+    }
     private Queue<GameObject> CreaturePool;
     void Start()
     {
@@ -57,11 +63,15 @@ public class ObstacleCreature1SpawnScript : MonoBehaviour
         }
     }
     }
-    void ReuseCreature(GameObject obstacle)
+    public void ReuseCreature(GameObject obstacle)
         {
             float randomY = Random.Range(minHeight, maxHeight);
             float randomX = Random.Range(minSpacing,maxSpacing);
             obstacle.transform.position = new Vector2(randomX, randomY);
+            Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
+            rb.linearVelocity = Vector2.zero;  // Stop movement
+            rb.angularVelocity = 0f; 
+            rb.rotation = 0f;
             obstacle.SetActive(true);
         }
     public void IncreaseSpeedForObCreature1(float increment)

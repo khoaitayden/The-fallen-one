@@ -17,7 +17,7 @@ public class DifficultyManagement : MonoBehaviour
          {
              obstacle1.IncreaseSpeedForOb1(0.03f);
              lastscore=ScoreData.Instance.ScoreFromOb1;
-             if (ScoreData.Instance.ScoreFromOb1>=50)
+             if (ScoreData.Instance.ScoreFromOb1>=5)
             {
                 if (obstaclecreature1.poolcheckspawned==false)
                 {
