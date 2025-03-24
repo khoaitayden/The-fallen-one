@@ -6,7 +6,7 @@ public class TheFlyCreature1Behavior : MonoBehaviour
     [SerializeField] private ObstacleCreature1SpawnScript obstaclecreature1;
     void Start()
     {
-        obstaclecreature1 = FindObjectOfType<ObstacleCreature1SpawnScript>();
+        obstaclecreature1 = FindFirstObjectByType<ObstacleCreature1SpawnScript>();
     }
 
     // Update is called once per frame

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.Pool;
+
 public class ObstacleCreature1SpawnScript : MonoBehaviour
 {
     [Header("Creature Settings")]
@@ -8,83 +8,91 @@ public class ObstacleCreature1SpawnScript : MonoBehaviour
     [SerializeField] private int poolSize;
     [SerializeField] private float minHeight = -3.5f;
     [SerializeField] private float maxHeight = 3.5f;
+    [SerializeField] PlayerBehavior playerBehavior;
 
     [Header("Movement Settings")]
     [SerializeField] private float movingSpeed;
     [SerializeField] private float minSpacing;
     [SerializeField] private float maxSpacing;
-    public bool poolcheckspawned=false;
+    public bool poolcheckspawned = false;
     [SerializeField] private Animator animator;
+    
+    public List<GameObject> CreaturePool;
+//    private List<Rigidbody2D> rigidbodies;
+    
     public float Speed
-    { 
+    {
         get { return movingSpeed; }
         set { movingSpeed = Mathf.Max(0, value); } // Ensure speed is not negative
     }
-    private Queue<GameObject> CreaturePool;
+    
     void Start()
     {
-        //InitializePool();
-    }
-    void Update()
-    {
-        if (poolcheckspawned)MoveCreature();
+        InitializePool();
     }
 
-    public void InitializePool()
+    void FixedUpdate()
     {
-        CreaturePool = new Queue<GameObject>();     
-        for (int i=0;i<poolSize;i++)
-        {
-            SpawnCreature();
-        }   
+        if (poolcheckspawned) MoveCreature();
     }
-    void SpawnCreature()
+
+    private void InitializePool()
     {
-        float randomY = Random.Range(minHeight, maxHeight);
-        float randomX = Random.Range(minSpacing,maxSpacing);
-        GameObject obj = Instantiate(obstaclePrefab);
-        obj.SetActive(true);
-        obj.transform.position = new Vector2(randomX, randomY);
-        CreaturePool.Enqueue(obj);
-    }
-    void MoveCreature()
-    {
-    {
-        foreach (GameObject obj in CreaturePool)
+        CreaturePool = new List<GameObject>(poolSize);
+//        rigidbodies = new List<Rigidbody2D>(poolSize);
+
+        for (int i = 0; i < poolSize; i++)
         {
+            GameObject obj = Instantiate(obstaclePrefab,new Vector3(12,0,0),Quaternion.identity);
+            obj.SetActive(false);
+            CreaturePool.Add(obj);
+//            rigidbodies.Add(obj.GetComponent<Rigidbody2D>());
+        }
+    }
+
+    private void MoveCreature()
+    {
+        for (int i = 0; i < CreaturePool.Count; i++)
+        {
+            GameObject obj = CreaturePool[i];
+            obj.SetActive(true);
             if (!obj.activeInHierarchy) continue;
-
             obj.transform.position += Vector3.left * movingSpeed * Time.deltaTime;
-
-            if ((obj.transform.position.x <= -10) || (obj.transform.position.y<-6) ||(obj.transform.position.y>6))
+            if (obj.transform.position.x <= -10 || obj.transform.position.y < -6 || obj.transform.position.y > 6)
             {
-                ReuseCreature(obj);
+                ReuseCreature(i);
             }
         }
     }
+
+    public void ReuseCreature(int index)
+    {
+        GameObject obstacle = CreaturePool[index];
+//        Rigidbody2D rb = rigidbodies[index];
+
+        float randomY = Random.Range(minHeight, maxHeight);
+        float randomX = Random.Range(minSpacing, maxSpacing);
+
+        obstacle.transform.position = new Vector2(randomX, randomY);
+        // rb.linearVelocity = Vector2.zero;  // Stop movement
+        // rb.angularVelocity = 0f;
+        // rb.rotation = 0f;
+
+        obstacle.SetActive(true);
     }
-    public void ReuseCreature(GameObject obstacle)
-        {
-            float randomY = Random.Range(minHeight, maxHeight);
-            float randomX = Random.Range(minSpacing,maxSpacing);
-            obstacle.transform.position = new Vector2(randomX, randomY);
-            Rigidbody2D rb = obstacle.GetComponent<Rigidbody2D>();
-            rb.linearVelocity = Vector2.zero;  // Stop movement
-            rb.angularVelocity = 0f; 
-            rb.rotation = 0f;
-            obstacle.SetActive(true);
-        }
+
     public void IncreaseSpeedForObCreature1(float increment)
     {
         movingSpeed += increment;
-
-        int neededObstacles = Mathf.FloorToInt(movingSpeed / 3f); // Add 1 extra every +2 speed
+        int neededObstacles = Mathf.FloorToInt(movingSpeed / 5f);
         int totalNeeded = poolSize + neededObstacles;
 
-        // Spawn More Obstacles If Needed
         while (CreaturePool.Count < totalNeeded)
         {
-            SpawnCreature();
+            GameObject obj = Instantiate(obstaclePrefab,new Vector3(12,0,0),Quaternion.identity);;
+            obj.SetActive(false);
+            CreaturePool.Add(obj);
+//            rigidbodies.Add(obj.GetComponent<Rigidbody2D>());
         }
     }
 }

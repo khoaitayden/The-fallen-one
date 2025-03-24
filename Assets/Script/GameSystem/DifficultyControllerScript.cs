@@ -10,18 +10,18 @@ public class DifficultyManagement : MonoBehaviour
     void Start()
     {
     }
-    void Update()
+    void FixedUpdate()
     {
 
          if (ScoreData.Instance.ScoreFromOb1!=lastscore)
          {
              obstacle1.IncreaseSpeedForOb1(0.03f);
              lastscore=ScoreData.Instance.ScoreFromOb1;
-             if (ScoreData.Instance.ScoreFromOb1>=5)
+             if (ScoreData.Instance.ScoreFromOb1>=0)
+             //the amount of score needed to spawn the creature
             {
                 if (obstaclecreature1.poolcheckspawned==false)
                 {
-                    obstaclecreature1.InitializePool();
                     obstaclecreature1.poolcheckspawned=true;
                 }
                 obstaclecreature1.IncreaseSpeedForObCreature1(0.05f);
