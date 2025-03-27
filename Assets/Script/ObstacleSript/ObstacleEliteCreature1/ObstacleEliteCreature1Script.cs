@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class ObstacleCreature1SpawnScript : MonoBehaviour
+public class ObstacleEliteCreature1Script : MonoBehaviour
 {
     [Header("Creature Settings")]
     [SerializeField] private GameObject obstaclePrefab;
@@ -42,9 +42,7 @@ public class ObstacleCreature1SpawnScript : MonoBehaviour
 
         for (int i = 0; i < poolSize; i++)
         {
-            float randomY = Random.Range(minHeight, maxHeight);
-            float randomX = Random.Range(minSpacing, maxSpacing);
-            GameObject obj = Instantiate(obstaclePrefab,new Vector3(randomX,randomY,0),Quaternion.identity);
+            GameObject obj = Instantiate(obstaclePrefab,new Vector3(12,0,0),Quaternion.identity);
             obj.SetActive(false);
             CreaturePool.Add(obj);
 //          rigidbodies.Add(obj.GetComponent<Rigidbody2D>());
@@ -81,16 +79,16 @@ public class ObstacleCreature1SpawnScript : MonoBehaviour
         obstacle.SetActive(true);
     }
 
-    public void IncreaseSpeedForObCreature1(float increment)
+    public void IncreaseSpeedForObEliteCreature1(float increment)
     {
         movingSpeed += increment;
-        int neededObstacles = Mathf.FloorToInt(movingSpeed / 3f);
+        int neededObstacles = Mathf.FloorToInt(movingSpeed / 5f);
         int totalNeeded = poolSize + neededObstacles;
 
         while (CreaturePool.Count < totalNeeded)
         {
             GameObject obj = Instantiate(obstaclePrefab,new Vector3(12,0,0),Quaternion.identity);;
-            obj.SetActive(true);
+            obj.SetActive(false);
             CreaturePool.Add(obj);
 //          rigidbodies.Add(obj.GetComponent<Rigidbody2D>());
         }

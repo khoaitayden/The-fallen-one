@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - flycreature1
+  - eliteflycreature1
   layers:
   - Default
   - TransparentFX

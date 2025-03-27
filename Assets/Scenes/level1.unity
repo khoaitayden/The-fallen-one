@@ -167,7 +167,7 @@ MonoBehaviour:
   poolSize: 5
   minHeight: -4.25
   maxHeight: 1.5
-  gapTightness: 1.5
+  gapTightness: 1
   movingSpeed: 4
   minSpacing: 1
   maxSpacing: 15
@@ -202,8 +202,63 @@ Transform:
   m_Children:
   - {fileID: 1151815}
   - {fileID: 1571292681}
+  - {fileID: 477141307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &477141306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 477141307}
+  - component: {fileID: 477141308}
+  m_Layer: 0
+  m_Name: ObstacleEliteCreature1Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &477141307
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477141306}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 377041439}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &477141308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477141306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28988e5bed92cf3479610ed9767f8f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePrefab: {fileID: 4048368030249535752, guid: b3ddac99a5553d34bb5768ae0ee6d16f, type: 3}
+  poolSize: 2
+  minHeight: -3.5
+  maxHeight: 3.5
+  movingSpeed: 5
+  minSpacing: 20
+  maxSpacing: 50
+  poolcheckspawned: 0
+  animator: {fileID: 0}
+  CreaturePool: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obstacle1: {fileID: 1151816}
   obstaclecreature1: {fileID: 1571292682}
+  obstacleelitecreature1: {fileID: 477141308}
 --- !u!1 &1303869477
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,14 +616,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   obstaclePrefab: {fileID: 8533025809180451848, guid: c325ef89490253c4a825fbe3b2a7c66a, type: 3}
-  poolSize: 1
+  poolSize: 3
   minHeight: -3.5
   maxHeight: 3.5
   movingSpeed: 5
-  minSpacing: 10
+  minSpacing: 25
   maxSpacing: 50
   poolcheckspawned: 0
   animator: {fileID: 0}
+  CreaturePool: []
 --- !u!1 &1583179608
 GameObject:
   m_ObjectHideFlags: 0
@@ -768,7 +825,7 @@ Transform:
   m_GameObject: {fileID: 2002756349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.39, y: -0.27, z: 0}
+  m_LocalPosition: {x: -7.89, y: -0.27, z: 0}
   m_LocalScale: {x: 0.125, y: 0.125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -842,9 +899,9 @@ MonoBehaviour:
       m_Action: Fly
       m_Flags: 0
     m_Flags: 0
-  animator: {fileID: 2002756355}
-  attackCooldown: 1.5
+  attackCooldown: 0.5
   obstaclecreature1: {fileID: 1571292682}
+  animator: {fileID: 2002756355}
 --- !u!61 &2002756357
 BoxCollider2D:
   m_ObjectHideFlags: 0

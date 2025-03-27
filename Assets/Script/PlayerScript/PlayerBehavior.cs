@@ -4,25 +4,35 @@ using System.Collections;
 using Unity.VisualScripting;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System;
 
 public class PlayerBehavior : MonoBehaviour
 {
+        [Header("PlayerAction Settings")]
     [SerializeField] private InputAction attackAction;
     [SerializeField] private InputAction FlyAction;
- //   [SerializeField] private InputAction DashAction;
-    [SerializeField] private Animator animator; 
-    [SerializeField] private float attackCooldown = 2.0f; 
-    [SerializeField] private ObstacleCreature1SpawnScript obstaclecreature1;
-
     private bool canAttack = true; 
+ //   [SerializeField] private InputAction DashAction;
+        [Header("PlayerStats Settings")]
+    [SerializeField] private float attackCooldown = 2.0f; 
+    private float charka ;
+    public float Charka
+    {
+        get { return charka; }
+        set { charka = Mathf.Max(0, value); }
+    }
+        [Header("PlayerInteraction Settings")]
+    [SerializeField] private ObstacleCreature1SpawnScript obstaclecreature1;
+    [SerializeField] private Animator animator;
     private bool hitflycreature1=false;
-    private List<GameObject> flycreatures = new List<GameObject>();
     public bool checkhitflycreature1
     {
         get { return hitflycreature1; }
     }
+    private List<GameObject> flycreatures = new List<GameObject>();    
     private GameObject flycreature1;
-    private Rigidbody2D rb;
+    //private Rigidbody2D rb;
+
 
     void Start()
     {
@@ -30,7 +40,7 @@ public class PlayerBehavior : MonoBehaviour
     }
     void OnEnable()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // = GetComponent<Rigidbody2D>();
         attackAction.Enable();
         attackAction.performed += _ => TryAttack(); 
 
@@ -72,6 +82,8 @@ void hitattack()
                 if (obstaclecreature1.CreaturePool[j] == flycreatures[i])
                 {
                     obstaclecreature1.ReuseCreature(j);
+                    Charka+=1;
+                    Debug.Log("Charka: ");
                 }
             }
         }
