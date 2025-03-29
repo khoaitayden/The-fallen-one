@@ -24,11 +24,11 @@ public class ScoreData : MonoBehaviour
     public int ScoreFromOb1
     {
         get { return scoreFromOb1; }
-        private set { scoreFromOb1 = value; }
+        set { scoreFromOb1 = value; }
     }
 
     public void AddScoreToOb1(int amount)
     {
-        ScoreFromOb1 += amount;
+        scoreFromOb1 += amount;
     }
 }

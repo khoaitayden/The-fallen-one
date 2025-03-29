@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4404563686075520026}
+  - component: {fileID: 6375835193350589516}
   m_Layer: 3
   m_Name: Obstacle1
   m_TagString: Untagged
@@ -34,6 +35,19 @@ Transform:
   - {fileID: 1116698838065811433}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6375835193350589516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2559082740021226546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21deae1fa4aecc41a7d7a7255322688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 4
 --- !u!1 &6807226998940887746
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,9 +57,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3272599212942505562}
-  - component: {fileID: 1996706419933898810}
   - component: {fileID: 7436142464968407717}
-  - component: {fileID: 5231201197766995721}
+  - component: {fileID: 7106470741083039150}
   m_Layer: 6
   m_Name: Middle
   m_TagString: Untagged
@@ -68,18 +81,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4404563686075520026}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1996706419933898810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6807226998940887746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef365950e5ded084eac6a80c35e1600b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &7436142464968407717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,33 +127,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.09928393, y: 4.169049}
   m_EdgeRadius: 0
---- !u!50 &5231201197766995721
-Rigidbody2D:
-  serializedVersion: 5
+--- !u!114 &7106470741083039150
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807226998940887746}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e25d284892f357240bce3dbaec8642cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8055866294514522961
 GameObject:
   m_ObjectHideFlags: 0

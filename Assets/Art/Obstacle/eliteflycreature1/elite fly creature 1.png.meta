@@ -234,7 +234,12 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      elite fly creature 1_0: 3393737025603378415
+      elite fly creature 1_1: 8169902029793391977
+      elite fly creature 1_2: 4503641935213163942
+      elite fly creature 1_3: -6866619138195620738
+      elite fly creature 1_4: -8131690892592615930
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

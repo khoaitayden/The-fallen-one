@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      fly creature 1_0: -9083859103053403835
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
