@@ -1,30 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class CreateCreature1 : MonoBehaviour
+using Unity.VisualScripting;
+public class CreateCreature1 : CreateObstacle
 {
-    public static CreateCreature1 CreateCreature1Instance;
-    public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
-    public int amountToPool;
-
-    void Awake()
+    public override bool CheckCanSpawn()
     {
-        CreateCreature1Instance =this;
+        if (ScoreManager.Instance.Score>=50) return true;
+        else return false;
     }
-    void Start()
+    public override Vector3 GenerateRandomPosition(int i)
     {
-        pooledObjects = new List<GameObject>();
-        GameObject tmp;
-        for(int i = 0; i < amountToPool; i++)
-        {
-            float randomy= Random.Range(-3.8f, 3.8f);
-            Vector3 randomPosition = new Vector3(10+(i*8), randomy, 0);
-            tmp = Instantiate(objectToPool,randomPosition, Quaternion.identity);
-            tmp.SetActive(false);
-            pooledObjects.Add(tmp);
-        }
+        float randomy= Random.Range(-3.8f, 3.8f);
+        float randomx= Random.Range(15f, 50f);
+        Vector3 randomPosition = new Vector3(randomx, randomy, 0);
+        return randomPosition;
     }
-    
-
-
 }

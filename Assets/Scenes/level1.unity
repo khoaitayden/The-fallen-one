@@ -340,52 +340,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &845502933
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 845502934}
-  - component: {fileID: 845502935}
-  m_Layer: 0
-  m_Name: HardController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &845502934
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845502933}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1583179609}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &845502935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845502933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cbdaa4167a86a44eb5b98978b5e32b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Obstacle1: {fileID: 6375835193350589516, guid: 158c111ec04e5eb4ab154c0149082803, type: 3}
-  Obstacle1AccelerateRate: 0.05
 --- !u!1 &1040703235
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,9 +350,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1040703237}
   - component: {fileID: 1040703236}
-  - component: {fileID: 1040703238}
   - component: {fileID: 1040703239}
   - component: {fileID: 1040703240}
+  - component: {fileID: 1040703241}
   m_Layer: 0
   m_Name: PoolingManager
   m_TagString: Untagged
@@ -436,19 +390,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1040703238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040703235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02a9c06858a57194ba54cc826ee1500d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Creature1: {fileID: 2286768986047872866, guid: c325ef89490253c4a825fbe3b2a7c66a, type: 3}
 --- !u!114 &1040703239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,12 +417,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f30574b1912948a0542c105b34d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Obstacle1: {fileID: 6375835193350589516, guid: 158c111ec04e5eb4ab154c0149082803, type: 3}
-  maxSpacing: 10
-  minSpacing: 1
-  gapTightness: 0.8
-  maxHeight: 1.3
-  minHeight: -4.4
+  maxSpacing: 17
+  minSpacing: 2.5
+  gapTightness: 1.7
+  minHeight: -4.2
+  maxHeight: 1.1
+  createObstacle1: {fileID: 1040703239}
+  Obstacle1: {fileID: 5170253454703555031, guid: 158c111ec04e5eb4ab154c0149082803, type: 3}
+--- !u!114 &1040703241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040703235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a130f03a2c75a949979a3978ef3ec28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpacing: 120
+  minSpacing: 20
+  minHeight: -3.8
+  maxHeight: 3.8
+  createCreature1: {fileID: 1040703236}
+  Creature1: {fileID: 8937519015748665888, guid: c325ef89490253c4a825fbe3b2a7c66a, type: 3}
 --- !u!1 &1303869477
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +453,7 @@ GameObject:
   - component: {fileID: 1303869479}
   - component: {fileID: 1303869480}
   m_Layer: 0
-  m_Name: ScoreData
+  m_Name: StateController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -526,6 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1b7fc80394eca4ebecdd67c2a9b696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle1: {fileID: 5170253454703555031, guid: 158c111ec04e5eb4ab154c0149082803, type: 3}
+  creature1: {fileID: 8937519015748665888, guid: c325ef89490253c4a825fbe3b2a7c66a, type: 3}
+  createCreature1: {fileID: 1040703236}
 --- !u!1 &1583179608
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,12 +514,11 @@ Transform:
   m_GameObject: {fileID: 1583179608}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.005792, y: -0.34369174, z: -0.0028752177}
+  m_LocalPosition: {x: -5.21, y: 6.1, z: -0.0028752177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1303869479}
-  - {fileID: 845502934}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2002756349
@@ -573,6 +535,7 @@ GameObject:
   - component: {fileID: 2002756350}
   - component: {fileID: 2002756357}
   - component: {fileID: 2002756355}
+  - component: {fileID: 2002756358}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Player
@@ -619,7 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4591c71f205638c428fa8f195150f6d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 7
+  strength: 8
   InputActionMovement:
     m_Name: Input Action Movement
     m_Type: 0
@@ -799,6 +762,57 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.05, y: 9.71}
   m_EdgeRadius: 0
+--- !u!114 &2002756358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002756349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87a05a3a7296c2146ad5c4ad0d0789e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkInterval: 0.3
+  detectionRadius: 3
+  attack1:
+    m_Name: Attack 1
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: b344d170-a469-47d2-8877-a3529a3f14cd
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 5abda91f-e387-4ec8-b543-9f10de384fad
+      m_Path: <Keyboard>/space
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Attack 1
+      m_Flags: 0
+    m_Flags: 0
+  fly:
+    m_Name: Fly
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 82895ec3-5a42-4fb5-8640-6303e3bf7faa
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: e18d3815-7d9e-4141-9942-7a6fe136b85f
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fly
+      m_Flags: 0
+    m_Flags: 0
+  ConfigCreature1: {fileID: 1040703241}
+  animator: {fileID: 2002756355}
+  attack1Cooldown: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

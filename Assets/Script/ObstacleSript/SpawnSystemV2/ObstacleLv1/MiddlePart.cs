@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
-public class MiddleOb1ScoreCounter : MonoBehaviour
+public class MiddlePart : MonoBehaviour
 {
     void Start()
     { 
@@ -11,7 +11,7 @@ public class MiddleOb1ScoreCounter : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             {
-                ScoreData.Instance.AddScoreToOb1(1);
+                ScoreManager.Instance.IncreaseHardAfterPassedPipe(1);
                 Debug.Log("Current Score: ");
             }
         }

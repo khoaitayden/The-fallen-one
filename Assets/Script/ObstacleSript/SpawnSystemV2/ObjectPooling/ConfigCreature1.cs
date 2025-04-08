@@ -1,29 +1,26 @@
 using UnityEngine;
 
-public class ConfigCreature1 : MonoBehaviour
+public class ConfigCreature1 : ConfigObstacle
 {
-    [SerializeField] private ObstacleCreature1 Creature1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public  float maxSpacing;
+    public float minSpacing;   
+    public float minHeight;
+    public float maxHeight;
+    [SerializeField] CreateCreature1 createCreature1;
+    public Obstacle Creature1;
+    public override void WrappReuse()
     {
-        
+        if (createCreature1 == null || createCreature1.pooledObjects == null || createCreature1.pooledObjects.Count == 0)
+        return;
+        Reuse(createCreature1.pooledObjects, createCreature1.amountToPool);
+    }
+    public override Vector3 GenerateRandomPosition(int i)
+    {
+        float randomy = Random.Range(minHeight, maxHeight);
+        float randomx = Random.Range(minSpacing, maxSpacing);
+        Vector3 randomPosition = new Vector3(randomx, randomy, 0);
+        return randomPosition;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        ReuseObstacle();
-    }
-    void ReuseObstacle()
-    {
 
-        for (int i=0;i<Creature1.Creature1Speed+1;i++)
-        {
-            if (CreateCreature1.CreateCreature1Instance.pooledObjects[i].activeInHierarchy == false)
-            {
-                CreateCreature1.CreateCreature1Instance.pooledObjects[i].SetActive(true);
-            }
-        }
-        
-    }
 }

@@ -1,42 +1,31 @@
 using UnityEngine;
-public class ConfigObstacle1 : MonoBehaviour
-{   
-    [SerializeField] private Obstacle1 Obstacle1;
-    [Header("Reuse Stats")]
+using System.Collections.Generic;
+
+public class ConfigObstacle1 : ConfigObstacle
+{
     [SerializeField] private float maxSpacing;
     [SerializeField] private float minSpacing;   
     [SerializeField] private float gapTightness;
-    [SerializeField] private float maxHeight;
     [SerializeField] private float minHeight;
-    private float lastX;
-    int amountToPool;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        InvokeRepeating("ReuseObstacle", 0f, 0.5f);
-        amountToPool=CreateObstacle1.CreateObstacle1Instance.amountToPool;
-        lastX =CreateObstacle1.CreateObstacle1Instance.pooledObjects[amountToPool-1].transform.position.x;
-    }
+    [SerializeField] private float maxHeight;
+    [SerializeField] CreateObstacle1 createObstacle1;
+    [SerializeField] private Obstacle Obstacle1;
 
-    // Update is called once per frame
-    void Update()
+
+    public override void WrappReuse()
     {
+        Reuse(createObstacle1.pooledObjects, createObstacle1.amountToPool);
     }
-    void ReuseObstacle()
+    public override Vector3 GenerateRandomPosition(int i)
     {
-        for (int i=0;i<amountToPool;i++)
+        float lastX;
+        if (i==0)
         {
-            if (CreateObstacle1.CreateObstacle1Instance.pooledObjects[i].transform.position.x < -10)
-            {
-                float randomy= Random.Range(minHeight, maxHeight);
-                if (i==0)
-                {
-                    lastX =CreateObstacle1.CreateObstacle1Instance.pooledObjects[amountToPool-1].transform.position.x;
-                    
-                } else lastX= CreateObstacle1.CreateObstacle1Instance.pooledObjects[i-1].transform.position.x;
-                float spacing= Mathf.Clamp(maxSpacing-(Obstacle1.Obstacle1Speed * gapTightness), minSpacing, maxSpacing);
-                CreateObstacle1.CreateObstacle1Instance.pooledObjects[i].transform.position= new Vector3(lastX+spacing, randomy, 0);
-            }
-        }
+            lastX=createObstacle1.pooledObjects[createObstacle1.amountToPool-1].transform.position.x;
+        } else lastX =createObstacle1.pooledObjects[i-1].transform.position.x;
+            float randomY = Random.Range(minHeight, maxHeight);
+            float spacing= Mathf.Clamp(maxSpacing-(Obstacle1.movespeed*Obstacle.SpeedMultiplier* gapTightness), minSpacing, maxSpacing);
+            Vector3 randomPosition = new Vector3(lastX+spacing, randomY, 0);
+            return randomPosition;
     }
 }

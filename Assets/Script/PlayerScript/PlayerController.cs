@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     }
     void movement()
     {
-        //rigidbody2d.linearVelocity = new Vector2(rigidbody2d.linearVelocity.x, jumpstrength);
         Vector2 moveinput=InputActionMovement.ReadValue<Vector2>();
         rigidbody2d.linearVelocity=moveinput*strength;
 
