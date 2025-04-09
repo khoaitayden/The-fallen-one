@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5067039004736129964}
   - component: {fileID: 6296413260404612702}
   m_Layer: 7
-  m_Name: elite fly creature 1_0
+  m_Name: fly creature 2_0
   m_TagString: eliteflycreature1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

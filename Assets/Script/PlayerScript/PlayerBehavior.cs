@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerBehavior : MonoBehaviour
     [SerializeField] private ConfigCreature1 ConfigCreature1;
     [SerializeField] private Animator animator;
     [SerializeField] private float attack1Cooldown = 1f;
+    [SerializeField] private Slider attack1CooldownSlider;
     private int enemyLayerMask;
     private bool canAttack1 = true;
     private List<GameObject> EnemyInAttack1Range = new List<GameObject>();
@@ -87,7 +89,18 @@ public class PlayerBehavior : MonoBehaviour
     IEnumerator Attack1Cooldown()
     {
         canAttack1 = false;
-        yield return new WaitForSeconds(attack1Cooldown);
+
+        float elapsed = 0f;
+        attack1CooldownSlider.value = 1f;
+
+        while (elapsed < attack1Cooldown)
+        {
+            elapsed += Time.deltaTime;
+            attack1CooldownSlider.value = 1f - (elapsed / attack1Cooldown);
+            yield return null;
+        }
+
+        attack1CooldownSlider.value = 0f;
         canAttack1 = true;
     }
 }
