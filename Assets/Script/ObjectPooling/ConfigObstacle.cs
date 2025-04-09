@@ -13,6 +13,7 @@ public abstract class ConfigObstacle : MonoBehaviour
     {
         for (int i = 0; i < amountToPool; i++)
         {
+            if (pooledObjects[i] == null || pooledObjects == null || pooledObjects.Count == 0) return;
             if (pooledObjects[i].transform.position.x < -10f) 
             {
                 Vector3 randomPosition = GenerateRandomPosition(i);

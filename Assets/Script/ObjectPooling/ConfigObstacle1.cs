@@ -14,6 +14,7 @@ public class ConfigObstacle1 : ConfigObstacle
 
     public override void WrappReuse()
     {
+        if (createObstacle1 == null || createObstacle1.pooledObjects == null || createObstacle1.pooledObjects.Count == 0) return;
         Reuse(createObstacle1.pooledObjects, createObstacle1.amountToPool);
     }
     public override Vector3 GenerateRandomPosition(int i)

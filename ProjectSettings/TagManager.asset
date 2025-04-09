@@ -6,6 +6,7 @@ TagManager:
   tags:
   - flycreature1
   - eliteflycreature1
+  - creature2
   layers:
   - Default
   - TransparentFX

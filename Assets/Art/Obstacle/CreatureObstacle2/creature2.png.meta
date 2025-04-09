@@ -1,22 +1,16 @@
 fileFormatVersion: 2
-guid: 74df0ec215087d140b12c15d1f73ecf4
+guid: ced75b635a755184583bf120001f0217
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3393737025603378415
-    second: elite fly creature 1_0
+      213: 4361012017726563484
+    second: creature2_0
   - first:
-      213: 8169902029793391977
-    second: elite fly creature 1_1
+      213: -7394417938362383541
+    second: creature2_1
   - first:
-      213: 4503641935213163942
-    second: elite fly creature 1_2
-  - first:
-      213: -6866619138195620738
-    second: elite fly creature 1_3
-  - first:
-      213: -8131690892592615930
-    second: elite fly creature 1_4
+      213: 5009438560157831150
+    second: creature2_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -112,101 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: elite fly creature 1_0
-      rect:
-        serializedVersion: 2
-        x: 113
-        y: 151
-        width: 895
-        height: 914
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fec1e2018d9f81f20800000000000000
-      internalID: 3393737025603378415
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: elite fly creature 1_1
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 132
-        width: 21
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 965f39f2c92516170800000000000000
-      internalID: 8169902029793391977
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: elite fly creature 1_2
+      name: creature2_0
       rect:
         serializedVersion: 2
         x: 246
-        y: 75
-        width: 78
-        height: 78
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6a5feef8a76208e30800000000000000
-      internalID: 4503641935213163942
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: elite fly creature 1_3
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 113
-        width: 21
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e7c73f3564ed4b0a0800000000000000
-      internalID: -6866619138195620738
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: elite fly creature 1_4
-      rect:
-        serializedVersion: 2
-        x: 189
         y: 56
-        width: 21
-        height: 40
+        width: 705
+        height: 933
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -215,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 60eecbb773e662f80800000000000000
-      internalID: -8131690892592615930
+      spriteID: c942dc1135d658c30800000000000000
+      internalID: 4361012017726563484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: creature2_1
+      rect:
+        serializedVersion: 2
+        x: 1462
+        y: 189
+        width: 705
+        height: 819
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b434227ff00c16990800000000000000
+      internalID: -7394417938362383541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: creature2_2
+      rect:
+        serializedVersion: 2
+        x: 2697
+        y: 132
+        width: 667
+        height: 838
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eef0a5e44d9158540800000000000000
+      internalID: 5009438560157831150
       vertices: []
       indices: 
       edges: []
@@ -234,12 +184,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      elite fly creature 1_0: 3393737025603378415
-      elite fly creature 1_1: 8169902029793391977
-      elite fly creature 1_2: 4503641935213163942
-      elite fly creature 1_3: -6866619138195620738
-      elite fly creature 1_4: -8131690892592615930
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

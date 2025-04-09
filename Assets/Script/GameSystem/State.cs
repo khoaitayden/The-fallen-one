@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
+    [Header("State References")]
+    [SerializeField] private GameObject stage3;
     [Header("Obstacle References")]
     [SerializeField] private Obstacle obstacle1;
     [SerializeField] private Obstacle creature1;
@@ -48,18 +50,27 @@ public class ScoreManager : MonoBehaviour
         Obstacle.SpeedMultiplier += 0.005f;
         if ((passedObstacle>=50)&&(createCreature1.pooledObjects[1].activeSelf==false))
         {
-            for (int i = 0; i < createCreature1.amountToPool; i++)
-            {
-                createCreature1.pooledObjects[i].SetActive(true);
-            }
+            Stage1();
         }        
         if (passedObstacle>=150)
         {
-            for (int i = 0; i < createObstacle1.amountToPool; i++)
+            Stage2();
+        }
+    }
+
+    void Stage1()
+    {
+        for (int i = 0; i < createCreature1.amountToPool; i++)
+            {
+                createCreature1.pooledObjects[i].SetActive(true);
+            }
+    }
+    void Stage2()
+    {
+        for (int i = 0; i < createObstacle1.amountToPool; i++)
             {
                 Destroy(createObstacle1.pooledObjects[i]);
+                stage3.SetActive(true);
             }
-        }
-
     }
 }

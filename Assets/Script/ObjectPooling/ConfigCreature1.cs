@@ -10,8 +10,7 @@ public class ConfigCreature1 : ConfigObstacle
     public Obstacle Creature1;
     public override void WrappReuse()
     {
-        if (createCreature1 == null || createCreature1.pooledObjects == null || createCreature1.pooledObjects.Count == 0)
-        return;
+        if (createCreature1 == null || createCreature1.pooledObjects == null || createCreature1.pooledObjects.Count == 0) return;
         Reuse(createCreature1.pooledObjects, createCreature1.amountToPool);
     }
     public override Vector3 GenerateRandomPosition(int i)
