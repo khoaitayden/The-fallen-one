@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: ced75b635a755184583bf120001f0217
+guid: 36649f2ec7d65fb4fad9387eeaa8bbd6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4361012017726563484
-    second: creature2_0
+      213: -8699678331385903864
+    second: creature2phase2_0
   - first:
-      213: -7394417938362383541
-    second: creature2_1
+      213: 192953944422900964
+    second: creature2phase2_1
   - first:
-      213: 5009438560157831150
-    second: creature2_2
+      213: 7885448147685326642
+    second: creature2phase2_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: creature2_0
+      name: creature2phase2_0
       rect:
         serializedVersion: 2
-        x: 246
+        x: 303
         y: 56
-        width: 705
-        height: 933
+        width: 591
+        height: 1009
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c942dc1135d658c30800000000000000
-      internalID: 4361012017726563484
+      spriteID: 805849586a8844780800000000000000
+      internalID: -8699678331385903864
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: creature2_1
+      name: creature2phase2_1
       rect:
         serializedVersion: 2
-        x: 1462
+        x: 1519
         y: 189
-        width: 705
-        height: 819
+        width: 591
+        height: 857
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b434227ff00c16990800000000000000
-      internalID: -7394417938362383541
+      spriteID: 4e4665317928da200800000000000000
+      internalID: 192953944422900964
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: creature2_2
+      name: creature2phase2_2
       rect:
         serializedVersion: 2
-        x: 2697
+        x: 2735
         y: 132
-        width: 667
-        height: 838
+        width: 610
+        height: 914
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,8 +165,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eef0a5e44d9158540800000000000000
-      internalID: 5009438560157831150
+      spriteID: 23fbb89bf4dbe6d60800000000000000
+      internalID: 7885448147685326642
       vertices: []
       indices: 
       edges: []
@@ -185,9 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      creature2_0: 4361012017726563484
-      creature2_1: -7394417938362383541
-      creature2_2: 5009438560157831150
+      creature2phase2_0: -8699678331385903864
+      creature2phase2_1: 192953944422900964
+      creature2phase2_2: 7885448147685326642
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

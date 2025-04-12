@@ -5,7 +5,7 @@ public class CreateCreature1 : CreateObstacle
 {
     public override bool CheckCanSpawn()
     {
-        if (ScoreManager.Instance.Score>=50) return true;
+        if (StateManager.Instance.Score>=50) return true;
         else return false;
     }
     public override Vector3 GenerateRandomPosition(int i)

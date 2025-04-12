@@ -2,9 +2,12 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour
+public class StateManager : MonoBehaviour
 {
-    public static ScoreManager Instance { get; private set; }
+    public static StateManager Instance { get; private set; }
+    [Header("State Setting")]
+    public int stage2ScoreReqirement;
+    public int stage3ScoreReqirement;
     [Header("State References")]
     [SerializeField] private GameObject stage3;
     [Header("Obstacle References")]
@@ -34,10 +37,24 @@ public class ScoreManager : MonoBehaviour
         passedObstacle=0;
 
     }
-    public int Score
+    void FixedUpdate()
     {
-        get {return passedObstacle;}
+        scoreText.text=passedObstacle.ToString();
     }
+    public int Score
+{
+    get { return passedObstacle; }
+    set
+    {
+        passedObstacle = value;
+
+        // If score goes below 0, trigger death
+        if (passedObstacle < 0)
+        {
+            PlayerBehavior.TriggerPlayerDied();
+        }
+    }
+}
     public void ResetScore()
     {
         passedObstacle = 0;
@@ -46,30 +63,28 @@ public class ScoreManager : MonoBehaviour
     public void IncreaseHardAfterPassedPipe(int amount)
     {
         passedObstacle+= amount;
-        scoreText.text=passedObstacle.ToString();
         Obstacle.SpeedMultiplier += 0.005f;
-        if ((passedObstacle>=50)&&(createCreature1.pooledObjects[1].activeSelf==false))
-        {
-            Stage1();
-        }        
-        if (passedObstacle>=150)
+        if ((passedObstacle>=stage2ScoreReqirement)&&(createCreature1.pooledObjects[1].activeSelf==false))
         {
             Stage2();
+        }        
+        if (passedObstacle>=stage3ScoreReqirement)
+        {
+            Stage3();
         }
     }
 
-    void Stage1()
+    void Stage2()
     {
         for (int i = 0; i < createCreature1.amountToPool; i++)
             {
                 createCreature1.pooledObjects[i].SetActive(true);
             }
     }
-    void Stage2()
+    void Stage3()
     {
         for (int i = 0; i < createObstacle1.amountToPool; i++)
             {
-                Destroy(createObstacle1.pooledObjects[i]);
                 stage3.SetActive(true);
             }
     }

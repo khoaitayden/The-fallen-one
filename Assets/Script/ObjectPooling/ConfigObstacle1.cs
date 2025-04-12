@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class ConfigObstacle1 : ConfigObstacle
 {
@@ -10,15 +11,17 @@ public class ConfigObstacle1 : ConfigObstacle
     [SerializeField] private float maxHeight;
     [SerializeField] CreateObstacle1 createObstacle1;
     [SerializeField] private Obstacle Obstacle1;
-
-
+    private int reuseAmount=0;
     public override void WrappReuse()
     {
         if (createObstacle1 == null || createObstacle1.pooledObjects == null || createObstacle1.pooledObjects.Count == 0) return;
+        if (StateManager.Instance.stage3ScoreReqirement>reuseAmount+createObstacle1.amountToPool)
         Reuse(createObstacle1.pooledObjects, createObstacle1.amountToPool);
+        Debug.Log("Reuse amount: " + (reuseAmount+createObstacle1.amountToPool));
     }
     public override Vector3 GenerateRandomPosition(int i)
     {
+        reuseAmount++;
         float lastX;
         if (i==0)
         {
@@ -28,5 +31,19 @@ public class ConfigObstacle1 : ConfigObstacle
             float spacing= Mathf.Clamp(maxSpacing-(Obstacle1.movespeed*Obstacle.SpeedMultiplier* gapTightness), minSpacing, maxSpacing);
             Vector3 randomPosition = new Vector3(lastX+spacing, randomY, 0);
             return randomPosition;
+    }
+    private void OnEnable()
+    {
+        PlayerBehavior.OnPlayerDied += ResetReuseAmount;
+    }
+
+    private void OnDisable()
+    {
+        PlayerBehavior.OnPlayerDied -= ResetReuseAmount;
+    }
+
+    private void ResetReuseAmount()
+    {
+        reuseAmount = 0;
     }
 }

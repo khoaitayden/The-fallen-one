@@ -1,16 +1,19 @@
 fileFormatVersion: 2
-guid: ced75b635a755184583bf120001f0217
+guid: 931921638cc710443991fee79e645c90
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4361012017726563484
-    second: creature2_0
+      213: 2146799262699336862
+    second: creature2phase3_0
   - first:
-      213: -7394417938362383541
-    second: creature2_1
+      213: -8933888446054063039
+    second: creature2phase3_1
   - first:
-      213: 5009438560157831150
-    second: creature2_2
+      213: -22670413462626934
+    second: creature2phase3_2
+  - first:
+      213: -5896738398304215338
+    second: creature2phase3_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -106,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: creature2_0
+      name: creature2phase3_0
       rect:
         serializedVersion: 2
-        x: 246
+        x: 303
         y: 56
-        width: 705
-        height: 933
+        width: 591
+        height: 1028
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +124,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c942dc1135d658c30800000000000000
-      internalID: 4361012017726563484
+      spriteID: e94b3412e86facd10800000000000000
+      internalID: 2146799262699336862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: creature2_1
+      name: creature2phase3_1
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 968
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1442bf5cac3740480800000000000000
+      internalID: -8933888446054063039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: creature2phase3_2
       rect:
         serializedVersion: 2
         x: 1462
         y: 189
         width: 705
-        height: 819
+        height: 971
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b434227ff00c16990800000000000000
-      internalID: -7394417938362383541
+      spriteID: a8d16aa01657faff0800000000000000
+      internalID: -22670413462626934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: creature2_2
+      name: creature2phase3_3
       rect:
         serializedVersion: 2
         x: 2697
         y: 132
         width: 667
-        height: 838
+        height: 1084
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -165,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eef0a5e44d9158540800000000000000
-      internalID: 5009438560157831150
+      spriteID: 6dedba34ba39a2ea0800000000000000
+      internalID: -5896738398304215338
       vertices: []
       indices: 
       edges: []
@@ -185,9 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      creature2_0: 4361012017726563484
-      creature2_1: -7394417938362383541
-      creature2_2: 5009438560157831150
+      creature2phase3_0: 2146799262699336862
+      creature2phase3_1: -8933888446054063039
+      creature2phase3_2: -22670413462626934
+      creature2phase3_3: -5896738398304215338
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

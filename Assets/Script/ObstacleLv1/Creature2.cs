@@ -1,13 +1,18 @@
 using UnityEngine;
 
-public class BotPaddle : MonoBehaviour
+public class Creature2 : MonoBehaviour
 {
     [SerializeField] private Transform ball;  
-    [SerializeField] private float speed = 5f;   
-    [SerializeField] private float maxY ;    // Limit for paddle movement (optional)
-    [SerializeField] private float minY;   // Limit for paddle movement (optional)
-
-    private void Update()
+    [SerializeField] private int speed;   
+    [SerializeField] private float maxY ;    
+    [SerializeField] private float minY;
+    [SerializeField] private Animator animator;
+    public int Speed
+    {
+        get { return speed; }
+        set { speed = value;}
+    }
+    void Update()
     {
         if (ball == null) return;
 

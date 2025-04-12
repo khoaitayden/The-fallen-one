@@ -11,7 +11,7 @@ public class MiddlePart : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             {
-                ScoreManager.Instance.IncreaseHardAfterPassedPipe(1);
+                StateManager.Instance.IncreaseHardAfterPassedPipe(1);
                 Debug.Log("Current Score: ");
             }
         }

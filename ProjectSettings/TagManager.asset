@@ -7,6 +7,7 @@ TagManager:
   - flycreature1
   - eliteflycreature1
   - creature2
+  - ball
   layers:
   - Default
   - TransparentFX
