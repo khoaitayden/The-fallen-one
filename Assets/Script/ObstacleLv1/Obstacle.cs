@@ -6,6 +6,7 @@ public class Obstacle : MonoBehaviour
     public float movespeed;
     public static float SpeedMultiplier = 1f;
     public float CurrentSpeed;
+    
     void Start()
     {
         CurrentSpeed = movespeed * SpeedMultiplier;
@@ -22,7 +23,6 @@ public class Obstacle : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         PlayerBehavior.TriggerPlayerDied();
-        Debug.Log("Player Died");
     }
     
 }

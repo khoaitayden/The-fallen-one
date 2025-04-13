@@ -3,15 +3,24 @@ using UnityEngine;
 public class Creature2 : MonoBehaviour
 {
     [SerializeField] private Transform ball;  
-    [SerializeField] private int speed;   
-    [SerializeField] private float maxY ;    
+    [SerializeField] private float maxY;    
     [SerializeField] private float minY;
     [SerializeField] private Animator animator;
+
+    [SerializeField] private int speed;
+    public System.Action<int> OnSpeedChanged; 
+
     public int Speed
     {
-        get { return speed; }
-        set { speed = value;}
+        get => speed;
+        set
+        {
+            speed = value;
+            OnSpeedChanged?.Invoke(speed);
+            animator.SetInteger("Phase", speed); 
+        }
     }
+
     void Update()
     {
         if (ball == null) return;

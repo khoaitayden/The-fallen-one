@@ -6,7 +6,6 @@ public class Ball : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Transform creature2; 
     [SerializeField] Creature2 creature2script;
-    [SerializeField] private Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,8 +35,6 @@ public class Ball : MonoBehaviour
         {
             LaunchLeft();
             creature2script.Speed += 1;
-            animator.SetInteger("Phase",creature2script.Speed);
-
         }
         if (rb.transform.position.x<-10f)
         {

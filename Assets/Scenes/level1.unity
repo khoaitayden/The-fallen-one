@@ -939,6 +939,9 @@ MonoBehaviour:
       m_Action: Restart
       m_Flags: 0
     m_Flags: 0
+  mainCamera: {fileID: 519420031}
+  zoomTarget: {fileID: 2002756353}
+  animator: {fileID: 2002756355}
 --- !u!1 &366765777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3291,6 +3294,7 @@ MonoBehaviour:
   ConfigCreature1: {fileID: 1040703241}
   animator: {fileID: 2002756355}
   attack1CooldownSlider: {fileID: 2134111579}
+  deathscreen: {fileID: 1699609735}
   FirstAttackKillEffect: {fileID: 8413180860100672558, guid: e3593ceae89807b4eac490b45eab770c, type: 3}
 --- !u!1 &2134111577
 GameObject:

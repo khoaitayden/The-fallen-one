@@ -20,16 +20,19 @@ public class PlayerBehavior : MonoBehaviour
     [Header("Additional References")]
     [SerializeField] private ConfigCreature1 ConfigCreature1;
     [SerializeField] private Animator animator;
+    [SerializeField] BoxCollider2D col;
+    
 
     [Header("UI References")]
     [SerializeField] private Slider attack1CooldownSlider;
+    [SerializeField] private GameObject deathscreen;
     [Header("Effect")]
     [SerializeField] private GameObject FirstAttackKillEffect;
 
 
     private int enemyLayerMask;
     private bool canAttack1 = true;
-    private bool isDead = false;
+    public static bool isDead = false;
     private List<GameObject> EnemyInAttack1Range = new List<GameObject>();
 
     void Start()
@@ -131,11 +134,16 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            animator?.SetTrigger("deathhitground");
+        }
         if (isDead) return;
         if (collision.gameObject.CompareTag("ball"))
         {
             animator?.SetTrigger("Hitball");
         }
+        
     }
 
     void DisablePlayer()
@@ -143,6 +151,8 @@ public class PlayerBehavior : MonoBehaviour
         isDead = true;
         attack1.Disable();
         fly.Disable();
+        col.size = new Vector2(1.5f, 0.5f);
+        col.offset = new Vector2(0f, -0.25f); 
         StopAllCoroutines();
     }
     void OnDrawGizmos()
@@ -152,11 +162,15 @@ public class PlayerBehavior : MonoBehaviour
     }
     public static void TriggerPlayerDied()
     {
+        if (isDead) return;
+        isDead = true;
         OnPlayerDied?.Invoke();
+
     }
     void CheckFalloff()
     {
-        if (transform.position.y < -6f||transform.position.y > 6f)
+        if (deathscreen.activeSelf) return;
+        if (transform.position.y < -5.5f||transform.position.y > 5.5f)
         {
             TriggerPlayerDied();
         }

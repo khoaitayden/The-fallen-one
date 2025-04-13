@@ -47,8 +47,6 @@ public class StateManager : MonoBehaviour
     set
     {
         passedObstacle = value;
-
-        // If score goes below 0, trigger death
         if (passedObstacle < 0)
         {
             PlayerBehavior.TriggerPlayerDied();
