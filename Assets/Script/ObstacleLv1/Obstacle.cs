@@ -22,7 +22,11 @@ public class Obstacle : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        PlayerBehavior.TriggerPlayerDied();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+                PlayerBehavior.TriggerPlayerDied();
+        }
+        
     }
     
 }

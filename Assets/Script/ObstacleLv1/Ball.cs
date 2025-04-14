@@ -44,11 +44,11 @@ public class Ball : MonoBehaviour
     }
     Vector2 FixGoStraight(Vector2 dir)
     {
-         if (Mathf.Abs(dir.x) < 0.1f)
+         if (Mathf.Abs(dir.x) < 1f)
         {
             dir.x = 0.2f * Mathf.Sign(Random.Range(-3f, 3f));
         }
-        if (Mathf.Abs(dir.y) < 0.1f)
+        if (Mathf.Abs(dir.y) < 1f)
         {
             dir.y = 0.2f * Mathf.Sign(Random.Range(-3f, 3f)); 
         }

@@ -49,7 +49,7 @@ public class StateManager : MonoBehaviour
         passedObstacle = value;
         if (passedObstacle < 0)
         {
-            PlayerBehavior.TriggerPlayerDied();
+            //PlayerBehavior.TriggerPlayerDied();
         }
     }
 }
