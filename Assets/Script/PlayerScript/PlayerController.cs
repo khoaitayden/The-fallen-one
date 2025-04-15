@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 move;
     Rigidbody2D rigidbody2d;
-    private bool canMove = true;
-
+    public static bool canMove = true;
     void Start()
     {
         InputActionMovement.Enable();

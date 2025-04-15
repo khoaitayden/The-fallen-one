@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class StateManager : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class StateManager : MonoBehaviour
         passedObstacle = value;
         if (passedObstacle < 0)
         {
-            //PlayerBehavior.TriggerPlayerDied();
+            PlayerBehavior.TriggerPlayerDied();
         }
     }
 }
@@ -85,5 +86,9 @@ public class StateManager : MonoBehaviour
             {
                 stage3.SetActive(true);
             }
+    }
+    public void goToLv2()
+    {
+        SceneManager.LoadScene("level2");
     }
 }

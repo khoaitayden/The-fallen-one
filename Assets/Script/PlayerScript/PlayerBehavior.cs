@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public class PlayerBehavior : MonoBehaviour
+public class PlayerBehavior : PlayerController
 {
     public static event System.Action OnPlayerDied;
     [Header("Attack 1 Settings")]
@@ -136,12 +136,20 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("ground"))
         {
-            animator?.SetTrigger("deathhitground");
+            animator?.SetBool("deathhitground",true);
         }
         if (isDead) return;
         if (collision.gameObject.CompareTag("ball"))
         {
             animator?.SetTrigger("Hitball");
+        }
+        if (collision.gameObject.CompareTag("creature3"))
+        {
+            animator?.SetBool("deathhitground",false);
+            animator.SetTrigger("death");
+            animator?.SetTrigger("falloff");
+            DisablePlayer();
+            PlayerController.canMove=false;
         }
         
     }

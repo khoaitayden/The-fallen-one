@@ -69,6 +69,7 @@ public class UIController : MonoBehaviour
         Time.timeScale = 1f;
         Obstacle.SpeedMultiplier = 1f;
         PlayerBehavior.isDead = false;
+        PlayerController.canMove = true;
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
     public void LoadMainMenu()

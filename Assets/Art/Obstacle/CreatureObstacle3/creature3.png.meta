@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 4c30482eb0c36c54896a87011c61389a
+guid: 7c2dc5dce7240ae469af903b86819cd4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7710967011991396897
-    second: lv1stage3_0
+      213: 8487485238883154230
+    second: creature3_0
+  - first:
+      213: -4240277185371381697
+    second: creature3_1
+  - first:
+      213: 6814416293323678410
+    second: creature3_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: lv1stage3_0
+      name: creature3_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 576
+        x: 75
+        y: 455
+        width: 952
+        height: 477
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +121,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 122a08894abd20b60800000000000000
-      internalID: 7710967011991396897
+      spriteID: 639700c2bda99c570800000000000000
+      internalID: 8487485238883154230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: creature3_1
+      rect:
+        serializedVersion: 2
+        x: 1291
+        y: 455
+        width: 952
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f30eeb8ad528725c0800000000000000
+      internalID: -4240277185371381697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: creature3_2
+      rect:
+        serializedVersion: 2
+        x: 2488
+        y: 436
+        width: 952
+        height: 477
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac22133b38ba19e50800000000000000
+      internalID: 6814416293323678410
       vertices: []
       indices: 
       edges: []
@@ -135,7 +185,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      lv1stage3_0: 7710967011991396897
+      creature3_0: 8487485238883154230
+      creature3_1: -4240277185371381697
+      creature3_2: 6814416293323678410
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

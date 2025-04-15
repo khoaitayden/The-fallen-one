@@ -1,28 +1,19 @@
 fileFormatVersion: 2
-guid: fb6fe56f6a1f2fa429428dd89a0238a7
+guid: 3bf5e1198d0c8944da7f67ca10413ea9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7666410538472989115
-    second: main death fall on the ground_0
+      213: 7076218217815401357
+    second: falloff_0
   - first:
-      213: -5928356240554796236
-    second: main death fall on the ground_1
+      213: -2754708271182021534
+    second: falloff_1
   - first:
-      213: 2851553259591469849
-    second: main death fall on the ground_2
+      213: 6100030781098145629
+    second: falloff_2
   - first:
-      213: -5866727332363966435
-    second: main death fall on the ground_3
-  - first:
-      213: 836889322171761863
-    second: main death fall on the ground_4
-  - first:
-      213: 8924268130574870528
-    second: main death fall on the ground_5
-  - first:
-      213: -7703749489274866224
-    second: main death fall on the ground_6
+      213: -1396898883254188695
+    second: falloff_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -118,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: main death fall on the ground_0
+      name: falloff_0
       rect:
         serializedVersion: 2
-        x: 37
-        y: 0
-        width: 1161
-        height: 761
+        x: 436
+        y: 94
+        width: 401
+        height: 1104
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bb16eff24cf846a60800000000000000
-      internalID: 7666410538472989115
+      spriteID: d83e80a4af6c33260800000000000000
+      internalID: 7076218217815401357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main death fall on the ground_1
+      name: falloff_1
       rect:
         serializedVersion: 2
-        x: 1272
-        y: 246
-        width: 1142
-        height: 401
+        x: 1690
+        y: 56
+        width: 477
+        height: 1160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43bd2c3b86f3abda0800000000000000
-      internalID: -5928356240554796236
+      spriteID: 26c7d542c6f45c9d0800000000000000
+      internalID: -2754708271182021534
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main death fall on the ground_2
+      name: falloff_2
       rect:
         serializedVersion: 2
-        x: 2450
-        y: 246
-        width: 1142
-        height: 515
+        x: 2887
+        y: 75
+        width: 439
+        height: 1141
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -177,20 +168,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 91b8e08d490c29720800000000000000
-      internalID: 2851553259591469849
+      spriteID: d57bd421da9a7a450800000000000000
+      internalID: 6100030781098145629
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: main death fall on the ground_3
+      name: falloff_3
       rect:
         serializedVersion: 2
-        x: 3723
-        y: 227
-        width: 1123
-        height: 515
+        x: 4046
+        y: 56
+        width: 477
+        height: 1160
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,74 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d18ee501392359ea0800000000000000
-      internalID: -5866727332363966435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: main death fall on the ground_4
-      rect:
-        serializedVersion: 2
-        x: 4939
-        y: 170
-        width: 1123
-        height: 553
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c48d5c876a3d9b00800000000000000
-      internalID: 836889322171761863
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: main death fall on the ground_5
-      rect:
-        serializedVersion: 2
-        x: 6117
-        y: 132
-        width: 1161
-        height: 401
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 008214bf49e59db70800000000000000
-      internalID: 8924268130574870528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: main death fall on the ground_6
-      rect:
-        serializedVersion: 2
-        x: 7295
-        y: 132
-        width: 1217
-        height: 325
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 0d5bc2dd7a8c61590800000000000000
-      internalID: -7703749489274866224
+      spriteID: 9658e74edd73d9ce0800000000000000
+      internalID: -1396898883254188695
       vertices: []
       indices: 
       edges: []
@@ -285,13 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      main death fall on the ground_0: 7666410538472989115
-      main death fall on the ground_1: -5928356240554796236
-      main death fall on the ground_2: 2851553259591469849
-      main death fall on the ground_3: -5866727332363966435
-      main death fall on the ground_4: 836889322171761863
-      main death fall on the ground_5: 8924268130574870528
-      main death fall on the ground_6: -7703749489274866224
+      falloff_0: 7076218217815401357
+      falloff_1: -2754708271182021534
+      falloff_2: 6100030781098145629
+      falloff_3: -1396898883254188695
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

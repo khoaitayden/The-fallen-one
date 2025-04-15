@@ -35,6 +35,7 @@ public class Ball : MonoBehaviour
         {
             LaunchLeft();
             creature2script.Speed += 1;
+            StateManager.Instance.Score += 5;
         }
         if (rb.transform.position.x<-10f)
         {
@@ -44,14 +45,15 @@ public class Ball : MonoBehaviour
     }
     Vector2 FixGoStraight(Vector2 dir)
     {
-         if (Mathf.Abs(dir.x) < 1f)
+        if (Mathf.Abs(dir.y) < 2f)
         {
-            dir.x = 0.2f * Mathf.Sign(Random.Range(-3f, 3f));
+            dir.y = Random.Range(-20f, 20f); 
         }
-        if (Mathf.Abs(dir.y) < 1f)
+         if (Mathf.Abs(dir.x) < 2f)
         {
-            dir.y = 0.2f * Mathf.Sign(Random.Range(-3f, 3f)); 
+            dir.x = Random.Range(-20f, 20f);
         }
+       
         return dir;
     }
 }
