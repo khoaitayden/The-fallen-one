@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4791946047367656869}
   - component: {fileID: 3317856903542505718}
   - component: {fileID: 3835627556300488324}
-  - component: {fileID: 1733210448088295191}
+  - component: {fileID: 8937519015748665888}
   m_Layer: 7
   m_Name: fly creature 1_0
   m_TagString: flycreature1
@@ -230,7 +230,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1733210448088295191
+--- !u!114 &8937519015748665888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,8 +239,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8533025809180451848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc38d1d376fedc74ea432c56cb2c66ac, type: 3}
+  m_Script: {fileID: 11500000, guid: e3b374ed58f9f724e9b97bf08c89a6cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 3835627556300488324}
-  obstaclecreature1: {fileID: 0}
+  movespeed: 5

@@ -1,159 +1,186 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.VisualScripting;
-using NUnit.Framework;
 using System.Collections.Generic;
-using System;
+using UnityEngine.UI;
 
-public class PlayerBehavior : MonoBehaviour
+public class PlayerBehavior : PlayerController
 {
-        [Header("PlayerAction Settings")]
-    [SerializeField] private InputAction attackAction;
-    [SerializeField] private InputAction FlyAction;
-    private bool canAttack = true; 
- //   [SerializeField] private InputAction DashAction;
-        [Header("PlayerStats Settings")]
-    [SerializeField] private float attackCooldown = 2.0f; 
-    private float charka ;
-    public float Charka
-    {
-        get { return charka; }
-        set { charka = Mathf.Max(0, value); }
-    }
-        [Header("PlayerInteraction Settings")]
-    [SerializeField] private ObstacleCreature1SpawnScript obstaclecreature1;
-    [SerializeField] private Animator animator;
-    private bool hitflycreature1=false;
-    public bool checkhitflycreature1
-    {
-        get { return hitflycreature1; }
-    }
-    private List<GameObject> flycreatures = new List<GameObject>();    
-    private GameObject flycreature1;
-    //private Rigidbody2D rb;
+    public static event System.Action OnPlayerDied;
+    [Header("Attack 1 Settings")]
+    [SerializeField] private float checkInterval = 0.3f;
+    [SerializeField] private float detectionRadius = 1.0f;
+    [SerializeField] private float attack1Cooldown;
 
+    [Header("Input References")]
+    [SerializeField] private InputAction attack1;
+    [SerializeField] private InputAction fly;
+
+    [Header("Additional References")]
+    [SerializeField] private ConfigCreature1 ConfigCreature1;
+    [SerializeField] private Animator animator;
+    [SerializeField] BoxCollider2D col;
+    
+
+    [Header("UI References")]
+    [SerializeField] private Slider attack1CooldownSlider;
+    [SerializeField] private GameObject deathscreen;
+    [Header("Effect")]
+    [SerializeField] private GameObject FirstAttackKillEffect;
+
+
+    private int enemyLayerMask;
+    private bool canAttack1 = true;
+    public static bool isDead = false;
+    private List<GameObject> EnemyInAttack1Range = new List<GameObject>();
 
     void Start()
     {
-        InvokeRepeating(nameof(CheckEnemiesInRange), 0f, 0.2f);
+        enemyLayerMask = LayerMask.GetMask("Enemy");
+        InvokeRepeating(nameof(CheckEnemiesInRange), 0f, checkInterval);
+        InvokeRepeating(nameof(CheckFalloff), 0f, checkInterval);
+        OnPlayerDied += DisablePlayer;
     }
+
     void OnEnable()
     {
-        // = GetComponent<Rigidbody2D>();
-        attackAction.Enable();
-        attackAction.performed += _ => TryAttack(); 
-
-        FlyAction.Enable(); 
-        FlyAction.performed += _ => fly();
-
-    //    DashAction.Enable(); 
-    //    DashAction.performed += _ => dash(); 
+        attack1.Enable();
+        attack1.performed += TryAttack1;
+        fly.Enable();
+        fly.performed += Fly;
     }
 
     void OnDisable()
     {
-        attackAction.performed -= _ => TryAttack(); 
-        attackAction.Disable();
-
-        FlyAction.performed -= _ => fly(); 
-        FlyAction.Disable(); 
-
-    //    DashAction.performed -= _ => dash(); 
-    //    DashAction.Disable();
+        attack1.performed -= TryAttack1;
+        fly.performed -= Fly;
+        attack1.Disable();
+        fly.Disable();
     }
 
-
-    void TryAttack()
+    void OnDestroy()
     {
-        if (!canAttack) return; 
-        firstattack();
-        hitattack();
-        StartCoroutine(AttackCooldown());
+        OnPlayerDied -= DisablePlayer;
     }
-void hitattack()
-{
-    if (hitflycreature1)
+
+    void Fly(InputAction.CallbackContext context)
     {
-        for (int i = 0; i < flycreatures.Count; i++)
+        if (isDead) return;
+        if (context.performed)
         {
-            for (int j = 0; j < obstaclecreature1.CreaturePool.Count; j++)
+            animator?.SetTrigger("Fly");
+        }
+    }
+
+    void TryAttack1(InputAction.CallbackContext context)
+    {
+        if (isDead || !canAttack1) return;
+        Attack(EnemyInAttack1Range);
+        StartCoroutine(Attack1Cooldown());
+    }
+
+    void Attack(List<GameObject> enemies)
+    {
+        animator?.SetTrigger("FirstAttack");
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.CompareTag("flycreature1"))
             {
-                if (obstaclecreature1.CreaturePool[j] == flycreatures[i])
+                 if (FirstAttackKillEffect != null)
                 {
-                    obstaclecreature1.ReuseCreature(j);
-                    Charka+=1;
-                    Debug.Log("Charka: ");
+                GameObject effect = Instantiate(FirstAttackKillEffect, enemy.transform.position, Quaternion.identity);
+                Destroy(effect, 0.4f);
                 }
+                float randomy = Random.Range(ConfigCreature1.minHeight, ConfigCreature1.maxHeight);
+                float randomx = Random.Range(ConfigCreature1.minSpacing, ConfigCreature1.maxSpacing);
+                Vector3 randomPosition = new Vector3(randomx, randomy, 0);
+                enemy.transform.position = randomPosition;
             }
         }
-
-        // Clear the list after handling all flycreatures
-        flycreatures.Clear();
-        hitflycreature1 = false;
-    }
-}
-    void firstattack()
-    {
-        animator.SetTrigger("FirstAttack"); 
-    }
-    void fly()
-    {
-        animator.SetTrigger("Fly"); 
     }
 
-    // Handles the attack cooldown
-    IEnumerator AttackCooldown()
+    void CheckEnemiesInRange()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(attackCooldown); 
-        canAttack = true; 
-    }
+        if (isDead) return;
 
-
-    public void SetAttackCooldown(float newCooldown)
-    {
-        attackCooldown = newCooldown;
-    }
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     if (collision.gameObject.CompareTag("flycreature1"))
-    //     {
-    //         {
-    //             hitflycreature1=true;
-    //             flycreature1=collision.gameObject;
-    //         }
-    //     }
-    // }
-    
-        void CheckEnemiesInRange()
+        EnemyInAttack1Range.Clear();
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayerMask);
+        foreach (Collider2D hit in hits)
         {
-            Vector2 origin = transform.position;
-            float radius = 2.0f;
-            int layerMask = LayerMask.GetMask("Enemy");
-
-            Collider2D[] hits = Physics2D.OverlapCircleAll(origin, radius, layerMask);
-            
-            flycreatures.Clear();
-
-            foreach (Collider2D hit in hits)
+            if (hit.CompareTag("flycreature1"))
             {
-                if (hit.CompareTag("flycreature1"))
-                {
-                    flycreatures.Add(hit.gameObject);
-                }
+                EnemyInAttack1Range.Add(hit.gameObject);
             }
-
-            hitflycreature1 = flycreatures.Count > 0;
-            flycreature1 = hitflycreature1 ? flycreatures[0] : null;
         }
+    }
+
+    IEnumerator Attack1Cooldown()
+    {
+        canAttack1 = false;
+        float elapsed = 0f;
+        attack1CooldownSlider.value = 1f;
+
+        while (elapsed < attack1Cooldown)
+        {
+            elapsed += Time.deltaTime;
+            attack1CooldownSlider.value = 1f - (elapsed / attack1Cooldown);
+            yield return null;
+        }
+
+        attack1CooldownSlider.value = 0f;
+        canAttack1 = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("ground"))
+        {
+            animator?.SetBool("deathhitground",true);
+        }
+        if (isDead) return;
+        if (collision.gameObject.CompareTag("ball"))
+        {
+            animator?.SetTrigger("Hitball");
+        }
+        if (collision.gameObject.CompareTag("creature3"))
+        {
+            animator?.SetBool("deathhitground",false);
+            animator.SetTrigger("death");
+            animator?.SetTrigger("falloff");
+            DisablePlayer();
+            PlayerController.canMove=false;
+        }
+        
+    }
+
+    void DisablePlayer()
+    {
+        isDead = true;
+        attack1.Disable();
+        fly.Disable();
+        col.size = new Vector2(1.5f, 0.5f);
+        col.offset = new Vector2(0f, -0.25f); 
+        StopAllCoroutines();
+    }
     void OnDrawGizmos()
     {
-        Vector2 origin = transform.position;
-        float radius = 2.0f;
-
-        // Draw the detection area
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(origin, radius);
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+    public static void TriggerPlayerDied()
+    {
+        if (isDead) return;
+        isDead = true;
+        OnPlayerDied?.Invoke();
+
+    }
+    void CheckFalloff()
+    {
+        if (deathscreen.activeSelf) return;
+        if (transform.position.y < -5.5f||transform.position.y > 5.5f)
+        {
+            TriggerPlayerDied();
+        }
     }
 }
