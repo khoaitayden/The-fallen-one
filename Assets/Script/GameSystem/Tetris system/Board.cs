@@ -54,21 +54,22 @@ public class Board : MonoBehaviour
             tilemap.SetTile(piece.cells[i], null); // Already world position
         }
     }
-    public bool IsValidPosition(Piece piece, Vector3Int position)
+    public bool IsValidPosition(Piece piece, Vector3Int newPosition)
     {
         RectInt bounds = this.bounds;
 
         for (int i = 0; i < piece.cells.Length; i++)
         {
-            Vector3Int tilePosition = position + (Vector3Int)piece.data.cells[i];
+            // Calculate the new position of each cell by adjusting from the piece's new position
+            Vector3Int tilePosition = newPosition + (piece.cells[i] - piece.position);
 
-            // Check bounds
+            // Check if the tile is within the bounds of the board
             if (!bounds.Contains((Vector2Int)tilePosition))
             {
                 return false;
             }
 
-            // Check collision with *other* tiles
+            // Check if the tile position is already occupied by another tile
             if (tilemap.HasTile(tilePosition))
             {
                 return false;
