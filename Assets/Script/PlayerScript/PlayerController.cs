@@ -3,39 +3,39 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float strength;
-    [SerializeField] private InputAction InputActionMovement;
+    [SerializeField] protected float strength;
 
-    Vector2 move;
-    Rigidbody2D rigidbody2d;
+    [SerializeField] protected InputAction InputActionMovement;
+
+    protected Vector2 move;
+    protected Rigidbody2D rigidbody2d;
     public static bool canMove = true;
-    void Start()
+
+    protected virtual void Start()
     {
         InputActionMovement.Enable();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        InputActionMovement.performed += _ => movement(); 
+        InputActionMovement.performed += _ => movement();
         InputActionMovement.canceled += ctx => move = Vector2.zero;
-
         PlayerBehavior.OnPlayerDied += DisableMovement;
     }
 
-    void OnDestroy()
+    protected virtual void OnDestroy()
     {
         PlayerBehavior.OnPlayerDied -= DisableMovement;
     }
 
-    void movement()
+    protected virtual void movement()
     {
-        if (!canMove) return;
+        if (!canMove || rigidbody2d == null) return;
 
         Vector2 moveinput = InputActionMovement.ReadValue<Vector2>();
         rigidbody2d.linearVelocity = moveinput * strength;
     }
 
-    void DisableMovement()
+    protected virtual void DisableMovement()
     {
         canMove = false;
         rigidbody2d.linearVelocity = Vector2.zero;
     }
-    
 }
