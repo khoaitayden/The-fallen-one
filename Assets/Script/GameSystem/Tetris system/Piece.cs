@@ -8,12 +8,20 @@ public class Piece : MonoBehaviour
     public Vector3Int position { get; private set; }
     public Board board { get; private set; }
 
-    public Vector3Int[] cells { get; private set; }         // Final board positions
+    public Vector3Int[] cells { get; private set; }
     public int rotationIndex { get; private set; }
 
     // --------------------------- Private Fields ---------------------------
 
-    private Vector3Int[] cellOffsets; // Local offsets from the pivot
+    public Vector3Int[] cellOffsets;
+
+    // Step and Lock Timing
+    [SerializeField]private float stepDelay = 1f;
+    [SerializeField]private float lockDelay = 0.5f;
+    private float stepTime;
+    private float lockTime;
+
+    private bool isLocked = false;
 
     // --------------------------- Initialization ---------------------------
 
@@ -30,6 +38,10 @@ public class Piece : MonoBehaviour
 
         SetBaseOffsets();
         UpdateCellPositions();
+
+        stepTime = Time.time + stepDelay;
+        lockTime = Time.time + lockDelay;
+        isLocked = false;
     }
 
     private void SetBaseOffsets()
@@ -55,52 +67,75 @@ public class Piece : MonoBehaviour
     {
         board.Clear(this);
 
-        HandleMovementInput();
-        HandleRotationInput();
-        HandleDropInput();
+        if (!isLocked)
+        {
+            HandleInput();
+            HandleAutoStep();
+        }
 
         board.Set(this);
     }
 
     // --------------------------- Input Handling ---------------------------
 
-    private void HandleMovementInput()
+    private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.A)) Move(Vector2Int.left);
-        if (Input.GetKeyDown(KeyCode.D)) Move(Vector2Int.right);
-        if (Input.GetKeyDown(KeyCode.S)) Move(Vector2Int.down);
-    }
-
-    private void HandleRotationInput()
-    {
+        if (Input.GetKeyDown(KeyCode.A)) TryMove(Vector2Int.left);
+        if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector2Int.right);
+        if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector2Int.down, true); // Reset lock timer on soft drop
         if (Input.GetKeyDown(KeyCode.LeftShift)) Rotate(-1);
         if (Input.GetKeyDown(KeyCode.LeftControl)) Rotate(1);
+        if (Input.GetKeyDown(KeyCode.Space)) HardDrop();
     }
 
-    private void HandleDropInput()
+    // --------------------------- Step-Down and Lock ---------------------------
+
+    private void HandleAutoStep()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) HardDrop();
+        if (Time.time >= stepTime)
+        {
+            StepDown();
+        }
+    }
+
+    private void StepDown()
+    {
+        if (!TryMove(Vector2Int.down))
+        {
+            if (Time.time >= lockTime)
+            {
+                Lock();
+            }
+        }
+        else
+        {
+            lockTime = Time.time + lockDelay;
+        }
+
+        stepTime = Time.time + stepDelay;
+    }
+
+    private void Lock()
+    {
+        board.Set(this);         // Commit the piece to the board
+        board.ClearLines();      // Clear any full lines
+        board.SpawnPiece();      // Spawn a new piece
+        isLocked = true;
     }
 
     // --------------------------- Movement ---------------------------
 
-    private bool Move(Vector2Int direction)
+    private bool TryMove(Vector2Int direction, bool resetLockTimer = false)
     {
         Vector3Int newPosition = position + new Vector3Int(direction.x, direction.y, 0);
-        
-        // Check if moving to the new position is valid
         if (board.IsValidPosition(this, newPosition))
         {
             position = newPosition;
             UpdateCellPositions();
-            return true;
-        }
 
-        // Special case: downward movement
-        if (direction.y == -1 && board.IsValidPosition(this, newPosition))
-        {
-            position = newPosition;
-            UpdateCellPositions();
+            if (resetLockTimer)
+                lockTime = Time.time + lockDelay;
+
             return true;
         }
 
@@ -109,19 +144,20 @@ public class Piece : MonoBehaviour
 
     private void HardDrop()
     {
-        while (Move(Vector2Int.down)) { }
+        while (TryMove(Vector2Int.down)) { }
+
+        Lock();
     }
 
-        // --------------------------- Rotation with Wall Kicks ---------------------------
+    // --------------------------- Rotation with Wall Kicks ---------------------------
 
     private void Rotate(int direction)
     {
         int originalRotation = rotationIndex;
-        Vector3Int originalPosition = position; // Save the original position
-        Vector3Int[] originalOffsets = (Vector3Int[])cellOffsets.Clone(); // Save original offsets
-        Vector3Int[] originalCells = (Vector3Int[])cells.Clone(); // Save original cells
+        Vector3Int originalPosition = position;
+        Vector3Int[] originalOffsets = (Vector3Int[])cellOffsets.Clone();
+        Vector3Int[] originalCells = (Vector3Int[])cells.Clone();
 
-        // Update the rotation index
         rotationIndex = Wrap(rotationIndex + direction, 0, 4);
 
         Vector3 pivotOffset = (data.tetromino == Tetromino.I || data.tetromino == Tetromino.O)
@@ -131,31 +167,21 @@ public class Piece : MonoBehaviour
         Vector3Int[] rotatedOffsets = GetRotatedOffsets(direction, pivotOffset);
         Vector3Int[] newCells = GetRotatedWorldCells(rotatedOffsets);
 
-        // Try applying the rotated offsets and check if it's still valid
-        if (board.IsValidPosition(this, position))
+        if (board.IsValidPosition(position, rotatedOffsets))
         {
-            // If valid, apply the rotation
             cellOffsets = rotatedOffsets;
             cells = newCells;
+            lockTime = Time.time + lockDelay;
         }
-        else if (TestWallKicks(originalRotation, direction))
+        else if (TestWallKicks(originalRotation, direction, rotatedOffsets))
         {
-            // Wall kicks succeed, update the position based on wall kick and apply rotation
             cellOffsets = rotatedOffsets;
             cells = GetRotatedWorldCells(cellOffsets);
+            lockTime = Time.time + lockDelay;
         }
         else
         {
-            // Rotation failed and wall kicks didn't work, revert everything
-            rotationIndex = originalRotation;  // Reset rotation
-            position = originalPosition;       // Reset position
-            cellOffsets = originalOffsets;    // Reset offsets
-            cells = originalCells;            // Reset cells
-        }
-
-        // After a rotation, if the position is still invalid, uncommit the action
-        if (!board.IsValidPosition(this, position))
-        {
+            rotationIndex = originalRotation;
             position = originalPosition;
             cellOffsets = originalOffsets;
             cells = originalCells;
@@ -192,7 +218,7 @@ public class Piece : MonoBehaviour
         return worldCells;
     }
 
-    private bool TestWallKicks(int rotationIndex, int rotationDirection)
+    private bool TestWallKicks(int rotationIndex, int rotationDirection, Vector3Int[] rotatedOffsets)
     {
         int wallKickIndex = GetWallKickIndex(rotationIndex, rotationDirection);
 
@@ -201,7 +227,7 @@ public class Piece : MonoBehaviour
             Vector2Int translation = data.wallKicks[wallKickIndex, i];
             Vector3Int newPosition = position + new Vector3Int(translation.x, translation.y, 0);
 
-            if (board.IsValidPosition(this, newPosition))
+            if (board.IsValidPosition(newPosition, rotatedOffsets))
             {
                 position = newPosition;
                 return true;

@@ -9,7 +9,7 @@ public class Board : MonoBehaviour
     public Vector3Int spawnPosition;
     public TetrominoData[] tetrominoes;
     public Vector2Int boardSize;
-
+    public GameObject piecePrefab;
     public RectInt bounds
     {
         get
@@ -35,6 +35,12 @@ public class Board : MonoBehaviour
     {
         int random = Random.Range(0, tetrominoes.Length);
         TetrominoData data = tetrominoes[random];
+
+        // Destroy previous piece (optional, to clean up)
+        if (this.activePiece != null)
+            Destroy(this.activePiece.gameObject);
+
+        this.activePiece = Instantiate(piecePrefab, transform).GetComponent<Piece>();
         this.activePiece.Initialize(this, spawnPosition, data);
         Set(this.activePiece);
     }
@@ -43,7 +49,9 @@ public class Board : MonoBehaviour
     {
         for (int i = 0; i < piece.cells.Length; i++)
         {
-            tilemap.SetTile(piece.cells[i], piece.data.tile); // Already world position
+            Vector3Int pos = piece.cells[i];
+            if (bounds.Contains((Vector2Int)pos))
+                tilemap.SetTile(pos, piece.data.tile);
         }
     }
 
@@ -51,25 +59,30 @@ public class Board : MonoBehaviour
     {
         for (int i = 0; i < piece.cells.Length; i++)
         {
-            tilemap.SetTile(piece.cells[i], null); // Already world position
+            Vector3Int pos = piece.cells[i];
+            if (bounds.Contains((Vector2Int)pos))
+                tilemap.SetTile(pos, null);
         }
     }
-    public bool IsValidPosition(Piece piece, Vector3Int newPosition)
+    public bool IsValidPosition(Piece piece, Vector3Int position)
+    {
+        return IsValidPosition(position, piece.cellOffsets);
+    }
+
+    // Used for rotation (custom offsets)
+    public bool IsValidPosition(Vector3Int position, Vector3Int[] testOffsets)
     {
         RectInt bounds = this.bounds;
 
-        for (int i = 0; i < piece.cells.Length; i++)
+        for (int i = 0; i < testOffsets.Length; i++)
         {
-            // Calculate the new position of each cell by adjusting from the piece's new position
-            Vector3Int tilePosition = newPosition + (piece.cells[i] - piece.position);
+            Vector3Int tilePosition = position + testOffsets[i];
 
-            // Check if the tile is within the bounds of the board
             if (!bounds.Contains((Vector2Int)tilePosition))
             {
                 return false;
             }
 
-            // Check if the tile position is already occupied by another tile
             if (tilemap.HasTile(tilePosition))
             {
                 return false;
@@ -77,5 +90,58 @@ public class Board : MonoBehaviour
         }
 
         return true;
+    }
+    public void ClearLines()
+{
+    int rowMin = bounds.yMin;
+    int rowMax = bounds.yMax;
+
+    for (int y = rowMin; y < rowMax; y++)
+    {
+        if (IsLineFull(y))
+        {
+            ClearLine(y);
+            ShiftLinesDown(y);
+            y--; // Check same line again after shifting
+        }
+    }
+}
+
+    private bool IsLineFull(int y)
+    {
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        {
+            Vector3Int pos = new Vector3Int(x, y, 0);
+            if (!tilemap.HasTile(pos))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void ClearLine(int y)
+    {
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        {
+            Vector3Int pos = new Vector3Int(x, y, 0);
+            tilemap.SetTile(pos, null);
+        }
+    }
+
+    private void ShiftLinesDown(int fromY)
+    {
+        for (int y = fromY + 1; y < bounds.yMax; y++)
+        {
+            for (int x = bounds.xMin; x < bounds.xMax; x++)
+            {
+                Vector3Int from = new Vector3Int(x, y, 0);
+                Vector3Int to = new Vector3Int(x, y - 1, 0);
+
+                TileBase tile = tilemap.GetTile(from);
+                tilemap.SetTile(to, tile);
+                tilemap.SetTile(from, null);
+            }
+        }
     }
 }
