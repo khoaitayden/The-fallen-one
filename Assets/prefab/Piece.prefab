@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellOffsets: []
-  stepDelay: 1
-  lockDelay: 0.5
+  stepDelay: 3
+  lockDelay: 1

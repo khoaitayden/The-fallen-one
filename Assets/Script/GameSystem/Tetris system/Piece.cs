@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System.Collections;
 public class Piece : MonoBehaviour
 {
     // --------------------------- Public Properties ---------------------------
@@ -7,24 +7,34 @@ public class Piece : MonoBehaviour
     public TetrominoData data { get; private set; }
     public Vector3Int position { get; private set; }
     public Board board { get; private set; }
-
     public Vector3Int[] cells { get; private set; }
     public int rotationIndex { get; private set; }
+    public bool IsLocked => isLocked;
+    public void PushFromPlayer(Vector2Int direction, bool resetLockTimer = false)
+    {
+        externalPush = new ExternalPush { direction = direction, resetLockTimer = resetLockTimer };
+    }
 
     // --------------------------- Private Fields ---------------------------
 
     public Vector3Int[] cellOffsets;
-
-    // Step and Lock Timing
     [SerializeField]private float stepDelay = 1f;
     [SerializeField]private float lockDelay = 0.5f;
     private float stepTime;
     private float lockTime;
 
     private bool isLocked = false;
+    private struct ExternalPush
+    {
+        public Vector2Int direction;
+        public bool resetLockTimer;
+    }
+    private ExternalPush? externalPush = null;
+
+    private float pushCooldown = 0.05f;
+    private float lastPushTime = 0f;
 
     // --------------------------- Initialization ---------------------------
-
     public void Initialize(Board board, Vector3Int position, TetrominoData data)
     {
         this.board = board;
@@ -67,11 +77,18 @@ public class Piece : MonoBehaviour
     {
         board.Clear(this);
 
-        if (!isLocked)
+    if (!isLocked)
+    {
+        if (externalPush.HasValue && Time.time - lastPushTime >= pushCooldown)
         {
-            HandleInput();
-            HandleAutoStep();
+            TryMove(externalPush.Value.direction, externalPush.Value.resetLockTimer);
+            externalPush = null;
+            lastPushTime = Time.time;
         }
+
+        HandleInput();
+        HandleAutoStep();
+    }
 
         board.Set(this);
     }
@@ -80,9 +97,9 @@ public class Piece : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.A)) TryMove(Vector2Int.left);
-        if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector2Int.right);
-        if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector2Int.down, true); // Reset lock timer on soft drop
+        //if (Input.GetKeyDown(KeyCode.A)) TryMove(Vector2Int.left);
+        //if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector2Int.right);
+        //if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector2Int.down, true); // Reset lock timer on soft drop
         if (Input.GetKeyDown(KeyCode.LeftShift)) Rotate(-1);
         if (Input.GetKeyDown(KeyCode.LeftControl)) Rotate(1);
         if (Input.GetKeyDown(KeyCode.Space)) HardDrop();
@@ -117,16 +134,22 @@ public class Piece : MonoBehaviour
 
     private void Lock()
     {
-        board.Set(this);         // Commit the piece to the board
-        board.ClearLines();      // Clear any full lines
-        board.SpawnPiece();      // Spawn a new piece
+        StartCoroutine(LockRoutine());
+    }
+
+    private IEnumerator LockRoutine()
+    {
+        board.Set(this);
+        yield return board.ClearLinesCoroutine(); 
+        board.SpawnPiece(); 
         isLocked = true;
     }
 
     // --------------------------- Movement ---------------------------
 
-    private bool TryMove(Vector2Int direction, bool resetLockTimer = false)
+    public bool TryMove(Vector2Int direction, bool resetLockTimer = false)
     {
+        Debug.Log($"Trying to move {direction}");
         Vector3Int newPosition = position + new Vector3Int(direction.x, direction.y, 0);
         if (board.IsValidPosition(this, newPosition))
         {
@@ -209,12 +232,10 @@ public class Piece : MonoBehaviour
     private Vector3Int[] GetRotatedWorldCells(Vector3Int[] rotatedOffsets)
     {
         Vector3Int[] worldCells = new Vector3Int[rotatedOffsets.Length];
-
         for (int i = 0; i < rotatedOffsets.Length; i++)
         {
             worldCells[i] = position + rotatedOffsets[i];
         }
-
         return worldCells;
     }
 

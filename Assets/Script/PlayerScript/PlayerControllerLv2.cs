@@ -24,20 +24,48 @@ protected override void movement()
 
     if (moveinput == Vector2.zero) return;
 
-    // Switch sprite based on direction
     if (Mathf.Abs(moveinput.x) > Mathf.Abs(moveinput.y))
     {
-        // Horizontal movement
         spriteRenderer.sprite = moveinput.x > 0 ? spriteRight : spriteLeft;
     }
     else
     {
-        // Vertical movement
         spriteRenderer.sprite = moveinput.y > 0 ? spriteUp : spriteDown;
     }
 
     // Rotate the sprite to match direction (since all sprites are drawn facing up)
     float angle = Mathf.Atan2(moveinput.y, moveinput.x) * Mathf.Rad2Deg;
     transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
+}
+void OnCollisionEnter2D(Collision2D collision)
+{
+    Piece piece = FindAnyObjectByType<Piece>();
+    if (piece == null || piece.IsLocked) return; 
+
+    foreach (ContactPoint2D contact in collision.contacts)
+    {
+        Vector2 normal = contact.normal;
+        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
+        {
+            if (normal.x > 0)
+            {
+                Debug.Log("Push Left");
+                piece.PushFromPlayer(Vector2Int.left);
+            }
+            else
+            {
+                Debug.Log("Push Right");
+                piece.PushFromPlayer(Vector2Int.right);
+            }
+        }
+        else
+        {
+            if (normal.y > 0)
+            {
+                Debug.Log("Push Down");
+                piece.PushFromPlayer(Vector2Int.down, true);
+            }
+        }
+    }
 }
 }
