@@ -40,21 +40,25 @@ protected override void movement()
 void OnCollisionEnter2D(Collision2D collision)
 {
     Piece piece = FindAnyObjectByType<Piece>();
-    if (piece == null || piece.IsLocked) return; 
-
+    if(collision.gameObject.CompareTag("Locked"))
+    {
+        Debug.Log("Player collided with locked piece!");
+    }
+    if (piece == null || piece.IsLocked||collision.gameObject.CompareTag("Locked")) return; 
     foreach (ContactPoint2D contact in collision.contacts)
     {
+        if (collision.gameObject.CompareTag("Locked")) break;
         Vector2 normal = contact.normal;
         if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
         {
             if (normal.x > 0)
             {
-                Debug.Log("Push Left");
+                //Debug.Log("Push Left");
                 piece.PushFromPlayer(Vector2Int.left);
             }
             else
             {
-                Debug.Log("Push Right");
+                //Debug.Log("Push Right");
                 piece.PushFromPlayer(Vector2Int.right);
             }
         }
@@ -62,7 +66,7 @@ void OnCollisionEnter2D(Collision2D collision)
         {
             if (normal.y > 0)
             {
-                Debug.Log("Push Down");
+                //Debug.Log("Push Down");
                 piece.PushFromPlayer(Vector2Int.down, true);
             }
         }

@@ -97,9 +97,6 @@ public class Piece : MonoBehaviour
 
     private void HandleInput()
     {
-        //if (Input.GetKeyDown(KeyCode.A)) TryMove(Vector2Int.left);
-        //if (Input.GetKeyDown(KeyCode.D)) TryMove(Vector2Int.right);
-        //if (Input.GetKeyDown(KeyCode.S)) TryMove(Vector2Int.down, true); // Reset lock timer on soft drop
         if (Input.GetKeyDown(KeyCode.LeftShift)) Rotate(-1);
         if (Input.GetKeyDown(KeyCode.LeftControl)) Rotate(1);
         if (Input.GetKeyDown(KeyCode.Space)) HardDrop();
@@ -139,7 +136,7 @@ public class Piece : MonoBehaviour
 
     private IEnumerator LockRoutine()
     {
-        board.Set(this);
+        board.LockPiece(this); // instead of board.Set(this)
         yield return board.ClearLinesCoroutine(); 
         board.SpawnPiece(); 
         isLocked = true;

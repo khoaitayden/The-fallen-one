@@ -16,6 +16,8 @@ public class Board : MonoBehaviour
     public Vector2Int boardSize;
     public TetrominoData[] tetrominoes;
     public GameObject piecePrefab;
+    public Tilemap activeTilemap;
+    public Tilemap lockedTilemap;
 
     [Header("Audio")]
     public AudioSource audioSource;
@@ -72,17 +74,30 @@ public class Board : MonoBehaviour
         {
             Vector3Int pos = piece.cells[i];
             if (bounds.Contains((Vector2Int)pos))
-                tilemap.SetTile(pos, piece.data.tile);
+                activeTilemap.SetTile(pos, piece.data.tile);
         }
     }
 
+    // Clear from the activeTilemap only
     public void Clear(Piece piece)
     {
         for (int i = 0; i < piece.cells.Length; i++)
         {
             Vector3Int pos = piece.cells[i];
             if (bounds.Contains((Vector2Int)pos))
-                tilemap.SetTile(pos, null);
+                activeTilemap.SetTile(pos, null);
+        }
+    }
+    public void LockPiece(Piece piece)
+    {
+        for (int i = 0; i < piece.cells.Length; i++)
+        {
+            Vector3Int pos = piece.cells[i];
+            if (bounds.Contains((Vector2Int)pos))
+            {
+                lockedTilemap.SetTile(pos, piece.data.tile);
+                activeTilemap.SetTile(pos, null); // remove from active
+            }
         }
     }
 
@@ -101,7 +116,7 @@ public class Board : MonoBehaviour
         {
             Vector3Int tilePosition = position + testOffsets[i];
 
-            if (!bounds.Contains((Vector2Int)tilePosition) || tilemap.HasTile(tilePosition))
+            if (!bounds.Contains((Vector2Int)tilePosition) || lockedTilemap.HasTile(tilePosition))
                 return false;
         }
 
