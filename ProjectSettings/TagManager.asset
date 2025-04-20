@@ -9,7 +9,7 @@ TagManager:
   - ball
   - ground
   - creature3
-  - Locked
+  - Piece
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7013754349044382395}
   m_Layer: 0
   m_Name: 'T '
-  m_TagString: Untagged
+  m_TagString: Piece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationPoint: {x: 1, y: 0, z: 1}
   moveDelay: 0.1
-  fallTime: 1
+  landingDelay: 0.5
 --- !u!1001 &997882883907566535
 PrefabInstance:
   m_ObjectHideFlags: 0

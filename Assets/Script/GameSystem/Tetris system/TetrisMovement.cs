@@ -15,10 +15,10 @@ public class TetrisBlock : MonoBehaviour
     public float landingDelay = 1f; // Time after landing before locking/spawning
     private float landingTimer;
     private bool hasLanded;
-    private float lastMoveTime;
-    private float lastFallTime;
+    public float lastMoveTime;
+    public float lastFallTime;
 
-    private bool isLocked = false;
+    public bool isLocked;
 
     private TetrisSpawner spawner;
     private static Transform[,] grid = new Transform[wide, height];
@@ -35,24 +35,23 @@ public class TetrisBlock : MonoBehaviour
         HandleMovement();
         HandleFalling();
     }
-
     void HandleMovement()
     {
-        if (Time.time - lastMoveTime > moveDelay)
-        {
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                TryMove(Vector3.left);
-                lastMoveTime = Time.time;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                TryMove(Vector3.right);
-                lastMoveTime = Time.time;
-            }
-        }
+        // if (Time.time - lastMoveTime > moveDelay)
+        // {
+        //     if (Input.GetKey(KeyCode.LeftArrow))
+        //     {
+        //         TryMove(Vector3.left);
+        //         lastMoveTime = Time.time;
+        //     }
+        //     else if (Input.GetKey(KeyCode.RightArrow))
+        //     {
+        //         TryMove(Vector3.right);
+        //         lastMoveTime = Time.time;
+        //     }
+        // }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, 90f);
 
@@ -62,11 +61,11 @@ public class TetrisBlock : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            TryMove(Vector3.down);
-            lastFallTime = Time.time;
-        }
+        // if (Input.GetKeyDown(KeyCode.DownArrow))
+        // {
+        //     TryMove(Vector3.down);
+        //     lastFallTime = Time.time;
+        // }
     }
 
     void HandleFalling()
@@ -97,8 +96,8 @@ public class TetrisBlock : MonoBehaviour
     void LockPiece()
     {
         isLocked = true;
+        Debug.Log("Piece locked!");
         this.enabled = false;
-
         // TODO: Add to grid, clear lines, etc.
 
         if (spawner != null)
@@ -111,8 +110,9 @@ public class TetrisBlock : MonoBehaviour
         }
     }
 
-    bool TryMove(Vector3 direction)
+    public bool TryMove(Vector3 direction)
     {
+        if (isLocked) return false;
         transform.position += direction;
 
         if (!IsInsideBounds())

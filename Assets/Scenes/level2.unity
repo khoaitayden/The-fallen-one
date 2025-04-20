@@ -672,6 +672,7 @@ MonoBehaviour:
   - {fileID: 9113691254770361231, guid: 2a66f28c566e52f40b49a0332b4fae0e, type: 3}
   - {fileID: 3415178676275302036, guid: c056f50af0de2e64a9071579f6ac9780, type: 3}
   - {fileID: 7835475750087320414, guid: bda61caabc5800b47ba6da0e1b59d1ba, type: 3}
+  activePiece: {fileID: 0}
   spawnPosition: {x: 5, y: 9, z: 0}
 --- !u!4 &703790124
 Transform:
@@ -724,7 +725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1971101045
 SpriteRenderer:
   m_ObjectHideFlags: 0
