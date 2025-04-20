@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
 public class PlayerControllerLv2 : PlayerController
 {
     [Header("Directional Sprites")]
@@ -8,7 +9,10 @@ public class PlayerControllerLv2 : PlayerController
     [SerializeField] private Sprite spriteLeft;
     [SerializeField] private Sprite spriteRight;
     private SpriteRenderer spriteRenderer;
-
+    [Header("Push Settings")]
+    [SerializeField] private float pushCooldown; // how often the player can push
+    private float lastPushTime = 0f;
+    private Dictionary<Vector2, float> lastPushTimes = new();
     protected override void Start()
     {
         base.Start();
@@ -37,35 +41,48 @@ protected override void movement()
     float angle = Mathf.Atan2(moveinput.y, moveinput.x) * Mathf.Rad2Deg;
     transform.rotation = Quaternion.Euler(0, 0, angle + 90f);
 }
-void OnCollisionEnter2D(Collision2D collision)
-{
-    TetrisBlock piece = FindAnyObjectByType<TetrisSpawner>().activePiece;
-    if (piece == null || piece.isLocked) return;
-    foreach (ContactPoint2D contact in collision.contacts)
+
+
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 normal = contact.normal;
-        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
+        TetrisBlock piece = FindAnyObjectByType<TetrisSpawner>().activePiece;
+        if (piece == null || piece.isLocked) return;
+        if (!collision.transform.IsChildOf(piece.transform)) return;
+
+        foreach (ContactPoint2D contact in collision.contacts)
         {
-            if (normal.x > 0)
+            Vector2 normal = contact.normal.normalized;
+            Vector2 direction = Vector2.zero;
+
+            if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
             {
-                Debug.Log("Push Left");
-                piece.TryMove(Vector3.left);
+                direction = normal.x > 0 ? Vector2.left : Vector2.right;
             }
             else
             {
-                Debug.Log("Push Right");
-                piece.TryMove(Vector3.right);
+                if (normal.y > 0)
+                    direction = Vector2.down;
             }
-        }
-        else
-        {
-            if (normal.y > 0)
+
+            if (direction == Vector2.zero) continue;
+
+            // Check cooldown
+            if (!lastPushTimes.ContainsKey(direction))
             {
-                Debug.Log("Push Down");
-                piece.TryMove(Vector3.down);
+                lastPushTimes[direction] = -Mathf.Infinity;
+            }
+
+            if (Time.time - lastPushTimes[direction] < pushCooldown)
+                continue;
+
+            // Apply push
+            piece.TryMove(direction);
+            if (direction == Vector2.down)
+            {
                 piece.lastFallTime = Time.time;
             }
+
+            lastPushTimes[direction] = Time.time;
         }
     }
-}
 }

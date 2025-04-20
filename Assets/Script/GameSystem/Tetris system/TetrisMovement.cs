@@ -37,21 +37,7 @@ public class TetrisBlock : MonoBehaviour
     }
     void HandleMovement()
     {
-        // if (Time.time - lastMoveTime > moveDelay)
-        // {
-        //     if (Input.GetKey(KeyCode.LeftArrow))
-        //     {
-        //         TryMove(Vector3.left);
-        //         lastMoveTime = Time.time;
-        //     }
-        //     else if (Input.GetKey(KeyCode.RightArrow))
-        //     {
-        //         TryMove(Vector3.right);
-        //         lastMoveTime = Time.time;
-        //     }
-        // }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, 90f);
 
@@ -60,22 +46,19 @@ public class TetrisBlock : MonoBehaviour
                 transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, -90f);
             }
         }
-
-        // if (Input.GetKeyDown(KeyCode.DownArrow))
-        // {
-        //     TryMove(Vector3.down);
-        //     lastFallTime = Time.time;
-        // }
     }
 
-    void HandleFalling()
+void HandleFalling()
+{
+    if (Time.time - lastFallTime >= fallTime)
     {
-        if (Time.time - lastFallTime >= fallTime)
-        {
-            TryMove(Vector3.down);
-            lastFallTime = Time.time;
-        }
-        if (hasLanded)
+        TryMove(Vector3.down);
+        lastFallTime = Time.time;
+    }
+
+    if (hasLanded)
+    {
+        if (IsStillGrounded())
         {
             landingTimer += Time.deltaTime;
             if (landingTimer >= landingDelay)
@@ -85,7 +68,31 @@ public class TetrisBlock : MonoBehaviour
                 CheckForLines();
             }
         }
+        else
+        {
+            // Cancel landing if no longer grounded
+            hasLanded = false;
+            landingTimer = 0;
+        }
     }
+}
+bool IsStillGrounded()
+{
+    foreach (Transform child in transform)
+    {
+        Vector2 checkPos = child.position + Vector3.down;
+        int x = Mathf.RoundToInt(checkPos.x);
+        int y = Mathf.RoundToInt(checkPos.y);
+
+        if (y < 0 || x < 0 || x >= wide) return true; // Ground/floor
+
+        if (y < height && grid[x, y] != null)
+        {
+            return true; // Landed on a locked block
+        }
+    }
+    return false;
+}
 
     void StartLandingCountdown()
     {
@@ -122,6 +129,7 @@ public class TetrisBlock : MonoBehaviour
         }
         return true;
     }
+
     bool IsInsideBounds()
     {
         foreach (Transform child in transform)
@@ -146,9 +154,8 @@ public class TetrisBlock : MonoBehaviour
             }
         }
         return true;
-
-
     }
+
     void AddToGrid()
     {
         foreach (Transform child in transform)
@@ -159,6 +166,7 @@ public class TetrisBlock : MonoBehaviour
             grid[x,y] = child;
         }
     }
+
     void CheckForLines()
     {
         for (int y = 0; y < height; y++)
@@ -180,6 +188,7 @@ public class TetrisBlock : MonoBehaviour
             }
         }
     }
+
     IEnumerator AnimateAndClearLine(int y)
     {
         float flashDuration = 0.2f;

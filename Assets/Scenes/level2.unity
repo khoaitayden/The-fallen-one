@@ -374,7 +374,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 207302221}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3bb4526e93edeea42ba8de81d240e29a, type: 3}
   m_Name: 
@@ -790,7 +790,7 @@ Transform:
   m_GameObject: {fileID: 1971101044}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.26, y: 6.27, z: 1}
+  m_LocalPosition: {x: 6.97, y: 11.32, z: 1}
   m_LocalScale: {x: 0.125, y: 0.125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -830,7 +830,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: -0.4
@@ -911,6 +911,7 @@ MonoBehaviour:
   spriteDown: {fileID: 7076218217815401357, guid: 3bf5e1198d0c8944da7f67ca10413ea9, type: 3}
   spriteLeft: {fileID: -1396898883254188695, guid: 3bf5e1198d0c8944da7f67ca10413ea9, type: 3}
   spriteRight: {fileID: -2754708271182021534, guid: 3bf5e1198d0c8944da7f67ca10413ea9, type: 3}
+  pushCooldown: 0.1
 --- !u!61 &1971101051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -964,7 +965,7 @@ SceneRoots:
   - {fileID: 175376501}
   - {fileID: 158356120}
   - {fileID: 207302224}
-  - {fileID: 321024279}
   - {fileID: 1971101046}
   - {fileID: 246702326}
   - {fileID: 703790124}
+  - {fileID: 321024279}
