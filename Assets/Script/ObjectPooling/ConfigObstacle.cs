@@ -21,4 +21,5 @@ public abstract class ConfigObstacle : MonoBehaviour
             }
         }
     }
+    
 }

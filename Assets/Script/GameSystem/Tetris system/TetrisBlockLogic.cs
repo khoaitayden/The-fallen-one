@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using System.Transactions;
 public class TetrisBlock : MonoBehaviour
 {
     public Vector3 rotationPoint;
@@ -10,6 +11,7 @@ public class TetrisBlock : MonoBehaviour
     public static float fallTime = 1f;
     public static int height = 10;
     public static int wide = 15;
+    public int BlockIndex; 
 
     [Header("Landing Settings")]
     public float landingDelay = 1f; // Time after landing before locking/spawning
@@ -39,60 +41,86 @@ public class TetrisBlock : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, 90f);
-
-            if (!IsInsideBounds())
+            if (!TryRotateAndWallKick())
             {
-                transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, -90f);
+                return;
             }
         }
     }
-
-void HandleFalling()
-{
-    if (Time.time - lastFallTime >= fallTime)
+    bool TryRotateAndWallKick()
     {
-        TryMove(Vector3.down);
-        lastFallTime = Time.time;
-    }
+        Vector3 originalPosition = transform.position;
+        Quaternion originalRotation = transform.rotation;
 
-    if (hasLanded)
-    {
-        if (IsStillGrounded())
+        // Rotate once
+        transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, -90f);
+
+        // Try wall kick offsets
+        Vector2[] wallKickOffsets = new Vector2[]
         {
-            landingTimer += Time.deltaTime;
-            if (landingTimer >= landingDelay)
+            Vector2.zero,
+            Vector2.down,
+            Vector2.up,
+            Vector2.left,
+            Vector2.right
+        };
+
+        foreach (Vector2 offset in wallKickOffsets)
+        {
+            transform.position = originalPosition + new Vector3(offset.x, offset.y, 0);
+            if (IsInsideBounds())
+                return true;
+        }
+
+        // Restore rotation and position if all fail
+        transform.rotation = originalRotation;
+        transform.position = originalPosition;
+        return false;
+    }
+    void HandleFalling()
+    {
+        if (Time.time - lastFallTime >= fallTime)
+        {
+            TryMove(Vector3.down);
+            lastFallTime = Time.time;
+        }
+
+        if (hasLanded)
+        {
+            if (IsStillGrounded())
             {
-                LockPiece();
-                AddToGrid();
-                CheckForLines();
+                landingTimer += Time.deltaTime;
+                if (landingTimer >= landingDelay)
+                {
+                    LockPiece();
+                    AddToGrid();
+                    CheckForLines();
+                }
+            }
+            else
+            {
+                hasLanded = false;
+                landingTimer = 0;
             }
         }
-        else
-        {
-            // Cancel landing if no longer grounded
-            hasLanded = false;
-            landingTimer = 0;
-        }
     }
-}
-bool IsStillGrounded()
-{
-    foreach (Transform child in transform)
+    bool IsStillGrounded()
     {
-        Vector2 checkPos = child.position + Vector3.down;
-        int x = Mathf.RoundToInt(checkPos.x);
-        int y = Mathf.RoundToInt(checkPos.y);
-
-        if (y < 0 || x < 0 || x >= wide) return true; // Ground/floor
-
-        if (y < height && grid[x, y] != null)
+        foreach (Transform child in transform)
         {
-            return true; // Landed on a locked block
+            Vector2 checkPos = child.position + Vector3.down;
+            int x = Mathf.RoundToInt(checkPos.x);
+            int y = Mathf.RoundToInt(checkPos.y);
+
+            if (y < 0 || x < 0 || x >= wide) return true; // Ground/floor
+
+            if (y < height && grid[x, y] != null)
+            {
+                return true; // Landed on a locked block
+            }
         }
+        return false;
     }
-    return false;
-}
 
     void StartLandingCountdown()
     {
@@ -105,7 +133,6 @@ bool IsStillGrounded()
         isLocked = true;
         Debug.Log("Piece locked!");
         this.enabled = false;
-        // TODO: Add to grid, clear lines, etc.
 
         if (spawner != null)
         {
@@ -193,7 +220,8 @@ bool IsStillGrounded()
     {
         float flashDuration = 0.2f;
         float fadeDuration = 0.3f;
-    //Flash
+
+        // Flash white
         for (int x = 0; x < wide; x++)
         {
             if (grid[x, y] != null)
@@ -205,7 +233,7 @@ bool IsStillGrounded()
 
         yield return new WaitForSeconds(flashDuration);
 
-        //Fade out
+        // Fade out
         float timer = 0f;
         while (timer < fadeDuration)
         {
@@ -218,12 +246,11 @@ bool IsStillGrounded()
                     if (sr != null) sr.color = new Color(1f, 1f, 1f, alpha);
                 }
             }
-
             timer += Time.deltaTime;
             yield return null;
         }
 
-        // Destroy
+        // Destroy blocks in the cleared line
         for (int x = 0; x < wide; x++)
         {
             if (grid[x, y] != null)
@@ -232,8 +259,14 @@ bool IsStillGrounded()
                 grid[x, y] = null;
             }
         }
+        yield return null;
+        if (transform.childCount == 0)
+        {
+            Destroy(gameObject);
+            yield break;
+        }
 
-        // Move lines
+        // Move everything down
         for (int i = y + 1; i < height; i++)
         {
             for (int x = 0; x < wide; x++)

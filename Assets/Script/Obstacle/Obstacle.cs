@@ -17,7 +17,7 @@ public class Obstacle : MonoBehaviour
         transform.position += Vector3.left * (movespeed*SpeedMultiplier) * Time.deltaTime;
         if (transform.position.x < -20f) 
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
     void OnCollisionEnter2D(Collision2D collision)

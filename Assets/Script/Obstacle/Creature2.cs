@@ -27,7 +27,11 @@ public class Creature2 : MonoBehaviour
 
         Vector3 targetPosition = new Vector3(transform.position.x, ball.position.y, transform.position.z);
         targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
-
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        if (transform.position.x < -20f) 
+        {
+            Destroy(gameObject);
+        }
     }
+    
 }

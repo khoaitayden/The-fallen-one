@@ -17,6 +17,7 @@ public class PlayerControllerLv2 : PlayerController
     {
         base.Start();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        canMove=true;
     }
 
 protected override void movement()
