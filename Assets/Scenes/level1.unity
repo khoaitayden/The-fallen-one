@@ -2642,6 +2642,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 32036162}
     - target: {fileID: 1595379743631236574, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
+      propertyPath: OnplayerUI
+      value: 
+      objectReference: {fileID: 1136140318}
+    - target: {fileID: 1595379743631236574, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}

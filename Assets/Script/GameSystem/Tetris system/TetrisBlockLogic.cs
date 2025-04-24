@@ -8,13 +8,13 @@ public class TetrisBlock : MonoBehaviour
 {
     public Vector3 rotationPoint;
     public float moveDelay = 0.1f;
-    public static float fallTime = 1f;
+    public static float fallTime = 2f;
     public static int height = 10;
     public static int wide = 15;
     public int BlockIndex; 
 
     [Header("Landing Settings")]
-    public float landingDelay = 1f; // Time after landing before locking/spawning
+    public float landingDelay = 1f;
     private float landingTimer;
     private bool hasLanded;
     public float lastMoveTime;
@@ -23,7 +23,7 @@ public class TetrisBlock : MonoBehaviour
     public bool isLocked;
 
     private TetrisSpawner spawner;
-    private static Transform[,] grid = new Transform[wide, height];
+    public static Transform[,] grid = new Transform[wide, height];
 
     private void Start()
     {
@@ -39,44 +39,47 @@ public class TetrisBlock : MonoBehaviour
     }
     void HandleMovement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift)) // Counter-clockwise
         {
-            if (!TryRotateAndWallKick())
-            {
-                return;
-            }
+            TryRotateAndWallKick(-90f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl)) // Clockwise
+        {
+            TryRotateAndWallKick(90f);
         }
     }
-    bool TryRotateAndWallKick()
+    bool TryRotateAndWallKick(float angle)
     {
         Vector3 originalPosition = transform.position;
         Quaternion originalRotation = transform.rotation;
 
-        // Rotate once
-        transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, -90f);
+        // Rotate first
+        transform.RotateAround(transform.TransformPoint(rotationPoint), Vector3.forward, angle);
 
-        // Try wall kick offsets
+        // Wall kick offsets
         Vector2[] wallKickOffsets = new Vector2[]
         {
             Vector2.zero,
-            Vector2.down,
-            Vector2.up,
+            Vector2.right,
             Vector2.left,
-            Vector2.right
+            Vector2.up,
+            Vector2.down
         };
 
         foreach (Vector2 offset in wallKickOffsets)
         {
-            transform.position = originalPosition + new Vector3(offset.x, offset.y, 0);
+            transform.position = originalPosition + new Vector3(offset.x, offset.y, 0f);
             if (IsInsideBounds())
                 return true;
         }
 
-        // Restore rotation and position if all fail
+        // Revert if none of the offsets work
         transform.rotation = originalRotation;
         transform.position = originalPosition;
         return false;
     }
+
     void HandleFalling()
     {
         if (Time.time - lastFallTime >= fallTime)
@@ -112,11 +115,11 @@ public class TetrisBlock : MonoBehaviour
             int x = Mathf.RoundToInt(checkPos.x);
             int y = Mathf.RoundToInt(checkPos.y);
 
-            if (y < 0 || x < 0 || x >= wide) return true; // Ground/floor
+            if (y < 0 || x < 0 || x >= wide) return true;
 
             if (y < height && grid[x, y] != null)
             {
-                return true; // Landed on a locked block
+                return true;
             }
         }
         return false;
@@ -134,6 +137,9 @@ public class TetrisBlock : MonoBehaviour
         Debug.Log("Piece locked!");
         this.enabled = false;
 
+        AddToGrid();
+        CheckGameOver();
+
         if (spawner != null)
         {
             spawner.SpawnNextPiece();
@@ -143,7 +149,18 @@ public class TetrisBlock : MonoBehaviour
             Debug.LogWarning("Spawner not found!");
         }
     }
-
+    public void CheckGameOver()
+    {
+        for (int x = 0; x < wide; x++)
+        {
+            int topY = height - 1;
+            if (grid[x, topY] != null)
+            {
+                PlayerBehavior.TriggerPlayerDied();
+                return;
+            }
+        }
+    }
     public bool TryMove(Vector3 direction)
     {
         if (isLocked) return false;
@@ -207,7 +224,6 @@ public class TetrisBlock : MonoBehaviour
                     break;
                 }
             }
-
             if (isFullLine)
             {
                 StartCoroutine(AnimateAndClearLine(y));

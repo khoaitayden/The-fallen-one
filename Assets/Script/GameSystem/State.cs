@@ -90,5 +90,6 @@ public class StateManager : MonoBehaviour
     public void goToLv2()
     {
         SceneManager.LoadScene("level2");
+        PlayerBehavior.isDead = false;
     }
 }
