@@ -17,10 +17,32 @@ public class StateMangagerLv2 : MonoBehaviour
     [SerializeField] Text countdownText;
     private bool isCountingDown = true;
     private int lastHardnessTime = -1;
-    void Update()
+    private int score;
+    private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    void Start()
+    {
+        score=StateManager.Instance.Score;
+        UnityEngine.Debug.Log(score);
+    }
+    void FixedUpdate()
+    {
+        if(PlayerBehavior.isDead)
+        {
+            return;
+        }
         CountDown();
         IncreaseHardness();
+        scoreText.text = score.ToString();
     }
     void CountDown()
     {
@@ -41,18 +63,24 @@ public class StateMangagerLv2 : MonoBehaviour
     void IncreaseHardness()
     {
         int currentTime = Mathf.FloorToInt(countdownTime);
-
-        // Check if we've passed a new multiple of HardScaleByTime
         if (currentTime % HardScaleByTime == 0 && currentTime != lastHardnessTime && currentTime > 0)
         {
             lastHardnessTime = currentTime;
             DecreaseFallTime(HardIncreaseEachTime);
-            UnityEngine.Debug.Log($"Fall time decreased to {TetrisBlock.fallTime} at {currentTime} seconds left.");
+            //UnityEngine.Debug.Log($"Fall time decreased to {TetrisBlock.fallTime} at {currentTime} seconds left.");
         }
     }
     void DecreaseFallTime(float amount)
     {
         TetrisBlock.fallTime -= amount;
     }
-    
+
+    public void ResetScoreLv2()
+    {
+        score = StateManager.Instance.Score;
+    }
+    public void IncreaseScore(int amount)
+    {
+        score += amount;
+    }
 }

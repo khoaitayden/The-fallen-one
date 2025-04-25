@@ -3,8 +3,7 @@ using UnityEngine.SceneManagement;
 public class Creature3 : MonoBehaviour
 {
     [SerializeField] private Transform player;
-    [SerializeField] private float speed = 3f;
-    [SerializeField] private float activationHeight ; // Player must go above this Y value to trigger chase
+    [SerializeField] private float speed = 3f;// Player must go above this Y value to trigger chase
 
     private bool isChasing = false;
     Scene currentScene;
@@ -15,7 +14,7 @@ public class Creature3 : MonoBehaviour
     void Update()
     {
         if (player == null) return;
-        if (!isChasing && player.position.y > activationHeight||currentScene.name =="level1")
+        if (!isChasing && PlayerBehaviorLv2.PlayerTracked||currentScene.name =="level1")
         {
             isChasing = true;
         }

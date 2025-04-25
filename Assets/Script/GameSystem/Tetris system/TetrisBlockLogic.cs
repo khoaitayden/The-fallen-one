@@ -134,7 +134,6 @@ public class TetrisBlock : MonoBehaviour
     void LockPiece()
     {
         isLocked = true;
-        Debug.Log("Piece locked!");
         this.enabled = false;
 
         AddToGrid();
@@ -153,7 +152,7 @@ public class TetrisBlock : MonoBehaviour
     {
         for (int x = 0; x < wide; x++)
         {
-            int topY = height - 1;
+            int topY = height-1;
             if (grid[x, topY] != null)
             {
                 PlayerBehavior.TriggerPlayerDied();
@@ -200,14 +199,18 @@ public class TetrisBlock : MonoBehaviour
         return true;
     }
 
-    void AddToGrid()
+    private void AddToGrid()
     {
         foreach (Transform child in transform)
         {
             Vector2 pos = child.position;
-            int x= Mathf.RoundToInt(pos.x);
-            int y= Mathf.RoundToInt(pos.y);
-            grid[x,y] = child;
+            int x = Mathf.RoundToInt(pos.x);
+            int y = Mathf.RoundToInt(pos.y);
+
+            if (x >= 0 && x < wide && y >= 0 && y < height)
+            {
+                grid[x, y] = child;
+            }
         }
     }
 
@@ -215,21 +218,25 @@ public class TetrisBlock : MonoBehaviour
     {
         for (int y = 0; y < height; y++)
         {
-            bool isFullLine = true;
-            for (int x = 0; x < wide; x++)
-            {
-                if (grid[x, y] == null)
-                {
-                    isFullLine = false;
-                    break;
-                }
-            }
-            if (isFullLine)
+            if (IsFullLine(y))
             {
                 StartCoroutine(AnimateAndClearLine(y));
+                StateMangagerLv2.Instance.IncreaseScore(10);
                 return;
             }
         }
+    }
+
+    bool IsFullLine(int y)
+    {
+        for (int x = 0; x < wide; x++)
+        {
+            if (grid[x, y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     IEnumerator AnimateAndClearLine(int y)
@@ -237,7 +244,7 @@ public class TetrisBlock : MonoBehaviour
         float flashDuration = 0.2f;
         float fadeDuration = 0.3f;
 
-        // Flash white
+        // Flash
         for (int x = 0; x < wide; x++)
         {
             if (grid[x, y] != null)
@@ -246,10 +253,9 @@ public class TetrisBlock : MonoBehaviour
                 if (sr != null) sr.color = Color.white;
             }
         }
-
         yield return new WaitForSeconds(flashDuration);
 
-        // Fade out
+        // Fade
         float timer = 0f;
         while (timer < fadeDuration)
         {
@@ -266,7 +272,7 @@ public class TetrisBlock : MonoBehaviour
             yield return null;
         }
 
-        // Destroy blocks in the cleared line
+        // Destroy line
         for (int x = 0; x < wide; x++)
         {
             if (grid[x, y] != null)
@@ -275,14 +281,8 @@ public class TetrisBlock : MonoBehaviour
                 grid[x, y] = null;
             }
         }
-        yield return null;
-        if (transform.childCount == 0)
-        {
-            Destroy(gameObject);
-            yield break;
-        }
 
-        // Move everything down
+        // Move everything above down
         for (int i = y + 1; i < height; i++)
         {
             for (int x = 0; x < wide; x++)
@@ -295,6 +295,7 @@ public class TetrisBlock : MonoBehaviour
                 }
             }
         }
+        yield return null;
         CheckForLines();
     }
 }

@@ -9,7 +9,6 @@ public class AreaChecker : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInsideTheGrid = true;
-            Debug.Log("Player entered area");
         }
     }
 
@@ -18,7 +17,6 @@ public class AreaChecker : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInsideTheGrid = false;
-            Debug.Log("Player left area");
         }
     }
 }

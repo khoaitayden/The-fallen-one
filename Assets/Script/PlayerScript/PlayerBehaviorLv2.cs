@@ -12,8 +12,10 @@ public class PlayerBehaviorLv2 : MonoBehaviour
     private Dictionary<Vector2, float> lastPushTimes = new();
     private Rigidbody2D rb;
     private float DangerMeter=0f;
+    public static bool PlayerTracked ;
     void Start()
     {
+        PlayerTracked = false;
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
         {
@@ -74,6 +76,10 @@ public class PlayerBehaviorLv2 : MonoBehaviour
         else
         {
             DangerMeter = Mathf.Clamp(DangerMeter + increaseRate * Time.fixedDeltaTime, 0, maxOutSideGridTime);
+            if (DangerMeter >= maxOutSideGridTime)
+            {
+                PlayerTracked=true;
+            }
         }
         dangerSlider.value = DangerMeter / maxOutSideGridTime;
     }

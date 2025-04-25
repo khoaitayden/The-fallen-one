@@ -127,7 +127,6 @@ public class UIController : MonoBehaviour
 
         OnplayerUI.SetActive(false);
         deathMenu.SetActive(true);  
-
         Time.timeScale = 1f;
     }
 

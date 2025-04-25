@@ -20,7 +20,7 @@ public class StateManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] Text scoreText;
 
-    private int passedObstacle;
+    private int score;
     
     private void Awake()
     {
@@ -35,20 +35,20 @@ public class StateManager : MonoBehaviour
     }
     void Start()
     {
-        passedObstacle=0;
+        score=0;
 
     }
     void FixedUpdate()
     {
-        scoreText.text=passedObstacle.ToString();
+        scoreText.text=score.ToString();
     }
     public int Score
 {
-    get { return passedObstacle; }
+    get { return score; }
     set
     {
-        passedObstacle = value;
-        if (passedObstacle < 0)
+        score = value;
+        if (score < 0)
         {
             PlayerBehavior.TriggerPlayerDied();
         }
@@ -56,18 +56,18 @@ public class StateManager : MonoBehaviour
 }
     public void ResetScore()
     {
-        passedObstacle = 0;
+        score = 0;
     }
 
     public void IncreaseHardAfterPassedPipe(int amount)
     {
-        passedObstacle+= amount;
+        score+= amount;
         Obstacle.SpeedMultiplier += 0.005f;
-        if ((passedObstacle>=stage2ScoreReqirement)&&(createCreature1.pooledObjects[1].activeSelf==false))
+        if ((score>=stage2ScoreReqirement)&&(createCreature1.pooledObjects[1].activeSelf==false))
         {
             Stage2();
         }        
-        if (passedObstacle>=stage3ScoreReqirement)
+        if (score>=stage3ScoreReqirement)
         {
             Stage3();
         }

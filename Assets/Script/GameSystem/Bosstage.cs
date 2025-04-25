@@ -23,6 +23,7 @@ public class Bossstage : MonoBehaviour
     void Start()
     {
         creature2Script.OnSpeedChanged += OnCreatureSpeedChanged;
+        DestroyCreature1();
         InvokeRepeating("ceilAndFloorComeOut", 0f, 0.1f);
     }
 
@@ -67,8 +68,6 @@ public class Bossstage : MonoBehaviour
             Destroy(ball);
             creature2.transform.position = new Vector3(creature2.transform.position.x, 0f, creature2.transform.position.z);
             alpha = 0f;
-            ConfigCreature1.canreuse = false;
-
             InvokeRepeating("theEndCutScene", 0f, 0.1f);
         }
     }
@@ -133,5 +132,9 @@ public class Bossstage : MonoBehaviour
             CancelInvoke("checkGoToLv2");
             StateManager.Instance.goToLv2();
         }
+    }
+    void DestroyCreature1()
+    {
+        ConfigCreature1.canreuse = false;
     }
 }
