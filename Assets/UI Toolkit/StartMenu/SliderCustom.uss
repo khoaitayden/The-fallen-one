@@ -1,0 +1,30 @@
+#ChooseHard #unity-drag-container {
+    background-image: url("project://database/Assets/Art/UI/Slider.png?fileID=9169877530624898698&guid=3053033b28293924c82a460603dc2064&type=3#Slider_0");
+}
+
+#ChooseHard #unity-dragger {
+    background-image: url("project://database/Assets/Art/UI/Slider.png?fileID=-93725002&guid=3053033b28293924c82a460603dc2064&type=3#Slider_2");
+    background-color: rgba(0, 0, 0, 0);
+    background-size: 100% 100%;
+    flex-shrink: initial;
+    flex-grow: initial;
+    width: 100px;
+    height: 100px;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: -50px;
+    -unity-text-align: middle-left;
+    align-content: flex-start;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+#ChooseHard #unity-tracker {
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}

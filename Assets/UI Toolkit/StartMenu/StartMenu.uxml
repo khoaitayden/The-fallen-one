@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UI.uss?fileID=7433441132597879392&amp;guid=03950d9f17a984d4e9265bec5a0abe11&amp;type=3#UI" />
+    <Style src="project://database/Assets/UI%20Toolkit/StartMenu/SliderCustom.uss?fileID=7433441132597879392&amp;guid=fa67f17680435aa4a98f9ee2fc9674fc&amp;type=3#SliderCustom" />
+    <engine:VisualElement name="StartMenu" style="flex-grow: 1; justify-content: center; align-items: center; margin-top: -60px; background-image: none;">
+        <engine:Button text="Begin&#10;" name="BeginButton" class="button" />
+        <engine:Button text="HighScore" name="HighScoreButton" class="button" style="font-size: 80px; -unity-text-align: middle-center;" />
+        <engine:Label text="CHOOSE MODE" style="-unity-text-align: upper-center; margin-top: 70px; font-size: 64px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&amp;guid=e35a9129c5c2ede48a8b640f65f1413a&amp;type=3#Qaaxee-gwRl6&quot;);">
+            <engine:SliderInt value="0" high-value="2" name="ChooseHard" fill="false" style="width: 500px; height: 100px; margin-top: 60px; -unity-text-align: middle-right; white-space: normal; text-overflow: clip; justify-content: flex-start; align-self: center; font-size: 0; flex-direction: column-reverse;" />
+        </engine:Label>
+        <engine:Button text="Back&#10;" name="BackButton" class="button" />
+    </engine:VisualElement>
+</engine:UXML>

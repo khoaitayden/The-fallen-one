@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class UIController : MonoBehaviour
 {
@@ -76,6 +77,9 @@ public class UIController : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1f; 
+        PlayerBehavior.isDead = false;
+        PlayerController.canMove = true;
+        StateManager.Instance.ResetScore();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
     }
     public void DeathMenu()
