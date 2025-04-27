@@ -20,8 +20,8 @@ public class StateManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] Text scoreText;
 
-    private int passedObstacle;
-    
+    private int score;
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,20 +35,20 @@ public class StateManager : MonoBehaviour
     }
     void Start()
     {
-        passedObstacle=0;
-
+        score=0;
+        ChoosedHard(StartMenu.hardmode);
     }
     void FixedUpdate()
     {
-        scoreText.text=passedObstacle.ToString();
+        scoreText.text=score.ToString();
     }
     public int Score
 {
-    get { return passedObstacle; }
+    get { return score; }
     set
     {
-        passedObstacle = value;
-        if (passedObstacle < 0)
+        score = value;
+        if (score < 0)
         {
             PlayerBehavior.TriggerPlayerDied();
         }
@@ -56,18 +56,40 @@ public class StateManager : MonoBehaviour
 }
     public void ResetScore()
     {
-        passedObstacle = 0;
+        score = 0;
     }
-
+    private void ChoosedHard (int hardmode)
+    {
+        switch (hardmode)
+        {
+            case 0:
+                Debug.Log("Hardmode easy choosen");
+                stage2ScoreReqirement = 25;
+                stage3ScoreReqirement = 50;
+                break;
+            case 1:
+                Debug.Log("Hardmode normal choosen");
+                stage2ScoreReqirement = 50;
+                stage3ScoreReqirement = 100;
+                break;
+            case 2:
+                Debug.Log("Hardmode hard choosen");
+                stage2ScoreReqirement = 100;
+                stage3ScoreReqirement = 150;
+                break;
+            default:
+                break;
+        }
+    }
     public void IncreaseHardAfterPassedPipe(int amount)
     {
-        passedObstacle+= amount;
+        score+= amount;
         Obstacle.SpeedMultiplier += 0.005f;
-        if ((passedObstacle>=stage2ScoreReqirement)&&(createCreature1.pooledObjects[1].activeSelf==false))
+        if ((score>=stage2ScoreReqirement)&&(createCreature1.pooledObjects[1].activeSelf==false))
         {
             Stage2();
         }        
-        if (passedObstacle>=stage3ScoreReqirement)
+        if (score>=stage3ScoreReqirement)
         {
             Stage3();
         }
@@ -90,5 +112,6 @@ public class StateManager : MonoBehaviour
     public void goToLv2()
     {
         SceneManager.LoadScene("level2");
+        PlayerBehavior.isDead = false;
     }
 }

@@ -11,7 +11,6 @@ public abstract class CreateObstacle : MonoBehaviour
     public abstract bool CheckCanSpawn();
     void Start()
     {
-
             pooledObjects = new List<GameObject>();
             GameObject tmp;
             for(int i = 0; i < amountToPool; i++)

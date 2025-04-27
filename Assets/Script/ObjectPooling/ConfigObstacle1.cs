@@ -12,12 +12,16 @@ public class ConfigObstacle1 : ConfigObstacle
     [SerializeField] CreateObstacle1 createObstacle1;
     [SerializeField] private Obstacle Obstacle1;
     private int reuseAmount=0;
+
     public override void WrappReuse()
     {
         if (createObstacle1 == null || createObstacle1.pooledObjects == null || createObstacle1.pooledObjects.Count == 0) return;
-        if (StateManager.Instance.stage3ScoreReqirement>reuseAmount+createObstacle1.amountToPool)
+        if (!(StateManager.Instance.stage3ScoreReqirement>reuseAmount+createObstacle1.amountToPool)) 
+        {
+            return;
+        }
         Reuse(createObstacle1.pooledObjects, createObstacle1.amountToPool);
-        Debug.Log("Reuse amount: " + (reuseAmount+createObstacle1.amountToPool));
+        //Debug.Log("Reuse amount: " + (reuseAmount+createObstacle1.amountToPool));
     }
     public override Vector3 GenerateRandomPosition(int i)
     {
@@ -45,5 +49,13 @@ public class ConfigObstacle1 : ConfigObstacle
     private void ResetReuseAmount()
     {
         reuseAmount = 0;
+    }
+    public void Destroyall()
+    {
+        for (int i = 0; i < createObstacle1.pooledObjects.Count; i++)
+        {
+            Destroy(createObstacle1.pooledObjects[i]);
+        }
+        createObstacle1.pooledObjects.Clear();
     }
 }

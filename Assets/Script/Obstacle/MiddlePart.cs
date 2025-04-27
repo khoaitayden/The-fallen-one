@@ -12,7 +12,6 @@ public class MiddlePart : MonoBehaviour
         {
             {
                 StateManager.Instance.IncreaseHardAfterPassedPipe(1);
-                Debug.Log("Current Score: ");
             }
         }
     }

@@ -1,0 +1,35 @@
+.header {
+    font-size: 145px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&guid=e35a9129c5c2ede48a8b640f65f1413a&type=3#Qaaxee-gwRl6");
+    -unity-text-align: upper-center;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.button {
+    font-size: 100px;
+    width: 500px;
+    height: 150px;
+    -unity-text-align: upper-center;
+    align-self: center;
+    align-content: flex-start;
+    -unity-font-definition: url("project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&guid=e35a9129c5c2ede48a8b640f65f1413a&type=3#Qaaxee-gwRl6");
+    background-image: url("project://database/Assets/Art/UI/Button.png?fileID=649223268058989734&guid=16de4c67149e005418c18868e2b88571&type=3#Button_0");
+    -unity-font-style: normal;
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    margin-top: 80px;
+    white-space: normal;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    border-left-color: rgba(255, 255, 255, 0);
+    border-right-color: rgba(255, 255, 255, 0);
+    border-top-color: rgba(255, 255, 255, 0);
+    border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+.button:hover {
+    color: rgb(0, 0, 0);
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out;
+    transition-duration: 0.5s;
+}

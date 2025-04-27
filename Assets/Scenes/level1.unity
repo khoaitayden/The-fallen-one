@@ -607,7 +607,7 @@ MonoBehaviour:
   maxY: 3.3
   minY: -3.3
   animator: {fileID: 111049549}
-  speed: 3
+  speed: 0
 --- !u!50 &111049554
 Rigidbody2D:
   serializedVersion: 5
@@ -1338,7 +1338,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &829350259
 Transform:
   m_ObjectHideFlags: 0
@@ -1400,7 +1400,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1040703236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2215,9 +2215,25 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Action Movement
       m_Flags: 8
+    - m_Name: up
+      m_Id: 8ba5fe1d-bff4-4b1c-99de-6dd3dddf62b4
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Movement
+      m_Flags: 8
     - m_Name: down
       m_Id: ee7d23f9-e3ea-4efb-8d06-67d7b60cd259
       m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Movement
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 7ba8e6a4-c23c-40fb-8322-d722615d981c
+      m_Path: <Keyboard>/downArrow
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -2397,7 +2413,15 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 5abda91f-e387-4ec8-b543-9f10de384fad
+      m_Id: 589fffba-ad7f-4d30-b59f-a016238011e3
+      m_Path: <Keyboard>/leftShift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Attack 1
+      m_Flags: 0
+    - m_Name: 
+      m_Id: d9ea3076-18aa-4d90-89c9-5d5bc318eb61
       m_Path: <Keyboard>/space
       m_Interactions: 
       m_Processors: 
@@ -2416,6 +2440,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: e18d3815-7d9e-4141-9942-7a6fe136b85f
       m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fly
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0a398cf2-03c7-4ab1-a2d5-2b36f0547fae
+      m_Path: <Keyboard>/upArrow
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -2528,10 +2560,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 311595760}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2162323493424300386, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5586009999691661209, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 311595760}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 311595760}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadMainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7609155881738391484, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7826214234500380471, guid: 04ccb694012dabe4ba8a285365c0c7a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2642,6 +2730,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 32036162}
     - target: {fileID: 1595379743631236574, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
+      propertyPath: OnplayerUI
+      value: 
+      objectReference: {fileID: 1136140318}
+    - target: {fileID: 1595379743631236574, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
@@ -2665,6 +2757,14 @@ PrefabInstance:
       propertyPath: createObstacle1
       value: 
       objectReference: {fileID: 1040703239}
+    - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
+      propertyPath: stage2ScoreReqirement
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
+      propertyPath: stage3ScoreReqirement
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4804280157151642215, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.21
