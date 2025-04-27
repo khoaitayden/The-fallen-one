@@ -607,7 +607,7 @@ MonoBehaviour:
   maxY: 3.3
   minY: -3.3
   animator: {fileID: 111049549}
-  speed: 3
+  speed: 0
 --- !u!50 &111049554
 Rigidbody2D:
   serializedVersion: 5
@@ -2215,9 +2215,25 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Input Action Movement
       m_Flags: 8
+    - m_Name: up
+      m_Id: 8ba5fe1d-bff4-4b1c-99de-6dd3dddf62b4
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Movement
+      m_Flags: 8
     - m_Name: down
       m_Id: ee7d23f9-e3ea-4efb-8d06-67d7b60cd259
       m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input Action Movement
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 7ba8e6a4-c23c-40fb-8322-d722615d981c
+      m_Path: <Keyboard>/downArrow
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -2424,6 +2440,14 @@ MonoBehaviour:
     - m_Name: 
       m_Id: e18d3815-7d9e-4141-9942-7a6fe136b85f
       m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Fly
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0a398cf2-03c7-4ab1-a2d5-2b36f0547fae
+      m_Path: <Keyboard>/upArrow
       m_Interactions: 
       m_Processors: 
       m_Groups: 

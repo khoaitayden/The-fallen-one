@@ -19,11 +19,11 @@ public class Bossstage : MonoBehaviour
 
     // === State ===
     private float alpha = 0f;
-
+    private int hardset;
     void Start()
     {
         creature2Script.OnSpeedChanged += OnCreatureSpeedChanged;
-        DestroyCreature1();
+        if(StartMenu.hardmode==0) DestroyCreature1();
         InvokeRepeating("ceilAndFloorComeOut", 0f, 0.1f);
     }
 
@@ -63,7 +63,7 @@ public class Bossstage : MonoBehaviour
     // === Phase 3: On creature speed trigger ===
     void OnCreatureSpeedChanged(int newSpeed)
     {
-        if (newSpeed == 6)
+        if (newSpeed == ChooseHard(StartMenu.hardmode))
         {
             Destroy(ball);
             creature2.transform.position = new Vector3(creature2.transform.position.x, 0f, creature2.transform.position.z);
@@ -71,10 +71,25 @@ public class Bossstage : MonoBehaviour
             InvokeRepeating("theEndCutScene", 0f, 0.1f);
         }
     }
+    private int ChooseHard(int hardmode)
+    {
+        switch (hardmode)
+        {
+            case 0:
+                return 5;
+            case 1:
+                return 6;
+            case 2:
+                return 7;
+            default:
+                return 0;
+        }
+    }
 
     // === Phase 4: End cutscene ===
     void theEndCutScene()
     {
+        DestroyCreature1();
         ceiling.transform.position -= new Vector3(0.5f, 0f, 0f);
         floor.transform.position   -= new Vector3(0.5f, 0f, 0f);
 
@@ -106,7 +121,6 @@ public class Bossstage : MonoBehaviour
         if (player.transform.position.x <= 0f)
         {
             player.transform.position += new Vector3(0.1f, 0f, 0f);
-
             background4.color = new Color(
                 background4.color.r,
                 background4.color.g,

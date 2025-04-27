@@ -21,7 +21,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] Text scoreText;
 
     private int score;
-    
+
     private void Awake()
     {
         if (Instance == null)
@@ -36,7 +36,7 @@ public class StateManager : MonoBehaviour
     void Start()
     {
         score=0;
-
+        ChoosedHard(StartMenu.hardmode);
     }
     void FixedUpdate()
     {
@@ -58,7 +58,29 @@ public class StateManager : MonoBehaviour
     {
         score = 0;
     }
-
+    private void ChoosedHard (int hardmode)
+    {
+        switch (hardmode)
+        {
+            case 0:
+                Debug.Log("Hardmode easy choosen");
+                stage2ScoreReqirement = 25;
+                stage3ScoreReqirement = 50;
+                break;
+            case 1:
+                Debug.Log("Hardmode normal choosen");
+                stage2ScoreReqirement = 50;
+                stage3ScoreReqirement = 100;
+                break;
+            case 2:
+                Debug.Log("Hardmode hard choosen");
+                stage2ScoreReqirement = 100;
+                stage3ScoreReqirement = 150;
+                break;
+            default:
+                break;
+        }
+    }
     public void IncreaseHardAfterPassedPipe(int amount)
     {
         score+= amount;

@@ -10,11 +10,11 @@ public class StartMenu : MonoBehaviour
     private Button beginButton;
     private Button hightscoreButton;
     private Button backButton;
-    private Slider hardSlider;
+    private SliderInt hardSlider;
     private List<Button> menubuttons = new List<Button>();
     private AudioSource audioSource;
 
-    public static int hardmode=0;
+    public static int hardmode;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -34,7 +34,7 @@ public class StartMenu : MonoBehaviour
         beginButton = root.Q<Button>("BeginButton");
         hightscoreButton = root.Q<Button>("HighScoreButton");
         backButton = root.Q<Button>("BackButton");
-        hardSlider = root.Q<Label>("ChooseHard").Q<Slider>();
+        hardSlider = root.Q<SliderInt>("ChooseHard");
 
         beginButton.RegisterCallback<ClickEvent>(BeginGame);
         hightscoreButton.RegisterCallback<ClickEvent>(ShowHighScore);
@@ -73,9 +73,9 @@ public class StartMenu : MonoBehaviour
     {
         //Invoke(nameof(GoToHighScore), 0.5f);
     }
-    void OnHardSliderChanged(ChangeEvent<float> evt)
+    void OnHardSliderChanged(ChangeEvent<int> evt)
     {
-        hardmode = Mathf.RoundToInt(evt.newValue);
+        hardmode = evt.newValue;
         Debug.Log("Hardness: " + hardmode);
     }
     void BackToMainMenu(ClickEvent evt)

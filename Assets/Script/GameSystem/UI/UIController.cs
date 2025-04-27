@@ -72,6 +72,7 @@ public class UIController : MonoBehaviour
         Obstacle.SpeedMultiplier = 1f;
         PlayerBehavior.isDead = false;
         PlayerController.canMove = true;
+        TetrisBlock.fallTime = 2f;
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
     public void LoadMainMenu()
