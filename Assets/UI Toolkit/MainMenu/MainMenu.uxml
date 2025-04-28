@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/MainMenu.uss?fileID=7433441132597879392&amp;guid=03950d9f17a984d4e9265bec5a0abe11&amp;type=3#MainMenu" />
-    <engine:VisualElement name="MainMenu" style="scale: 1.1 1.1;">
+    <Style src="project://database/Assets/UI%20Toolkit/UI.uss?fileID=7433441132597879392&amp;guid=03950d9f17a984d4e9265bec5a0abe11&amp;type=3#UI" />
+    <engine:VisualElement name="MainMenu" style="scale: 1.1 1.1; height: 824px; margin-top: 90px;">
         <engine:Label text="The Fallen One" name="Header" class="header" style="-unity-text-align: upper-center; text-overflow: clip; height: 139px; margin-top: 20px;" />
         <engine:Button text="Start" name="StartButton" class="button" style="background-color: rgba(55, 55, 55, 0); align-self: center; align-content: flex-start; justify-content: flex-start; padding-top: 10px;" />
         <engine:Button text="Settings" name="SettingsButton" class="button" />

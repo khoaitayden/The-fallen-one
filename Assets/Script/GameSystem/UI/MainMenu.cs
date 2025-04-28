@@ -68,6 +68,11 @@ private void Awake()
     private void GoToSettingsMenu()
     {
         settingsMenu.SetActive(true);
+        var settingsMenuScript = settingsMenu.GetComponent<SettingsMenu>();
+        if (settingsMenuScript != null)
+        {
+            settingsMenuScript.OpenFromMainMenu();
+        }
         gameObject.SetActive(false);
     }
 

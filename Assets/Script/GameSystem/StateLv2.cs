@@ -2,9 +2,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Diagnostics;
+using System;
 public class StateMangagerLv2 : MonoBehaviour
 {
     public static StateMangagerLv2 Instance { get; private set; }
+    public static event Action OnCountdownFinished;
     [Header("State Setting")]
     [SerializeField] private float countdownTime;
     public int HardScaleByTime;
@@ -65,17 +67,19 @@ public class StateMangagerLv2 : MonoBehaviour
     void CountDown()
     {
         if (isCountingDown)
-    {
-        countdownTime -= Time.deltaTime;
-        if (countdownTime > 0)
         {
-            countdownText.text =Mathf.RoundToInt(countdownTime).ToString();
+            countdownTime -= Time.deltaTime;
+            if (countdownTime > 0)
+            {
+                countdownText.text = Mathf.RoundToInt(countdownTime).ToString();
+            }
+            else
+            {
+                isCountingDown = false;
+                OnCountdownFinished?.Invoke(); // <<<<< Fire the event
+                UnityEngine.Debug.Log("Countdown finished! Event invoked.");
+            }
         }
-        else
-        {
-            isCountingDown = false;
-        }
-    }
     }
 
     void IncreaseHardness()
