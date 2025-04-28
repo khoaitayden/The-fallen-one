@@ -583,6 +583,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 536641687}
+  easySprite: {fileID: -93725002, guid: 3053033b28293924c82a460603dc2064, type: 3}
+  normalSprite: {fileID: 1364343239, guid: 3053033b28293924c82a460603dc2064, type: 3}
+  hardSprite: {fileID: -930065913, guid: 3053033b28293924c82a460603dc2064, type: 3}
 --- !u!1 &1125311241
 GameObject:
   m_ObjectHideFlags: 0

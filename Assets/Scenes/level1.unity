@@ -1609,6 +1609,7 @@ GameObject:
   - component: {fileID: 1351812093}
   - component: {fileID: 1351812092}
   - component: {fileID: 1351812096}
+  - component: {fileID: 1351812097}
   m_Layer: 8
   m_Name: Ball
   m_TagString: ball
@@ -1650,8 +1651,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.49999997
+  m_Offset: {x: 0.0000019073486, y: 0}
+  m_Radius: 2.3964787
 --- !u!50 &1351812093
 Rigidbody2D:
   serializedVersion: 5
@@ -1723,7 +1724,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -8803724645867975215, guid: de799f06b640e8e4b9902e1b486e54f1, type: 3}
   m_Color: {r: 0.07640692, g: 0.82641506, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1744,7 +1745,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 11.075161, y: -0.91904974, z: -0.30750972}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 829350259}
@@ -1764,6 +1765,28 @@ MonoBehaviour:
   speed: 5
   creature2: {fileID: 111049551}
   creature2script: {fileID: 111049553}
+--- !u!95 &1351812097
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1351812091}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 08980163e7a3a994187873bea622ada2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1383674339 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6131787967787345086, guid: 08e094b0f7b9d5b429c8443048f5bfb5, type: 3}
@@ -2759,11 +2782,11 @@ PrefabInstance:
       objectReference: {fileID: 1040703239}
     - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: stage2ScoreReqirement
-      value: 50
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: stage3ScoreReqirement
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4804280157151642215, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: m_LocalPosition.x

@@ -6,6 +6,9 @@ public class StartMenu : MonoBehaviour
 {
     private UIDocument StartMenuDocument;
     [SerializeField] private GameObject mainMenu;
+    [SerializeField] private Sprite easySprite;
+    [SerializeField] private Sprite normalSprite;
+    [SerializeField] private Sprite hardSprite;
     //[SerializeField] private GameObject settingsMenu;
     private Button beginButton;
     private Button hightscoreButton;
@@ -24,7 +27,6 @@ public class StartMenu : MonoBehaviour
     private void OnEnable()
     {
         var root = StartMenuDocument.rootVisualElement;
-
         menubuttons = root.Query<Button>().ToList();
         for (int i = 0; i < menubuttons.Count; i++)
         {
@@ -35,11 +37,12 @@ public class StartMenu : MonoBehaviour
         hightscoreButton = root.Q<Button>("HighScoreButton");
         backButton = root.Q<Button>("BackButton");
         hardSlider = root.Q<SliderInt>("ChooseHard");
-
         beginButton.RegisterCallback<ClickEvent>(BeginGame);
         hightscoreButton.RegisterCallback<ClickEvent>(ShowHighScore);
         backButton.RegisterCallback<ClickEvent>(BackToMainMenu);
         hardSlider.RegisterValueChangedCallback(OnHardSliderChanged);
+        hardSlider.value = hardmode;
+        UpdateHandleSprite(hardmode);
     }
 
     private void OnDisable()
@@ -60,7 +63,6 @@ public class StartMenu : MonoBehaviour
     }
     void BeginGame(ClickEvent evt)
     {
-        hardmode=0;
         Invoke(nameof(GoToGameScene), 0.5f);
     }
     void GoToGameScene()
@@ -77,6 +79,7 @@ public class StartMenu : MonoBehaviour
     {
         hardmode = evt.newValue;
         Debug.Log("Hardness: " + hardmode);
+        UpdateHandleSprite(hardmode);
     }
     void BackToMainMenu(ClickEvent evt)
     {
@@ -89,4 +92,22 @@ public class StartMenu : MonoBehaviour
         gameObject.SetActive(false);
         mainMenu.SetActive(true);
     }
+    private void UpdateHandleSprite(int mode)
+{
+    var handle = hardSlider.Q("unity-dragger");
+    if (handle == null) return;
+
+    switch (mode)
+    {
+        case 0:
+            handle.style.backgroundImage = new StyleBackground(easySprite);
+            break;
+        case 1:
+            handle.style.backgroundImage = new StyleBackground(normalSprite);
+            break;
+        case 2:
+            handle.style.backgroundImage = new StyleBackground(hardSprite);
+            break;
+    }
+}
 }

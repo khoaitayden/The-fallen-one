@@ -63,17 +63,17 @@ public class StateManager : MonoBehaviour
         switch (hardmode)
         {
             case 0:
-                Debug.Log("Hardmode easy choosen");
+                Debug.Log("Hardmode easy choosen"+StartMenu.hardmode);
                 stage2ScoreReqirement = 25;
                 stage3ScoreReqirement = 50;
                 break;
             case 1:
-                Debug.Log("Hardmode normal choosen");
+                Debug.Log("Hardmode normal choosen"+StartMenu.hardmode);
                 stage2ScoreReqirement = 50;
                 stage3ScoreReqirement = 100;
                 break;
             case 2:
-                Debug.Log("Hardmode hard choosen");
+                Debug.Log("Hardmode hard choosen"+StartMenu.hardmode);
                 stage2ScoreReqirement = 100;
                 stage3ScoreReqirement = 150;
                 break;

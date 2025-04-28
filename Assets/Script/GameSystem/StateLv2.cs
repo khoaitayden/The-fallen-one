@@ -50,13 +50,13 @@ public class StateMangagerLv2 : MonoBehaviour
         switch (hardmode)
         {
             case 0:
-                HardScaleByTime = 25;
+                HardScaleByTime = 30;
                 break;
             case 1:
-                HardScaleByTime = 20;
+                HardScaleByTime = 25;
                 break;
             case 2:
-                HardScaleByTime = 15;
+                HardScaleByTime = 20;
                 break;
             default:
                 break;
