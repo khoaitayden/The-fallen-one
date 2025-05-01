@@ -13,8 +13,9 @@ public class Creature3 : MonoBehaviour
     }
     void Update()
     {
+        player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
         if (player == null) return;
-        if (!isChasing && PlayerBehaviorLv2.PlayerTracked||currentScene.name =="level1")
+        if (!isChasing &&(player.transform.position.y>12)&&PlayerBehaviorLv2.PlayerTracked||currentScene.name =="level1")
         {
             isChasing = true;
         }
