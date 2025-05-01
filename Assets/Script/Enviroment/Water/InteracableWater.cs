@@ -2,18 +2,32 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter), typeof(EdgeCollider2D))]
 [RequireComponent(typeof(WaterTriggerHandler))]
 public class InteracableWater : MonoBehaviour
 {
+    [Header("Spring")]
+    [SerializeField] private float spriteConstant = 1.4f;
+    [SerializeField] private float damping;
+    [SerializeField] private float spread;
+    [SerializeField, Range(1, 10)] private int wavePropagationIterations = 8;
+    [SerializeField, Range(0f, 20f)] private float speedMult = 5.5f;
+    [Header("Force")]
+    public float ForceMultiplier = 0.2f;
+    [Range(1f, 50f)] public float MaxForce = 5f;
+
+    [Header("Collision")]
+    [SerializeField, Range(1f, 10f)] private float playerCollisionRadiusMult = 4.15f;
     [Header("Mesh Generation")]
     [Range(2, 500)] public int NumofVertices = 100;
     public float Width = 10f;
     public float Height = 4f;
     public Material waterMaterial;
-
-    [Header("Gizmo")]
+    
+    [Header("Debug")]
+    [SerializeField] private bool showDebugMessages = true;
     public Color gizmoColor = Color.white;
 
     private const int NUM_OF_Y_VERTICES = 2;
@@ -24,7 +38,22 @@ public class InteracableWater : MonoBehaviour
     private Vector3[] vertices;
     private int[] topVerticesIndex;
     private EdgeCollider2D edgeCollider;
-
+    
+    // Make nested class serializable to debug in inspector
+    [System.Serializable]
+    private class WaterPoint
+    {
+        public float velocity;
+        public float acceleration;
+        public float pos;
+        public float targetHeight;
+    }
+    
+    private List<WaterPoint> waterPoints = new List<WaterPoint>();
+    
+    // Exposed for debugging
+    public int WaterPointCount => waterPoints.Count;
+    
     private void Awake()
     {
         InitializeComponents();
@@ -33,17 +62,28 @@ public class InteracableWater : MonoBehaviour
     private void Start()
     {
         GenerateMesh();
+        CreateWaterPoints();
+        
+        // Ensure the collider is a trigger
+        if (edgeCollider != null && !edgeCollider.isTrigger)
+        {
+            edgeCollider.isTrigger = true;
+            if (showDebugMessages) Debug.Log("Set edge collider to trigger mode");
+        }
     }
 
     private void Reset()
     {
         InitializeComponents();
-        edgeCollider.isTrigger = true;
+        if (edgeCollider != null)
+            edgeCollider.isTrigger = true;
     }
 
     private void OnValidate()
     {
-        GenerateMesh();
+        // Don't regenerate in play mode to avoid disrupting simulations
+        if (!Application.isPlaying)
+            GenerateMesh();
     }
 
     private void InitializeComponents()
@@ -51,10 +91,22 @@ public class InteracableWater : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
         edgeCollider = GetComponent<EdgeCollider2D>();
+        
+        // Ensure we have required components
+        if (meshRenderer == null || meshFilter == null || edgeCollider == null)
+        {
+            Debug.LogError("InteracableWater missing required components!");
+        }
     }
 
     public void ResetEdgeCollider()
     {
+        if (edgeCollider == null || vertices == null || topVerticesIndex == null || topVerticesIndex.Length < 2)
+        {
+            Debug.LogError("Cannot reset edge collider - missing required data");
+            return;
+        }
+        
         Vector2[] newPoints = new Vector2[2];
 
         Vector2 firstPoint = new Vector2(vertices[topVerticesIndex[0]].x, vertices[topVerticesIndex[0]].y);
@@ -65,6 +117,9 @@ public class InteracableWater : MonoBehaviour
 
         edgeCollider.offset = Vector2.zero;
         edgeCollider.points = newPoints;
+        edgeCollider.isTrigger = true;
+        
+        if (showDebugMessages) Debug.Log($"Edge collider set: {firstPoint} to {secondPoint}");
     }
 
     public void GenerateMesh()
@@ -72,9 +127,12 @@ public class InteracableWater : MonoBehaviour
         InitializeComponents();
 
         // Destroy old mesh to prevent memory leak
-        if (meshFilter.sharedMesh != null)
+        if (meshFilter.sharedMesh != null && meshFilter.sharedMesh.name == "Water Mesh")
         {
-            DestroyImmediate(meshFilter.sharedMesh);
+            if (Application.isEditor)
+                DestroyImmediate(meshFilter.sharedMesh);
+            else
+                Destroy(meshFilter.sharedMesh);
         }
 
         mesh = new Mesh
@@ -139,18 +197,147 @@ public class InteracableWater : MonoBehaviour
         // Optional: assign debug material if none is set
         if (waterMaterial == null)
         {
-            var defaultMaterial = new Material(Shader.Find("Unlit/Color"));
-            defaultMaterial.color = Color.cyan;
+            var defaultMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));
+            if (defaultMaterial == null)
+                defaultMaterial = new Material(Shader.Find("Standard"));
+                
+            defaultMaterial.color = new Color(0.3f, 0.7f, 0.9f, 0.8f);
             waterMaterial = defaultMaterial;
+            
+            if (showDebugMessages) Debug.Log("Created default water material");
         }
 
         meshRenderer.material = waterMaterial;
 
         ResetEdgeCollider();
     }
-}
-[CustomEditor(typeof(InteracableWater))]
+    
+    private void FixedUpdate()
+    {
+        if (waterPoints.Count == 0 || vertices == null || topVerticesIndex == null || mesh == null)
+        {
+            // Safety check - recreate if needed
+            if (showDebugMessages) Debug.LogWarning("Water simulation data was missing, recreating...");
+            CreateWaterPoints();
+            return;
+        }
 
+        //update all spring positions
+        for (int i = 1; i < waterPoints.Count - 1; i++)
+        {
+            WaterPoint point = waterPoints[i];
+
+            float x = point.pos - point.targetHeight;
+            float acceleration = -spriteConstant * x - damping * point.velocity;
+            point.pos += point.velocity * speedMult * Time.fixedDeltaTime;
+            
+            // Ensure the vertex index is valid
+            if (i < topVerticesIndex.Length && topVerticesIndex[i] < vertices.Length)
+                vertices[topVerticesIndex[i]].y = point.pos;
+                
+            point.velocity += acceleration * speedMult * Time.fixedDeltaTime;
+        }
+
+        //wave propagation
+        for (int j = 0; j < wavePropagationIterations; j++)
+        {
+            for (int i = 1; i < waterPoints.Count - 1; i++)
+            {
+                float leftDelta = spread * (waterPoints[i].pos - waterPoints[i - 1].pos) * speedMult * Time.fixedDeltaTime;
+                waterPoints[i - 1].velocity += leftDelta;
+
+                float rightDelta = spread * (waterPoints[i].pos - waterPoints[i + 1].pos) * speedMult * Time.fixedDeltaTime;
+                waterPoints[i + 1].velocity += rightDelta;
+            }
+        }
+
+        //update the mesh
+        mesh.vertices = vertices;
+    }
+    
+    public void Splash(Collider2D collision, float force)
+    {
+        if (waterPoints.Count == 0)
+        {
+            Debug.LogWarning("No water points for splash effect");
+            return;
+        }
+        
+        float radius = collision.bounds.extents.x * playerCollisionRadiusMult;
+        Vector2 center = collision.transform.position;
+
+        bool appliedForce = false;
+        
+        for (int i = 0; i < waterPoints.Count; i++)
+        {
+            if (i >= topVerticesIndex.Length || topVerticesIndex[i] >= vertices.Length)
+                continue;
+                
+            Vector2 vertexWorldPos = transform.TransformPoint(vertices[topVerticesIndex[i]]);
+
+            if (IsPointInsideCircle(vertexWorldPos, center, radius))
+            {
+                waterPoints[i].velocity = force;
+                appliedForce = true;
+            }
+        }
+        
+        if (showDebugMessages && appliedForce)
+            Debug.Log($"Applied splash force of {force} at {center}");
+        else if (showDebugMessages && !appliedForce)
+            Debug.LogWarning($"No points were found in splash radius: center={center}, radius={radius}");
+    }
+
+    private bool IsPointInsideCircle(Vector2 point, Vector2 center, float radius)
+    {
+        float distanceSquared = (point - center).sqrMagnitude;
+        return distanceSquared <= radius * radius;
+    }
+    
+    private void CreateWaterPoints()
+    {
+        if (vertices == null || topVerticesIndex == null)
+        {
+            Debug.LogError("Cannot create water points - mesh data not initialized");
+            return;
+        }
+        
+        waterPoints.Clear();
+
+        for (int i = 0; i < topVerticesIndex.Length; i++)
+        {
+            if (topVerticesIndex[i] < vertices.Length)
+            {
+                waterPoints.Add(new WaterPoint
+                {
+                    pos = vertices[topVerticesIndex[i]].y,
+                    targetHeight = vertices[topVerticesIndex[i]].y,
+                    velocity = 0f,
+                    acceleration = 0f
+                });
+            }
+        }
+        
+        if (showDebugMessages) Debug.Log($"Created {waterPoints.Count} water points");
+    }
+    
+    private void OnDrawGizmos()
+    {
+        // Optionally visualize water points
+        if (vertices != null && topVerticesIndex != null && Application.isPlaying)
+        {
+            Gizmos.color = Color.blue;
+            for (int i = 0; i < topVerticesIndex.Length; i++)
+            {
+                if (i < topVerticesIndex.Length && topVerticesIndex[i] < vertices.Length)
+                    Gizmos.DrawSphere(transform.TransformPoint(vertices[topVerticesIndex[i]]), 0.05f);
+            }
+        }
+    }
+}
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(InteracableWater))]
 public class InteracableWaterEditor : Editor
 {
     private InteracableWater water;
@@ -167,17 +354,30 @@ public class InteracableWaterEditor : Editor
 
         root.Add(new VisualElement { style = { height = 10 } });
 
-        var generateButton = new Button(() => water.GenerateMesh())
+        var generateButton = new Button(() => {
+            water.GenerateMesh();
+            EditorUtility.SetDirty(water);
+        })
         {
             text = "Generate Mesh"
         };
         root.Add(generateButton);
 
-        var colliderButton = new Button(() => water.ResetEdgeCollider())
+        var colliderButton = new Button(() => {
+            water.ResetEdgeCollider(); 
+            EditorUtility.SetDirty(water);
+        })
         {
             text = "Place Edge Collider"
         };
         root.Add(colliderButton);
+        
+        // Add debug info
+        if (Application.isPlaying)
+        {
+            var debugLabel = new Label($"Water Points: {water.WaterPointCount}");
+            root.Add(debugLabel);
+        }
 
         return root;
     }
@@ -222,8 +422,10 @@ public class InteracableWaterEditor : Editor
 
                 water.transform.position = (newCorners[i] + opposite) / 2f;
                 water.GenerateMesh();
+                EditorUtility.SetDirty(water);
                 break;
             }
         }
     }
 }
+#endif

@@ -6,25 +6,31 @@ public class Creature3 : MonoBehaviour
     [SerializeField] private float speed = 3f;// Player must go above this Y value to trigger chase
 
     private bool isChasing = false;
+    private Rigidbody2D rb;
     Scene currentScene;
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         currentScene = SceneManager.GetActiveScene();
     }
     void Update()
     {
-        player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y);
         if (player == null) return;
-        if (!isChasing &&(player.transform.position.y>12)&&PlayerBehaviorLv2.PlayerTracked||currentScene.name =="level1")
+
+        if (!isChasing && (player.transform.position.y > 11.5) && PlayerBehaviorLv2.PlayerTracked || currentScene.name == "level1")
         {
             isChasing = true;
         }
+
         if (isChasing)
         {
-            Vector2 currentPos = transform.position;
-            Vector2 targetPos = player.position;
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.AddForce(direction * speed, ForceMode2D.Force);
 
-            transform.position = Vector2.MoveTowards(currentPos, targetPos, speed * Time.deltaTime);
+            if (rb.linearVelocity.magnitude >speed)
+            {
+                rb.linearVelocity = rb.linearVelocity.normalized * speed;
+            }
         }
     }
 

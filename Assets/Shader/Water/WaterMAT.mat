@@ -62,7 +62,7 @@ Material:
     - _DistortionOffsetSpeed: 1
     - _DistortionScale: 50
     - _DistortionStrength: 0.0048
-    - _LineLength: 0.99
+    - _LineLength: 0.999
     - _WaveCount: 0.75
     - _WaveFloatDirection: 1
     - _WaveSize: 0.16
