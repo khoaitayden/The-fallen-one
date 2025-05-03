@@ -12,6 +12,7 @@ public class PlayerBehavior : PlayerController
     [SerializeField] private float checkInterval = 0.3f;
     [SerializeField] private float detectionRadius = 1.0f;
     [SerializeField] private float attack1Cooldown;
+    [SerializeField] private AudioSource Attack1Sound;
 
     [Header("Input References")]
     [SerializeField] private InputAction attack1;
@@ -83,6 +84,7 @@ public class PlayerBehavior : PlayerController
     void Attack(List<GameObject> enemies)
     {
         animator?.SetTrigger("FirstAttack");
+        Attack1Sound?.Play();
         foreach (GameObject enemy in enemies)
         {
             if (enemy.CompareTag("flycreature1"))

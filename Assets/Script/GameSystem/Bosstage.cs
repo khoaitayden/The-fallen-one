@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Bossstage : MonoBehaviour
 {
-    // === References ===
     [SerializeField] private GameObject ball;
     [SerializeField] private GameObject creature2;
     [SerializeField] private GameObject creature3;
@@ -18,10 +17,22 @@ public class Bossstage : MonoBehaviour
     [SerializeField] private SpriteRenderer background4;
     [SerializeField] private Animator creauture2Animator;
 
-    // === State ===
     private float alpha = 0f;
-    //private int hardset;
     private float audioVolume = 0f;
+    
+    private Vector3 ceilingMoveStep;
+    private Vector3 floorMoveStep;
+    private Vector3 creature2MoveStep;
+    private Vector3 playerMoveStep;
+
+    private void Awake()
+    {
+        ceilingMoveStep = new Vector3(0.5f, 0f, 0f);
+        floorMoveStep = new Vector3(0.5f, 0f, 0f);
+        creature2MoveStep = new Vector3(0.3f, 0f, 0f);
+        playerMoveStep = new Vector3(0.1f, 0f, 0f);
+    }
+
     void Start()
     {
         if (audioSource != null)
@@ -29,134 +40,143 @@ public class Bossstage : MonoBehaviour
             audioSource.volume = 0f;
             audioSource.Play(); 
         }
-        creature2Script.OnSpeedChanged += OnCreatureSpeedChanged;
-        if(StartMenu.hardmode==0) DestroyCreature1();
-        InvokeRepeating("ceilAndFloorComeOut", 0f, 0.1f);
-    }
-
-    // === Phase 1: Ceiling and Floor enter ===
-    void ceilAndFloorComeOut()
-    {
         
-        if (ceiling.transform.position.x < 0.5f && floor.transform.position.x < 0.5f)
-        {
-            CancelInvoke("ceilAndFloorComeOut");
-            InvokeRepeating("bossComeOut", 0f, 0.1f);
-        }
-
-        ceiling.transform.position -= new Vector3(0.5f, 0f, 0f);
-        floor.transform.position   -= new Vector3(0.5f, 0f, 0f);
-
-        alpha = Mathf.Clamp01(alpha + 0.02f);
-        audioVolume = Mathf.Clamp01(audioVolume + 0.02f);
-        background2.color = new Color(
-            background2.color.r,
-            background2.color.g,
-            background2.color.b,
-            alpha
-        );
-        audioSource.volume = audioVolume;
+        if (creature3 != null)
+            creature3.SetActive(false);
+            
+        if (ball != null)
+            ball.SetActive(false);
+        
+        creature2Script.OnSpeedChanged += OnCreatureSpeedChanged;
+        
+        if(StartMenu.hardmode == 0) 
+            DestroyCreature1();
+            
+        StartCoroutine(CeilingAndFloorComeOut());
     }
 
-    // === Phase 2: Boss comes in ===
-    void bossComeOut()
+    private IEnumerator CeilingAndFloorComeOut()
     {
-        if (creature2.transform.position.x <= 7f)
+        while (ceiling.transform.position.x >= 0.5f || floor.transform.position.x >= 0.5f)
         {
-            CancelInvoke("bossComeOut");
-            ball.SetActive(true);
-        }
+            ceiling.transform.position -= ceilingMoveStep;
+            floor.transform.position -= floorMoveStep;
 
-        creature2.transform.position -= new Vector3(0.3f, 0f, 0f);
+            alpha = Mathf.Clamp01(alpha + 0.02f);
+            audioVolume = Mathf.Clamp01(audioVolume + 0.02f);
+            
+            Color bgColor = background2.color;
+            bgColor.a = alpha;
+            background2.color = bgColor;
+            
+            audioSource.volume = audioVolume;
+            
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        StartCoroutine(BossComeOut());
     }
 
-    // === Phase 3: On creature speed trigger ===
+    private IEnumerator BossComeOut()
+    {
+        while (creature2.transform.position.x > 7f)
+        {
+            creature2.transform.position -= creature2MoveStep;
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+        if (ball != null)
+            ball.SetActive(true);
+    }
+
     void OnCreatureSpeedChanged(int newSpeed)
     {
         if (newSpeed == ChooseHard(StartMenu.hardmode))
         {
-            Destroy(ball);
-            creature2.transform.position = new Vector3(creature2.transform.position.x, 0f, creature2.transform.position.z);
+            if (ball != null)
+                Destroy(ball);
+                
+            Vector3 pos = creature2.transform.position;
+            creature2.transform.position = new Vector3(pos.x, 0f, pos.z);
+            
             alpha = 0f;
-            InvokeRepeating("theEndCutScene", 0f, 0.1f);
+            StartCoroutine(TheEndCutScene());
         }
     }
+    
     private int ChooseHard(int hardmode)
     {
         switch (hardmode)
         {
-            case 0:
-                return 5;
-            case 1:
-                return 6;
-            case 2:
-                return 7;
-            default:
-                return 0;
+            case 0: return 5;
+            case 1: return 6;
+            case 2: return 7;
+            default: return 0;
         }
     }
 
-    // === Phase 4: End cutscene ===
-    void theEndCutScene()
+    private IEnumerator TheEndCutScene()
     {
         DestroyCreature1();
-        ceiling.transform.position -= new Vector3(0.5f, 0f, 0f);
-        floor.transform.position   -= new Vector3(0.5f, 0f, 0f);
-
-        alpha = Mathf.Clamp01(alpha + 0.02f);
-        background3.color = new Color(
-            background3.color.r,
-            background3.color.g,
-            background3.color.b,
-            alpha
-        );
-
-        if (ceiling.transform.position.x < -20f && floor.transform.position.x < -20f)
+        
+        while (ceiling.transform.position.x > -20f || floor.transform.position.x > -20f)
         {
-            CancelInvoke("theEndCutScene");
-            Destroy(ceiling);
-            Destroy(floor);
-
-            creauture2Animator.SetTrigger("death");
-            creature2.GetComponent<Rigidbody2D>().gravityScale = 1f;
-
-            alpha = 0f;
-            InvokeRepeating("playerMoveMiddle", 0f, 0.1f);
-        }
-    }
-
-    // === Phase 5: Player moves to center ===
-    private void playerMoveMiddle()
-    {
-        if (player.transform.position.x <= 0f)
-        {
-            player.transform.position += new Vector3(0.1f, 0f, 0f);
-            background4.color = new Color(
-                background4.color.r,
-                background4.color.g,
-                background4.color.b,
-                alpha
-            );
+            ceiling.transform.position -= ceilingMoveStep;
+            floor.transform.position -= floorMoveStep;
 
             alpha = Mathf.Clamp01(alpha + 0.02f);
+            
+            // Reuse color objects to reduce GC
+            Color bgColor = background3.color;
+            bgColor.a = alpha;
+            background3.color = bgColor;
+            
+            yield return new WaitForSeconds(0.1f);
         }
-        else
-        {
-            CancelInvoke("playerMoveMiddle");
-            creature3.SetActive(true);
-            InvokeRepeating("checkGoToLv2", 0f, 0.2f);
-        }
+        
+        if (ceiling != null)
+            Destroy(ceiling);
+            
+        if (floor != null)
+            Destroy(floor);
+
+        creauture2Animator.SetTrigger("death");
+        creature2.GetComponent<Rigidbody2D>().gravityScale = 1f;
+
+        alpha = 0f;
+        StartCoroutine(PlayerMoveMiddle());
     }
 
-    // === Phase 6: Check to enter next level ===
-    private void checkGoToLv2()
+    private IEnumerator PlayerMoveMiddle()
     {
-        if (player.transform.position.y <= -15f)
+        while (player.transform.position.x <= 0f)
         {
-            CancelInvoke("checkGoToLv2");
-            StateManager.Instance.goToLv2();
+            player.transform.position += playerMoveStep;
+            
+            Color bgColor = background4.color;
+            bgColor.a = alpha;
+            background4.color = bgColor;
+
+            alpha = Mathf.Clamp01(alpha + 0.02f);
+            
+            yield return new WaitForSeconds(0.1f);
         }
+        
+        if (creature3 != null)
+            creature3.SetActive(true);
+            
+        StartCoroutine(CheckGoToLv2());
     }
+
+    private IEnumerator CheckGoToLv2()
+    {
+        while (creature3!=null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        StateManager.Instance.goToLv2();
+    }
+    
     void DestroyCreature1()
     {
         ConfigCreature1.canreuse = false;

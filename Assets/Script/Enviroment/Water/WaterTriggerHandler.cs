@@ -6,9 +6,10 @@ public class WaterTriggerHandler : MonoBehaviour
 {
     [SerializeField] private LayerMask _waterMask;
     [SerializeField] private GameObject _splashParticles;
-
+    [SerializeField] private AudioSource waterslashAudioSource;
     private EdgeCollider2D _edgeColl;
     private InteracableWater _water;
+    
 
     private void Awake()
     {
@@ -18,10 +19,8 @@ public class WaterTriggerHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Debug collision information
         Debug.Log($"Trigger entered by {collision.gameObject.name} on layer {collision.gameObject.layer}");
         
-        // Check if the colliding object is in the waterMask layer
         if ((_waterMask.value & (1 << collision.gameObject.layer)) > 0)
         {
             Debug.Log("Water mask matched!");
@@ -30,10 +29,8 @@ public class WaterTriggerHandler : MonoBehaviour
             {
                 Debug.Log($"Object velocity: {rb.linearVelocity}");
                 
-                // Spawn particles if assigned
                 if (_splashParticles != null)
                 {
-                    // Calculate spawn position
                     Vector2 localPos = transform.localPosition;
                     Vector2 hitObjectPos = collision.transform.position;
                     Bounds hitObjectBounds = collision.bounds;
@@ -42,12 +39,10 @@ public class WaterTriggerHandler : MonoBehaviour
 
                     if (collision.transform.position.y >= _edgeColl.points[1].y + _edgeColl.offset.y + transform.position.y)
                     {
-                        // Hit from above
                         spawnPos = hitObjectPos + new Vector2(0f, -hitObjectBounds.extents.y);
                     }
                     else
                     {
-                        // Hit from below
                         spawnPos = hitObjectPos + new Vector2(0f, hitObjectBounds.extents.y);
                     }
 
@@ -57,14 +52,13 @@ public class WaterTriggerHandler : MonoBehaviour
                 {
                     Debug.LogWarning("No splash particles assigned!");
                 }
-
-                // Clamp splash force to max velocity
                 int multiplier = rb.linearVelocity.y < 0 ? -1 : 1;
                 float vel = rb.linearVelocity.y * _water.ForceMultiplier;
                 vel = Mathf.Clamp(Mathf.Abs(vel), 0f, _water.MaxForce);
                 vel *= multiplier;
 
                 _water.Splash(collision, vel);
+                waterslashAudioSource.Play();
                 Debug.Log($"Applied splash with velocity: {vel}");
             }
             else
