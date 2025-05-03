@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class StateManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class StateManager : MonoBehaviour
     public int stage3ScoreReqirement;
     [Header("State References")]
     [SerializeField] private GameObject stage3;
+    [SerializeField] private AudioSource audioSourceStage2;
     [Header("Obstacle References")]
     [SerializeField] private Obstacle obstacle1;
     [SerializeField] private Obstacle creature1;
@@ -19,6 +21,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] CreateObstacle1 createObstacle1;
     [Header("UI References")]
     [SerializeField] Text scoreText;
+    [SerializeField] SceneTransition scenetransition;
 
     private int score;
 
@@ -64,8 +67,8 @@ public class StateManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("Hardmode easy choosen"+StartMenu.hardmode);
-                stage2ScoreReqirement = 25;
-                stage3ScoreReqirement = 50;
+                stage2ScoreReqirement = 5;
+                stage3ScoreReqirement = 10;
                 break;
             case 1:
                 Debug.Log("Hardmode normal choosen"+StartMenu.hardmode);
@@ -106,12 +109,28 @@ public class StateManager : MonoBehaviour
     {
         for (int i = 0; i < createObstacle1.amountToPool; i++)
             {
+                StartCoroutine(SoundFadeOut(audioSourceStage2, 1f));
                 stage3.SetActive(true);
             }
     }
     public void goToLv2()
     {
-        SceneManager.LoadScene("level2");
+        scenetransition.sceneTransition("level2");
         PlayerBehavior.isDead = false;
     }
+    IEnumerator SoundFadeOut(AudioSource audioSource, float duration)
+    {
+        float startVolume = audioSource.volume;
+        float startTime = Time.time;
+        
+        while (Time.time < startTime + duration)
+        {
+            audioSource.volume = Mathf.Lerp(startVolume, 0, (Time.time - startTime) / duration);
+            yield return null;
+        }
+        
+        audioSource.Stop();
+        audioSource.volume = startVolume;
+    }
+    
 }

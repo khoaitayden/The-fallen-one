@@ -1,0 +1,5 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="HighScoreMenu" style="flex-grow: 1; background-image: none; height: 1363px; width: 1920px;">
+        <engine:ScrollView name="ScrollView" style="background-image: url(&quot;project://database/Assets/Art/UI/scoreBoard.png?fileID=-7892064577905572149&amp;guid=49648777c12f3744dbb49dd49177e131&amp;type=3#scoreBoard_0&quot;);" />
+    </engine:VisualElement>
+</engine:UXML>

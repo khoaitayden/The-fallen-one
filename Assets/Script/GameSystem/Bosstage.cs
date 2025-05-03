@@ -10,6 +10,7 @@ public class Bossstage : MonoBehaviour
     [SerializeField] private GameObject ceiling;
     [SerializeField] private GameObject floor;
     [SerializeField] private GameObject player;
+    [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private Creature2 creature2Script;
     [SerializeField] private SpriteRenderer background2;
@@ -19,9 +20,15 @@ public class Bossstage : MonoBehaviour
 
     // === State ===
     private float alpha = 0f;
-    private int hardset;
+    //private int hardset;
+    private float audioVolume = 0f;
     void Start()
     {
+        if (audioSource != null)
+        {
+            audioSource.volume = 0f;
+            audioSource.Play(); 
+        }
         creature2Script.OnSpeedChanged += OnCreatureSpeedChanged;
         if(StartMenu.hardmode==0) DestroyCreature1();
         InvokeRepeating("ceilAndFloorComeOut", 0f, 0.1f);
@@ -30,6 +37,7 @@ public class Bossstage : MonoBehaviour
     // === Phase 1: Ceiling and Floor enter ===
     void ceilAndFloorComeOut()
     {
+        
         if (ceiling.transform.position.x < 0.5f && floor.transform.position.x < 0.5f)
         {
             CancelInvoke("ceilAndFloorComeOut");
@@ -40,12 +48,14 @@ public class Bossstage : MonoBehaviour
         floor.transform.position   -= new Vector3(0.5f, 0f, 0f);
 
         alpha = Mathf.Clamp01(alpha + 0.02f);
+        audioVolume = Mathf.Clamp01(audioVolume + 0.02f);
         background2.color = new Color(
             background2.color.r,
             background2.color.g,
             background2.color.b,
             alpha
         );
+        audioSource.volume = audioVolume;
     }
 
     // === Phase 2: Boss comes in ===

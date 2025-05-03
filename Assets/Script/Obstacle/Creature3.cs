@@ -4,7 +4,7 @@ public class Creature3 : MonoBehaviour
 {
     [SerializeField] private Transform player;
     [SerializeField] private float speed = 3f;// Player must go above this Y value to trigger chase
-
+    
     private bool isChasing = false;
     private Rigidbody2D rb;
     Scene currentScene;

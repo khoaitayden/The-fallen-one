@@ -8,7 +8,7 @@ public class StateMangagerLv2 : MonoBehaviour
     public static StateMangagerLv2 Instance { get; private set; }
     public static event Action OnCountdownFinished;
     [Header("State Setting")]
-    [SerializeField] private float countdownTime;
+    public float countdownTime;
     public int HardScaleByTime;
     [SerializeField] private float HardIncreaseEachTime;
     [Header("Obstacle References")]
@@ -34,7 +34,6 @@ public class StateMangagerLv2 : MonoBehaviour
     void Start()
     {
         score=StateManager.Instance.Score;
-        UnityEngine.Debug.Log(score);
         ChoosedHard(StartMenu.hardmode);
     }
     void FixedUpdate()
@@ -53,12 +52,15 @@ public class StateMangagerLv2 : MonoBehaviour
         {
             case 0:
                 HardScaleByTime = 30;
+                countdownTime = 200f;
                 break;
             case 1:
                 HardScaleByTime = 25;
+                countdownTime = 225f;
                 break;
             case 2:
                 HardScaleByTime = 20;
+                countdownTime = 250f;
                 break;
             default:
                 break;
@@ -104,5 +106,13 @@ public class StateMangagerLv2 : MonoBehaviour
     public void IncreaseScore(int amount)
     {
         score += amount;
+    }
+    public int Score
+    {
+        get { return score; }
+        set
+        {
+            score = value;
+        }
     }
 }

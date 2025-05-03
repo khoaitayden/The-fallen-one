@@ -10,6 +10,8 @@ public class StartMenu : MonoBehaviour
     [SerializeField] private Sprite normalSprite;
     [SerializeField] private Sprite hardSprite;
     //[SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject highscoreMenu;
+    [SerializeField] private SceneTransition sceneTransition;
     private Button beginButton;
     private Button hightscoreButton;
     private Button backButton;
@@ -69,11 +71,12 @@ public class StartMenu : MonoBehaviour
     {
         mainMenu.SetActive(false);
         gameObject.SetActive(false);
-        SceneManager.LoadScene("level1");
+        sceneTransition.sceneTransition("level1");
+
     }
     void ShowHighScore(ClickEvent evt)
     {
-        //Invoke(nameof(GoToHighScore), 0.5f);
+        Invoke(nameof(GoToHighScore), 0.5f);
     }
     void OnHardSliderChanged(ChangeEvent<int> evt)
     {
@@ -88,9 +91,13 @@ public class StartMenu : MonoBehaviour
     }
     void GoToMainMenu()
     {
-        //settingsMenu.SetActive(false);
         gameObject.SetActive(false);
         mainMenu.SetActive(true);
+    }
+    void GoToHighScore()
+    {
+        gameObject.SetActive(false);
+        highscoreMenu.SetActive(true);
     }
     private void UpdateHandleSprite(int mode)
 {

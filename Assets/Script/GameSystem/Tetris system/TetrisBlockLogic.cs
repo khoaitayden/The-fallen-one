@@ -19,10 +19,10 @@ public class TetrisBlock : MonoBehaviour
     private bool hasLanded;
     public float lastMoveTime;
     public float lastFallTime;
-
     public bool isLocked;
 
     private TetrisSpawner spawner;
+    private bool canSpawn=true;
     public static Transform[,] grid = new Transform[wide, height];
 
     private void Start()
@@ -139,7 +139,7 @@ public class TetrisBlock : MonoBehaviour
         AddToGrid();
         CheckGameOver();
 
-        if (spawner != null)
+        if ((spawner != null)&&canSpawn)
         {
             spawner.SpawnNextPiece();
         }
@@ -297,5 +297,20 @@ public class TetrisBlock : MonoBehaviour
         }
         yield return null;
         CheckForLines();
+    }
+    private void OnEnable()
+    {
+        StateMangagerLv2.OnCountdownFinished += StopSpawning;
+    }
+    private void OnDisable()
+    {
+        StateMangagerLv2.OnCountdownFinished -= StopSpawning;
+    }
+    private void StopSpawning()
+    {
+        canSpawn = false;
+        isLocked = true;
+        this.enabled = false;
+        spawner.enabled = false;
     }
 }
