@@ -176,7 +176,6 @@ public class Bossstage : MonoBehaviour
         }
         StateManager.Instance.goToLv2();
     }
-    
     void DestroyCreature1()
     {
         ConfigCreature1.canreuse = false;

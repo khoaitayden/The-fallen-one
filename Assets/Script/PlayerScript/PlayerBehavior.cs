@@ -29,7 +29,8 @@ public class PlayerBehavior : PlayerController
     [SerializeField] private GameObject deathscreen;
     [Header("Effect")]
     [SerializeField] private GameObject FirstAttackKillEffect;
-
+    [SerializeField] private AudioSource dyingSoundSource;
+    public static AudioSource dyingSound;
 
     private int enemyLayerMask;
     private bool canAttack1 = true;
@@ -42,6 +43,7 @@ public class PlayerBehavior : PlayerController
         InvokeRepeating(nameof(CheckEnemiesInRange), 0f, checkInterval);
         InvokeRepeating(nameof(CheckFalloff), 0f, checkInterval);
         OnPlayerDied += DisablePlayer;
+        dyingSound = dyingSoundSource;
     }
 
     void OnEnable()
@@ -175,7 +177,7 @@ public class PlayerBehavior : PlayerController
         if (isDead) return;
         isDead = true;
         OnPlayerDied?.Invoke();
-
+        dyingSound?.Play();
     }
     void CheckFalloff()
     {

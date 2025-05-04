@@ -4,16 +4,16 @@
         <engine:VisualElement name="Volume" style="flex-grow: 0.6;">
             <engine:VisualElement name="MasterVolume" style="flex-grow: 1; height: 0; width: 500px; flex-direction: column; justify-content: center; align-self: center;">
                 <engine:Label text="Master Volume" class="header2" />
-                <engine:Slider value="50" high-value="100" name="MasterVolumeSlider" fill="true" style="flex-direction: row; flex-grow: 0; width: 500px; height: 0;" />
+                <engine:Slider value="1" high-value="2" name="MasterVolumeSlider" fill="true" style="flex-direction: row; flex-grow: 0; width: 500px; height: 0;" />
             </engine:VisualElement>
             <engine:VisualElement name="UnderVolume" style="flex-grow: 1; flex-direction: row; height: 0; margin-top: 0; justify-content: center; margin-bottom: 2px; -unity-text-align: upper-left; align-self: center; align-items: center; width: 1920px;">
                 <engine:VisualElement name="SFXVolume" style="flex-grow: 1; align-items: center;">
                     <engine:Label text="SFX Volume" class="header2" />
-                    <engine:Slider value="50" high-value="100" name="SFXVolumeSlider" fill="true" style="width: 500px; flex-direction: row; height: 0; justify-content: center; margin-right: 50px; margin-top: 2px; margin-left: 40px;" />
+                    <engine:Slider value="0.5" high-value="2" name="SFXVolumeSlider" fill="true" style="width: 500px; flex-direction: row; height: 0; justify-content: center; margin-right: 50px; margin-top: 2px; margin-left: 40px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="MusicVolume" style="flex-grow: 1; align-items: center;">
                     <engine:Label text="Music Volume" class="header2" />
-                    <engine:Slider value="50" high-value="100" name="MusicVolumeSlider" fill="true" style="width: 500px; height: 0; flex-direction: row; justify-content: center; margin-top: 2px; margin-right: 4px; margin-left: 50px; margin-bottom: 0;" />
+                    <engine:Slider value="0.5" high-value="2" name="MusicVolumeSlider" fill="true" style="width: 500px; height: 0; flex-direction: row; justify-content: center; margin-top: 2px; margin-right: 4px; margin-left: 50px; margin-bottom: 0;" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>

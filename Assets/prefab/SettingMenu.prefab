@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe6c9c0f7e50f84bac9bacb5cefd9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 92ef77dfaacf2df40b26289a40790fb6, type: 2}
   mainMenu: {fileID: 0}
   pauseMenu: {fileID: 0}
 --- !u!82 &1481572072376063389

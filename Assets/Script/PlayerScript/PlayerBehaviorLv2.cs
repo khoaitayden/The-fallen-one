@@ -8,11 +8,13 @@ public class PlayerBehaviorLv2 : MonoBehaviour
     [SerializeField] private float pushCooldown;
     [SerializeField] private float maxOutSideGridTime;
     [SerializeField] private Slider dangerSlider;
+    [SerializeField] private AudioSource dyingSoundSource;
     private float lastPushTime = 0f;
     private Dictionary<Vector2, float> lastPushTimes = new();
     private Rigidbody2D rb;
     private float DangerMeter=0f;
     public static bool PlayerTracked ;
+
     void Start()
     {
         PlayerTracked = false;
@@ -21,6 +23,7 @@ public class PlayerBehaviorLv2 : MonoBehaviour
         {
             return;
         }
+        PlayerBehavior.dyingSound = dyingSoundSource;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
