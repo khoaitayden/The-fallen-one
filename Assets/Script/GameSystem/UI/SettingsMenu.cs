@@ -20,6 +20,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject pauseMenu;
 
+
     private bool isInGame = false;
 
     private void Awake()
@@ -49,6 +50,7 @@ public class SettingsMenu : MonoBehaviour
     private void OnDisable()
     {
         backButton.UnregisterCallback<ClickEvent>(HandleBackButton);
+        LoadVolumeSettings(); 
     }
 
     private void SetVolume(string parameter, float value)
@@ -59,7 +61,7 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat(parameter, value);
     }
 
-    private void LoadVolumeSettings()
+    public void LoadVolumeSettings()
     {
         float master = PlayerPrefs.GetFloat(MASTER_VOL, 1f);
         float sfx = PlayerPrefs.GetFloat(SFX_VOL, 1f);

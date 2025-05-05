@@ -9,7 +9,6 @@ public class PlayerBehaviorLv2 : MonoBehaviour
     [SerializeField] private float maxOutSideGridTime;
     [SerializeField] private Slider dangerSlider;
     [SerializeField] private AudioSource dyingSoundSource;
-    private float lastPushTime = 0f;
     private Dictionary<Vector2, float> lastPushTimes = new();
     private Rigidbody2D rb;
     private float DangerMeter=0f;

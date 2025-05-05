@@ -88,8 +88,8 @@ public class StateManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("Hardmode easy chosen: " + StartMenu.hardmode);
-                stage2ScoreReqirement = 5;
-                stage3ScoreReqirement = 10;
+                stage2ScoreReqirement = 25;
+                stage3ScoreReqirement = 50;
                 break;
             case 1:
                 Debug.Log("Hardmode normal chosen: " + StartMenu.hardmode);
