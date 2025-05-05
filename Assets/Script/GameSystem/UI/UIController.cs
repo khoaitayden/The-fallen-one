@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject deathMenu;
+    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private InputAction pauseAction;
     [SerializeField] private InputAction restartAction;
     [SerializeField] private Camera mainCamera;
@@ -41,21 +42,21 @@ public class UIController : MonoBehaviour
     private void OnPausePerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Pause action performed");
-        if (isPaused)
+        if ((isPaused)&&(settingsMenu.activeSelf==false)&&(pauseMenu.activeSelf==false))
             ResumeGame();
         else
             PauseGame();
     }
     private void OnRestartPerformed(InputAction.CallbackContext context)
     {
-        if (deathMenu.activeSelf) // Only allow restart if death screen is shown
+        if (deathMenu.activeSelf)
         {
             RestartGame();
         }
     }
     public void PauseGame()
     {
-        pauseMenu.SetActive(true);
+        if ((settingsMenu.activeSelf==false)&&(deathMenu.activeSelf==false)) pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
     }

@@ -194,7 +194,6 @@ public class InteracableWater : MonoBehaviour
 
         meshFilter.sharedMesh = mesh;
 
-        // Optional: assign debug material if none is set
         if (waterMaterial == null)
         {
             var defaultMaterial = new Material(Shader.Find("Universal Render Pipeline/Lit"));

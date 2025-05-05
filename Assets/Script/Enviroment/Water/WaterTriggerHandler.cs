@@ -50,7 +50,7 @@ public class WaterTriggerHandler : MonoBehaviour
                 vel *= multiplier;
 
                 _water.Splash(collision, vel);
-                if (Mathf.Abs(vel)>2f)waterslashAudioSource.Play();
+                if (Mathf.Abs(vel)>2.5f)waterslashAudioSource.Play();
                 Debug.Log($"Applied splash with velocity: {vel}");
             }
         }
