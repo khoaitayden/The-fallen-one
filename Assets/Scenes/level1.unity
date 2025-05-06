@@ -1422,7 +1422,7 @@ MonoBehaviour:
   background2: {fileID: 737813818}
   background3: {fileID: 88972819}
   background4: {fileID: 19803631}
-  creature2Animator: {fileID: 111049549}
+  creauture2Animator: {fileID: 111049549}
 --- !u!82 &829350261
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1857,16 +1857,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stage3: {fileID: 829350258}
   stage1: {fileID: 1040703235}
+  creature3: {fileID: 1383674339}
   startAction:
     m_Name: Start
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 956943ad-e51d-43dc-ab1c-56e78d3db4ed
+    m_Id: ba80b293-8c7b-4b9c-a820-1d9dab1615ca
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 429cce22-22aa-47df-a299-686ddcf633dc
+      m_Id: fbf6590a-ff6d-43ff-98f8-fd0f99778099
       m_Path: <Keyboard>/w
       m_Interactions: 
       m_Processors: 
@@ -1874,7 +1875,7 @@ MonoBehaviour:
       m_Action: Start
       m_Flags: 0
     - m_Name: 
-      m_Id: 0dd10d48-f1e6-498c-81a4-efa93afab578
+      m_Id: 402dcefa-66de-4e44-b5e3-d3ea6c174342
       m_Path: <Keyboard>/upArrow
       m_Interactions: 
       m_Processors: 
@@ -1883,6 +1884,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Flags: 0
   playerrb: {fileID: 2002756350}
+  uIController: {fileID: 311595760}
 --- !u!1 &1351812091
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,16 +27,10 @@ public class StateManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] Text scoreText;
     [SerializeField] SceneTransition scenetransition;
-    
-    // Reference to boss stage script for direct activation
-    [SerializeField] private Bossstage bossStageScript;
 
     private int score;
-    [HideInInspector] public bool stage2Activated = false;
-    [HideInInspector] public bool stage3Activated = false;
-    
-    // Flag to track if stage3 is currently being initialized
-    private bool stage3Initializing = false;
+    private bool stage2Activated = false;
+    private bool stage3Activated = false;
 
     private void Awake()
     {
@@ -47,12 +41,6 @@ public class StateManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-        
-        // Try to get the boss stage script reference if not set in inspector
-        if (bossStageScript == null && stage3 != null)
-        {
-            bossStageScript = stage3.GetComponent<Bossstage>();
         }
     }
     
@@ -120,7 +108,7 @@ public class StateManager : MonoBehaviour
             ActivateStage2();
         }
         
-        if (!stage3Activated && !stage3Initializing && score >= stage3ScoreReqirement)
+        if (!stage3Activated && score >= stage3ScoreReqirement)
         {
             StartCoroutine(ActivateStage3());
         }
@@ -143,34 +131,14 @@ public class StateManager : MonoBehaviour
     
     private IEnumerator ActivateStage3()
     {
-        stage3Initializing = true;
         stage3Activated = true;
-        
         StartCoroutine(SoundFadeOut(audioSourceStage2, 1f));
-        
         if (stage3 != null)
         {
-            // This is the critical path causing lag spikes - break it down into smaller steps
-            
-            // 1. First activate the GameObject but don't start animations yet
             stage3.SetActive(true);
-            
-            // 2. Wait a frame to let Unity process the GameObject activation
             yield return null;
             
-            // 3. Wait another frame to ensure any initialization is complete
-            yield return null;
-            
-            // 4. Now explicitly start the boss sequence
-            if (bossStageScript != null)
-            {
-                // Use the optimized API to start animations explicitly
-                bossStageScript.StartBossSequence();
-            }
         }
-        
-        // Clear initializing flag
-        stage3Initializing = false;
     }
     
     public void goToLv2()
