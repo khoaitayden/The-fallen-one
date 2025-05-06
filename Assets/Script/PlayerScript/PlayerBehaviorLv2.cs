@@ -11,7 +11,7 @@ public class PlayerBehaviorLv2 : MonoBehaviour
     [SerializeField] private AudioSource dyingSoundSource;
     private Dictionary<Vector2, float> lastPushTimes = new();
     private Rigidbody2D rb;
-    private float DangerMeter=0f;
+    public float DangerMeter=0f;
     public static bool PlayerTracked ;
 
     void Start()

@@ -35,7 +35,6 @@ public class StateMangagerLv2 : MonoBehaviour
     {
         score=StateManager.Instance.Score;
         ChoosedHard(StartMenu.hardmode);
-        Time.timeScale = 1f;
     }
     void FixedUpdate()
     {

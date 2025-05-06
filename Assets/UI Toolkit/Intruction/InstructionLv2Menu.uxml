@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UI.uss?fileID=7433441132597879392&amp;guid=03950d9f17a984d4e9265bec5a0abe11&amp;type=3#UI" />
+    <engine:Label text="Press &quot;down&quot; button below to start" name="Remind" enable-rich-text="true" class="header2" style="width: 1915px;" />
+    <engine:VisualElement name="InstructionMenu" style="flex-grow: 1; font-size: 50px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 0; -unity-text-align: upper-center; justify-content: center; margin-top: -77px;">
+        <engine:Label text="UP: Press W or ↑" name="Up" class="text2" style="margin-top: 10px;" />
+        <engine:Label text="Down: Press S or ↓" name="Down" class="text2" />
+        <engine:Label text="Left: Press A or ←" name="Left" class="text2" />
+        <engine:Label text="Right: Press D or →" name="Right" class="text2" />
+        <engine:Label text="Objective: Try to survive still the time is over" name="Objective" class="text2" style="align-items: stretch; align-self: center;" />
+        <engine:Label text="Don&apos;t: Go out of Grid and let block go overgrid" name="Caution" class="text2" />
+        <engine:Label text="How: Just push block and dont go out dumbass" name="How" class="text2" />
+    </engine:VisualElement>
+</engine:UXML>

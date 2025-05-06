@@ -10,6 +10,7 @@ public class Level1Loader : MonoBehaviour
     [SerializeField] private InputAction startAction;
     [SerializeField] private Rigidbody2D playerrb;
     [SerializeField] private UIController uIController;
+    [SerializeField] private GameObject Instruction;
     public static bool PreLoaded=false;
 
     void Start()
@@ -46,5 +47,6 @@ public class Level1Loader : MonoBehaviour
         startAction.Disable();
         playerrb.gravityScale=3f;
         stage1.SetActive(true);
+        Instruction.SetActive(false);
     }
 }

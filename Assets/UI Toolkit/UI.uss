@@ -46,4 +46,17 @@
     color: rgb(255, 255, 255);
     -unity-text-outline-width: 5px;
     -unity-text-outline-color: rgb(0, 0, 0);
+    margin-bottom: 0;
+}
+
+.text {
+    -unity-text-outline-width: 3px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&guid=e35a9129c5c2ede48a8b640f65f1413a&type=3#Qaaxee-gwRl6");
+    margin-top: 10px;
+}
+
+.text2 {
+    margin-top: 10px;
+    -unity-font-definition: url("project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&guid=e35a9129c5c2ede48a8b640f65f1413a&type=3#Qaaxee-gwRl6");
+    color: rgb(255, 255, 255);
 }

@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UI.uss?fileID=7433441132597879392&amp;guid=03950d9f17a984d4e9265bec5a0abe11&amp;type=3#UI" />
+    <engine:VisualElement name="InstructionMenu" style="flex-grow: 1; font-size: 50px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 0;">
+        <engine:Label text="Jump: Press W or ↑" name="Jump" class="text" style="margin-top: 10px;" />
+        <engine:Label text="Down: Press S or ↓" name="Down" class="text" />
+        <engine:Label text="Attack: Press Space" name="Attack" class="text" />
+    </engine:VisualElement>
+</engine:UXML>

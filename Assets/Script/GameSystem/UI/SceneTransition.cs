@@ -7,6 +7,7 @@ public class SceneTransition : MonoBehaviour
     [SerializeField] private AudioSource musicSource;
     [SerializeField] private float fadeDuration=1f ;
     [SerializeField] private Animator fadeAnimator;
+    public bool FadedIn=false;
     public void sceneTransition(string sceneName)
     {
         FadeIn();
@@ -19,6 +20,8 @@ public class SceneTransition : MonoBehaviour
         {
             fadeAnimator.SetTrigger("FadeIn");
         }
+        FadedIn=true;
+
     }
     public IEnumerator FadeOutSound(AudioSource audioSource, float duration)
     {
