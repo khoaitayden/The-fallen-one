@@ -1,8 +1,12 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
+//using UnityEditor.UIElements;
 using System.Collections.Generic;
+#if UNITY_EDITOR
+using UnityEditor.UIElements;
+using UnityEditor.SearchService;
+#endif
 
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter), typeof(EdgeCollider2D))]
 [RequireComponent(typeof(WaterTriggerHandler))]

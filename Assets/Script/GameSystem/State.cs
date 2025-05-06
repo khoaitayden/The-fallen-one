@@ -27,10 +27,16 @@ public class StateManager : MonoBehaviour
     [Header("UI References")]
     [SerializeField] Text scoreText;
     [SerializeField] SceneTransition scenetransition;
+    
+    // Reference to boss stage script for direct activation
+    [SerializeField] private Bossstage bossStageScript;
 
     private int score;
-    private bool stage2Activated = false;
-    private bool stage3Activated = false;
+    [HideInInspector] public bool stage2Activated = false;
+    [HideInInspector] public bool stage3Activated = false;
+    
+    // Flag to track if stage3 is currently being initialized
+    private bool stage3Initializing = false;
 
     private void Awake()
     {
@@ -43,10 +49,10 @@ public class StateManager : MonoBehaviour
             Destroy(gameObject);
         }
         
-        // Pre-initialize stage3 but keep it inactive
-        if (stage3 != null)
+        // Try to get the boss stage script reference if not set in inspector
+        if (bossStageScript == null && stage3 != null)
         {
-            stage3.SetActive(false);
+            bossStageScript = stage3.GetComponent<Bossstage>();
         }
     }
     
@@ -88,8 +94,8 @@ public class StateManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("Hardmode easy chosen: " + StartMenu.hardmode);
-                stage2ScoreReqirement = 25;
-                stage3ScoreReqirement = 50;
+                stage2ScoreReqirement = 5;
+                stage3ScoreReqirement = 10;
                 break;
             case 1:
                 Debug.Log("Hardmode normal chosen: " + StartMenu.hardmode);
@@ -109,14 +115,12 @@ public class StateManager : MonoBehaviour
         score += amount;
         Obstacle.SpeedMultiplier += 0.005f;
         
-        // Only check and activate stage2 once
         if (!stage2Activated && score >= stage2ScoreReqirement)
         {
             ActivateStage2();
         }
         
-        // Only check and activate stage3 once
-        if (!stage3Activated && score >= stage3ScoreReqirement)
+        if (!stage3Activated && !stage3Initializing && score >= stage3ScoreReqirement)
         {
             StartCoroutine(ActivateStage3());
         }
@@ -125,30 +129,48 @@ public class StateManager : MonoBehaviour
     void ActivateStage2()
     {
         stage2Activated = true;
-        
-        // Start a coroutine to activate objects gradually to prevent lag spike
-        StartCoroutine(GraduallyActivateCreatures());
+        StartCoroutine(ActivateCreatures2());
     }
     
-    private IEnumerator GraduallyActivateCreatures()
+    private IEnumerator ActivateCreatures2()
     {
         for (int i = 0; i < createCreature1.amountToPool; i++)
         {
             createCreature1.pooledObjects[i].SetActive(true);
-            // Wait a frame between each activation to distribute the processing load
             yield return null;
         }
     }
     
     private IEnumerator ActivateStage3()
     {
+        stage3Initializing = true;
         stage3Activated = true;
+        
         StartCoroutine(SoundFadeOut(audioSourceStage2, 1f));
+        
         if (stage3 != null)
         {
-            yield return null;
+            // This is the critical path causing lag spikes - break it down into smaller steps
+            
+            // 1. First activate the GameObject but don't start animations yet
             stage3.SetActive(true);
+            
+            // 2. Wait a frame to let Unity process the GameObject activation
+            yield return null;
+            
+            // 3. Wait another frame to ensure any initialization is complete
+            yield return null;
+            
+            // 4. Now explicitly start the boss sequence
+            if (bossStageScript != null)
+            {
+                // Use the optimized API to start animations explicitly
+                bossStageScript.StartBossSequence();
+            }
         }
+        
+        // Clear initializing flag
+        stage3Initializing = false;
     }
     
     public void goToLv2()

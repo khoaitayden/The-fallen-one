@@ -1091,6 +1091,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &545553868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 545553869}
+  m_Layer: 0
+  m_Name: Instruction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &545553869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 545553868}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.6918855, y: 5.598195, z: 0.11359395}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1422,7 @@ MonoBehaviour:
   background2: {fileID: 737813818}
   background3: {fileID: 88972819}
   background4: {fileID: 19803631}
-  creauture2Animator: {fileID: 111049549}
+  creature2Animator: {fileID: 111049549}
 --- !u!82 &829350261
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1508,7 +1539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1040703236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1789,6 +1820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1244672462}
+  - component: {fileID: 1244672463}
   m_Layer: 0
   m_Name: Load
   m_TagString: Untagged
@@ -1811,6 +1843,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1244672463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244672461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a566547efd6c1a049a49ac2859cb4e7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stage3: {fileID: 829350258}
+  stage1: {fileID: 1040703235}
+  startAction:
+    m_Name: Start
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 956943ad-e51d-43dc-ab1c-56e78d3db4ed
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 429cce22-22aa-47df-a299-686ddcf633dc
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start
+      m_Flags: 0
+    - m_Name: 
+      m_Id: 0dd10d48-f1e6-498c-81a4-efa93afab578
+      m_Path: <Keyboard>/upArrow
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start
+      m_Flags: 0
+    m_Flags: 0
+  playerrb: {fileID: 2002756350}
 --- !u!1 &1351812091
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,6 +3396,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1043551564}
     - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
+      propertyPath: bossStageScript
+      value: 
+      objectReference: {fileID: 829350260}
+    - target: {fileID: 2468154079528833913, guid: 0b0ce16f3170d534fb3cc6f8e53bf964, type: 3}
       propertyPath: createCreature1
       value: 
       objectReference: {fileID: 1040703236}
@@ -3417,3 +3493,4 @@ SceneRoots:
   - {fileID: 768763628}
   - {fileID: 1198411148}
   - {fileID: 1244672462}
+  - {fileID: 545553869}

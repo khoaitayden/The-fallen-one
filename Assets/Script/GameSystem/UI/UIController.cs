@@ -42,7 +42,7 @@ public class UIController : MonoBehaviour
     private void OnPausePerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Pause action performed");
-        if ((isPaused)&&(settingsMenu.activeSelf==false)&&(pauseMenu.activeSelf==false))
+        if (isPaused&&(settingsMenu.activeSelf==false))
             ResumeGame();
         else
             PauseGame();
@@ -56,6 +56,7 @@ public class UIController : MonoBehaviour
     }
     public void PauseGame()
     {
+        if (Time.timeScale==0) return;
         if ((settingsMenu.activeSelf==false)&&(deathMenu.activeSelf==false)) pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;

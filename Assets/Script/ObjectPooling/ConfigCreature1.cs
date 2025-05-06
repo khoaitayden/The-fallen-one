@@ -9,6 +9,10 @@ public class ConfigCreature1 : ConfigObstacle
     public static bool canreuse=true;
     [SerializeField] CreateCreature1 createCreature1;
     public Obstacle Creature1;
+    void Awake()
+    {
+        canreuse = true;
+    }
     public override void WrappReuse()
     {
         if (createCreature1 == null || createCreature1.pooledObjects == null || createCreature1.pooledObjects.Count == 0) return;

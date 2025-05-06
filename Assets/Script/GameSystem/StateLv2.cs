@@ -35,6 +35,7 @@ public class StateMangagerLv2 : MonoBehaviour
     {
         score=StateManager.Instance.Score;
         ChoosedHard(StartMenu.hardmode);
+        Time.timeScale = 1f;
     }
     void FixedUpdate()
     {
@@ -78,8 +79,7 @@ public class StateMangagerLv2 : MonoBehaviour
             else
             {
                 isCountingDown = false;
-                OnCountdownFinished?.Invoke(); // <<<<< Fire the event
-                UnityEngine.Debug.Log("Countdown finished! Event invoked.");
+                OnCountdownFinished?.Invoke(); 
             }
         }
     }
@@ -91,7 +91,6 @@ public class StateMangagerLv2 : MonoBehaviour
         {
             lastHardnessTime = currentTime;
             DecreaseFallTime(HardIncreaseEachTime);
-            //UnityEngine.Debug.Log($"Fall time decreased to {TetrisBlock.fallTime} at {currentTime} seconds left.");
         }
     }
     void DecreaseFallTime(float amount)

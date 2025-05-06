@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using Unity.VisualScripting;
-using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 public class SceneTransition : MonoBehaviour
 {

@@ -37,7 +37,7 @@ public class PlayerBehavior : PlayerController
     public static bool isDead = false;
     private List<GameObject> EnemyInAttack1Range = new List<GameObject>();
 
-    void Start()
+    new void Start()
     {
         enemyLayerMask = LayerMask.GetMask("Enemy");
         InvokeRepeating(nameof(CheckEnemiesInRange), 0f, checkInterval);
@@ -62,7 +62,7 @@ public class PlayerBehavior : PlayerController
         fly.Disable();
     }
 
-    void OnDestroy()
+    new void OnDestroy()
     {
         OnPlayerDied -= DisablePlayer;
     }
