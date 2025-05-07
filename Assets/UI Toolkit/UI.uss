@@ -60,3 +60,12 @@
     -unity-font-definition: url("project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&guid=e35a9129c5c2ede48a8b640f65f1413a&type=3#Qaaxee-gwRl6");
     color: rgb(255, 255, 255);
 }
+
+.text3 {
+    color: rgb(255, 255, 255);
+    margin-top: 80px;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: center;
+    margin-left: -3px;
+}

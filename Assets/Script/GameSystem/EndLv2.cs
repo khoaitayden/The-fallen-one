@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEditor.UI;
+using TMPro;
 public class EndLv2 : MonoBehaviour
 {
     [Header("Camera Shake Settings")]
@@ -8,11 +10,13 @@ public class EndLv2 : MonoBehaviour
     [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeMagnitude = 0.3f;
     [SerializeField] private GameObject creature5;
+    [SerializeField] private GameObject endMenu;
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private Rigidbody2D creature5rb;
     [SerializeField] private UIController uiController;
+    [SerializeField] private TMP_InputField inputField;
     private bool freeze = true; 
-    
+    private string playerName;
     private Vector3 originalPos;
 
     private void OnEnable()
@@ -82,7 +86,18 @@ public class EndLv2 : MonoBehaviour
     }
     private void SaveScoreandGoToMainMenu()
     {
-        Debug.Log("Save score"+StateMangagerLv2.Instance.Score);
+        endMenu.SetActive(true);
+        StartCoroutine(InputName());
+    }
+    IEnumerator InputName()
+    {
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        } 
+        playerName=inputField.text;
+        SaveManager.SavePlayerData(playerName,StateMangagerLv2.Instance.Score, StartMenu.hardmode);
         uiController.LoadMainMenu();
     }
+    
 }

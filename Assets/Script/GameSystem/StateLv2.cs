@@ -13,7 +13,6 @@ public class StateMangagerLv2 : MonoBehaviour
     [SerializeField] private float HardIncreaseEachTime;
     [Header("Obstacle References")]
     [SerializeField] private GameObject obstacle3;
-    [SerializeField] private Obstacle creature4;
     [Header("UI References")]
     [SerializeField] Text scoreText;
     [SerializeField] Text countdownText;

@@ -31,7 +31,6 @@ public class InteracableWater : MonoBehaviour
     public Material waterMaterial;
     
     [Header("Debug")]
-    [SerializeField] private bool showDebugMessages = true;
     public Color gizmoColor = Color.white;
 
     private const int NUM_OF_Y_VERTICES = 2;
@@ -72,7 +71,6 @@ public class InteracableWater : MonoBehaviour
         if (edgeCollider != null && !edgeCollider.isTrigger)
         {
             edgeCollider.isTrigger = true;
-            if (showDebugMessages) Debug.Log("Set edge collider to trigger mode");
         }
     }
 
@@ -95,19 +93,12 @@ public class InteracableWater : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         meshFilter = GetComponent<MeshFilter>();
         edgeCollider = GetComponent<EdgeCollider2D>();
-        
-        // Ensure we have required components
-        if (meshRenderer == null || meshFilter == null || edgeCollider == null)
-        {
-            Debug.LogError("InteracableWater missing required components!");
-        }
     }
 
     public void ResetEdgeCollider()
     {
         if (edgeCollider == null || vertices == null || topVerticesIndex == null || topVerticesIndex.Length < 2)
         {
-            Debug.LogError("Cannot reset edge collider - missing required data");
             return;
         }
         
@@ -122,8 +113,6 @@ public class InteracableWater : MonoBehaviour
         edgeCollider.offset = Vector2.zero;
         edgeCollider.points = newPoints;
         edgeCollider.isTrigger = true;
-        
-        if (showDebugMessages) Debug.Log($"Edge collider set: {firstPoint} to {secondPoint}");
     }
 
     public void GenerateMesh()
@@ -206,8 +195,6 @@ public class InteracableWater : MonoBehaviour
                 
             defaultMaterial.color = new Color(0.3f, 0.7f, 0.9f, 0.8f);
             waterMaterial = defaultMaterial;
-            
-            if (showDebugMessages) Debug.Log("Created default water material");
         }
 
         meshRenderer.material = waterMaterial;
@@ -219,8 +206,6 @@ public class InteracableWater : MonoBehaviour
     {
         if (waterPoints.Count == 0 || vertices == null || topVerticesIndex == null || mesh == null)
         {
-            // Safety check - recreate if needed
-            if (showDebugMessages) Debug.LogWarning("Water simulation data was missing, recreating...");
             CreateWaterPoints();
             return;
         }
@@ -284,11 +269,6 @@ public class InteracableWater : MonoBehaviour
                 appliedForce = true;
             }
         }
-        
-        if (showDebugMessages && appliedForce)
-            Debug.Log($"Applied splash force of {force} at {center}");
-        else if (showDebugMessages && !appliedForce)
-            Debug.LogWarning($"No points were found in splash radius: center={center}, radius={radius}");
     }
 
     private bool IsPointInsideCircle(Vector2 point, Vector2 center, float radius)
@@ -301,7 +281,6 @@ public class InteracableWater : MonoBehaviour
     {
         if (vertices == null || topVerticesIndex == null)
         {
-            Debug.LogError("Cannot create water points - mesh data not initialized");
             return;
         }
         
@@ -320,8 +299,6 @@ public class InteracableWater : MonoBehaviour
                 });
             }
         }
-        
-        if (showDebugMessages) Debug.Log($"Created {waterPoints.Count} water points");
     }
     
     private void OnDrawGizmos()

@@ -85,4 +85,11 @@ public class PlayerBehaviorLv2 : MonoBehaviour
         }
         dangerSlider.value = DangerMeter / maxOutSideGridTime;
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.name=="creature5_0")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
