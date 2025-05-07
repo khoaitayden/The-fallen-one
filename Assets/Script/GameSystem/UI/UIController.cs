@@ -57,9 +57,12 @@ public class UIController : MonoBehaviour
     public void PauseGame()
     {
         if (Time.timeScale==0) return;
-        if ((settingsMenu.activeSelf==false)&&(deathMenu.activeSelf==false)) pauseMenu.SetActive(true);
+        if ((settingsMenu.activeSelf==false)&&(deathMenu.activeSelf==false)) 
+        {
+        pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
+        }
     }
 
     public void ResumeGame()
