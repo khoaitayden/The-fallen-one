@@ -30,6 +30,7 @@ public class PlayerBehavior : PlayerController
     [Header("Effect")]
     [SerializeField] private GameObject FirstAttackKillEffect;
     [SerializeField] private AudioSource dyingSoundSource;
+    [SerializeField] private GameObject FirstAttackEffect;
     public static AudioSource dyingSound;
 
     private int enemyLayerMask;
@@ -80,11 +81,14 @@ public class PlayerBehavior : PlayerController
     {
         if (isDead || !canAttack1) return;
         Attack(EnemyInAttack1Range);
+        FirstAttackEffect.SetActive(true);
         StartCoroutine(Attack1Cooldown());
+
     }
 
     void Attack(List<GameObject> enemies)
     {
+        
         animator?.SetTrigger("FirstAttack");
         Attack1Sound?.Play();
         foreach (GameObject enemy in enemies)
@@ -103,7 +107,6 @@ public class PlayerBehavior : PlayerController
             }
         }
     }
-
     void CheckEnemiesInRange()
     {
         if (isDead) return;
@@ -118,20 +121,24 @@ public class PlayerBehavior : PlayerController
             }
         }
     }
-
+    // IEnumerator Attack1Effect()
+    // {
+        
+    //     yield return new WaitForSeconds(1.0f);
+    //     Debug.Log("attack");
+    //     FirstAttackEffect.SetActive(false);
+    // }
     IEnumerator Attack1Cooldown()
     {
         canAttack1 = false;
         float elapsed = 0f;
         attack1CooldownSlider.value = 1f;
-
         while (elapsed < attack1Cooldown)
         {
             elapsed += Time.deltaTime;
             attack1CooldownSlider.value = 1f - (elapsed / attack1Cooldown);
             yield return null;
         }
-
         attack1CooldownSlider.value = 0f;
         canAttack1 = true;
     }
@@ -155,9 +162,7 @@ public class PlayerBehavior : PlayerController
             DisablePlayer();
             PlayerController.canMove=false;
         }
-        
     }
-
     void DisablePlayer()
     {
         isDead = true;
