@@ -48,11 +48,11 @@ public class Ball : MonoBehaviour
     {
         if (Mathf.Abs(dir.y) < 2f)
         {
-            dir.y = Random.Range(-20f, 20f); 
+            dir.y = Random.Range(-15f, 15f); 
         }
          if (Mathf.Abs(dir.x) < 2f)
         {
-            dir.x = Random.Range(-20f, 20f);
+            dir.x = Random.Range(-15f, 15f);
         }
        
         return dir;

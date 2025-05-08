@@ -83,6 +83,7 @@ public class EndLv2 : MonoBehaviour
         }
 
         mainCamera.transform.localPosition = originalPos;
+        if (PlayerBehavior.isDead==false)
         SaveScoreandGoToMainMenu();
         
     }

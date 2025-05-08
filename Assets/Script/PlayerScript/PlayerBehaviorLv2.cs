@@ -9,6 +9,7 @@ public class PlayerBehaviorLv2 : MonoBehaviour
     [SerializeField] private float maxOutSideGridTime;
     [SerializeField] private Slider dangerSlider;
     [SerializeField] private AudioSource dyingSoundSource;
+    [SerializeField] private GameObject trackedScreen;
     private Dictionary<Vector2, float> lastPushTimes = new();
     private Rigidbody2D rb;
     public float DangerMeter=0f;
@@ -81,6 +82,7 @@ public class PlayerBehaviorLv2 : MonoBehaviour
             if (DangerMeter >= maxOutSideGridTime)
             {
                 PlayerTracked=true;
+                trackedScreen.SetActive(true);
             }
         }
         dangerSlider.value = DangerMeter / maxOutSideGridTime;
