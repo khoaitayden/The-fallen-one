@@ -5,11 +5,40 @@ using System.Collections.Generic;
 public class SaveManager : MonoBehaviour
 {
     private static string SavePath => Path.Combine(Application.persistentDataPath, "leaderboard.json");
+    public static List<PlayerData> GetEasyScores()
+    {
+        return LoadLeaderboard().easyScores;
+    }
 
+    public static List<PlayerData> GetNormalScores()
+    {
+        return LoadLeaderboard().normalScores;
+    }
+
+    public static List<PlayerData> GetHardScores()
+    {
+        return LoadLeaderboard().hardScores;
+    }
+
+    public static List<PlayerData> GetScoresByDifficulty(int difficulty)
+    {
+        switch (difficulty)
+        {
+            case 0: 
+                return GetEasyScores();
+            case 1:
+                return GetNormalScores();
+            case 2: 
+                return GetHardScores();
+            default:
+                return new List<PlayerData>();
+        }
+    }
     public static void SavePlayerData(string playerName, int score, int difficulty)
     {
         GameLeaderboard leaderboard = LoadLeaderboard();
         PlayerData newEntry = new PlayerData(playerName, score);
+        
         switch (difficulty)
         {
             case 0:
@@ -28,9 +57,9 @@ public class SaveManager : MonoBehaviour
                 if (leaderboard.hardScores.Count > 6) leaderboard.hardScores.RemoveRange(6, leaderboard.hardScores.Count - 6);
                 break;
             default:
-                Debug.LogError("Invalid difficulty: " + difficulty);
                 return;
         }
+
         string jsonData = JsonUtility.ToJson(leaderboard, true);
         File.WriteAllText(SavePath, jsonData);
     }
