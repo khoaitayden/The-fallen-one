@@ -6,6 +6,7 @@ public class Ball : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Transform creature2; 
     [SerializeField] Creature2 creature2script;
+    [SerializeField] private float SpeedIncrease;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -26,7 +27,7 @@ public class Ball : MonoBehaviour
     {
         Vector2 dir = rb.linearVelocity;
         dir=FixGoStraight(dir);
-        speed=speed+0.2f;       
+        speed=speed+SpeedIncrease;       
         rb.linearVelocity = dir.normalized * speed;
     }
     void CheckOut()

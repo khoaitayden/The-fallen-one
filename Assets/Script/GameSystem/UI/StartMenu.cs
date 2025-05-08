@@ -12,17 +12,17 @@ public class StartMenu : MonoBehaviour
     //[SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject highscoreMenu;
     [SerializeField] private SceneTransition sceneTransition;
+    [SerializeField] private AudioSource audioSource;
     private Button beginButton;
     private Button hightscoreButton;
     private Button backButton;
     private SliderInt hardSlider;
     private List<Button> menubuttons = new List<Button>();
-    private AudioSource audioSource;
+    
 
     public static int hardmode;
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         StartMenuDocument = GetComponent<UIDocument>();
     }
 
@@ -65,7 +65,7 @@ public class StartMenu : MonoBehaviour
     }
     void BeginGame(ClickEvent evt)
     {
-        Invoke(nameof(GoToGameScene), 0.5f);
+        GoToGameScene();
     }
     void GoToGameScene()
     {
@@ -76,7 +76,7 @@ public class StartMenu : MonoBehaviour
     }
     void ShowHighScore(ClickEvent evt)
     {
-        Invoke(nameof(GoToHighScore), 0.5f);
+        GoToHighScore();
     }
     void OnHardSliderChanged(ChangeEvent<int> evt)
     {
@@ -86,7 +86,7 @@ public class StartMenu : MonoBehaviour
     }
     void BackToMainMenu(ClickEvent evt)
     {
-        Invoke(nameof(GoToMainMenu), 0.5f);
+        GoToMainMenu();
 
     }
     void GoToMainMenu()
@@ -100,21 +100,21 @@ public class StartMenu : MonoBehaviour
         highscoreMenu.SetActive(true);
     }
     private void UpdateHandleSprite(int mode)
-{
-    var handle = hardSlider.Q("unity-dragger");
-    if (handle == null) return;
-
-    switch (mode)
     {
-        case 0:
-            handle.style.backgroundImage = new StyleBackground(easySprite);
-            break;
-        case 1:
-            handle.style.backgroundImage = new StyleBackground(normalSprite);
-            break;
-        case 2:
-            handle.style.backgroundImage = new StyleBackground(hardSprite);
-            break;
+        var handle = hardSlider.Q("unity-dragger");
+        if (handle == null) return;
+
+        switch (mode)
+        {
+            case 0:
+                handle.style.backgroundImage = new StyleBackground(easySprite);
+                break;
+            case 1:
+                handle.style.backgroundImage = new StyleBackground(normalSprite);
+                break;
+            case 2:
+                handle.style.backgroundImage = new StyleBackground(hardSprite);
+                break;
+        }
     }
-}
 }

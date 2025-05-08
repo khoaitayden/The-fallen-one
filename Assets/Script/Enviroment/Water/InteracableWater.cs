@@ -42,7 +42,6 @@ public class InteracableWater : MonoBehaviour
     private int[] topVerticesIndex;
     private EdgeCollider2D edgeCollider;
     
-    // Make nested class serializable to debug in inspector
     [System.Serializable]
     private class WaterPoint
     {
@@ -67,7 +66,6 @@ public class InteracableWater : MonoBehaviour
         GenerateMesh();
         CreateWaterPoints();
         
-        // Ensure the collider is a trigger
         if (edgeCollider != null && !edgeCollider.isTrigger)
         {
             edgeCollider.isTrigger = true;
@@ -83,7 +81,6 @@ public class InteracableWater : MonoBehaviour
 
     private void OnValidate()
     {
-        // Don't regenerate in play mode to avoid disrupting simulations
         if (!Application.isPlaying)
             GenerateMesh();
     }

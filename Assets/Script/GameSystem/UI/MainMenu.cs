@@ -12,11 +12,11 @@ public class MainMenuController : MonoBehaviour
     private Button SettingsButton;
     private Button exitButton;
     private List<Button> menubuttons = new List<Button>();
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
 private void Awake()
 {
-    audioSource = GetComponent<AudioSource>();
+
     MainMenuDocument = GetComponent<UIDocument>();
 }
     private void OnEnable()
@@ -52,12 +52,12 @@ private void Awake()
 
     private void StartGame(ClickEvent evt)
     {
-        Invoke(nameof(GoToStartMenu), 0.5f);
+        GoToStartMenu();
     }
 
     private void OpenSettings(ClickEvent evt)
     {
-        Invoke(nameof(GoToSettingsMenu), 0.5f);
+        GoToSettingsMenu();
     }
 
     private void GoToStartMenu()

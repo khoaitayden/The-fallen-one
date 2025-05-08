@@ -3,11 +3,11 @@ using UnityEngine;
 public class TetrisSpawner : MonoBehaviour
 {
     [Header("Tetrimino Settings")]
-    public GameObject[] tetrominoPrefabs; // Drag your Tetris piece prefabs here
+    public GameObject[] tetrominoPrefabs; 
     public TetrisBlock activePiece;
 
     [Header("Spawn Settings")]
-    public Vector3 spawnPosition; // Adjust as needed
+    public Vector3 spawnPosition; 
 
     private void Start()
     {
