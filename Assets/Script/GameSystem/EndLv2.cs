@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using UnityEditor.UI;
 using TMPro;
+#if UNITY_EDITOR
+using UnityEditor.UI;
+#endif
 public class EndLv2 : MonoBehaviour
 {
     [Header("Camera Shake Settings")]
