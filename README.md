@@ -1,7 +1,7 @@
 # The Fallen One  
 *A 2D Unity Learning Project*  
 
-![Game Screenshot](![lv1 stage 1](https://github.com/user-attachments/assets/0e1f584b-985b-44a7-9d92-f832502285c0)
+(![lv1 stage 1](https://github.com/user-attachments/assets/0e1f584b-985b-44a7-9d92-f832502285c0)
 ) ![lv1 stage 3](https://github.com/user-attachments/assets/7de16fbf-3eef-478e-830b-36f2d53baaf3) ![lv2](https://github.com/user-attachments/assets/54fc1568-6908-4841-ab53-a87419475348)
 
 
