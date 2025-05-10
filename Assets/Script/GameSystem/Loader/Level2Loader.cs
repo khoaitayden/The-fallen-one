@@ -5,7 +5,6 @@ public class Level2Loader : MonoBehaviour
 {
     [SerializeField] private InputAction startAction;
     [SerializeField] private GameObject Instruction;
-    [SerializeField] private SceneTransition sceneTransitionl;
 
     void Start()
     {

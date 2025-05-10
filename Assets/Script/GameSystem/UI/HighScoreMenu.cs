@@ -12,6 +12,7 @@ public class HighScoreMenu : MonoBehaviour
     [SerializeField] private GameObject startMenu;
     [SerializeField] AudioSource buttonSound; 
 
+
     void Start()
     {
         DisplayScores(SaveManager.GetScoresByDifficulty(0), easyScoreEntries);
@@ -64,7 +65,7 @@ public class HighScoreMenu : MonoBehaviour
     public void BackToMainMenu()
     {
         buttonSound.Play();
-        Invoke(nameof(GoToMainMenu), 0.5f);
+        GoToMainMenu();
         
     }
     void GoToMainMenu()

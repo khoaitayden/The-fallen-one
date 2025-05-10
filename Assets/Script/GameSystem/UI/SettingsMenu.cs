@@ -14,7 +14,7 @@ public class SettingsMenu : MonoBehaviour
     private UIDocument settingsMenuDocument;
     private Button backButton;
     private Slider masterSlider, sfxSlider, musicSlider;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     [Header("Menus")]
     [SerializeField] private GameObject mainMenu;
@@ -25,7 +25,6 @@ public class SettingsMenu : MonoBehaviour
 
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
         settingsMenuDocument = GetComponent<UIDocument>();
     }
 
@@ -92,13 +91,6 @@ public class SettingsMenu : MonoBehaviour
     {
         if (audioSource != null)
             audioSource.Play();
-
-        StartCoroutine(DelayedGoBack());
-    }
-
-    private IEnumerator DelayedGoBack()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
         GoBack();
     }
 

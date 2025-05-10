@@ -9,12 +9,11 @@ public class DeathMenu : MonoBehaviour
     private UIDocument deathMenuDocument;
     private Button againButton;
     private Button mainMenuButton;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
     
     private void Awake()
     {
         deathMenuDocument = GetComponent<UIDocument>();
-        audioSource = GetComponent<AudioSource>();
     }
     
     private void OnEnable()
@@ -42,21 +41,14 @@ public class DeathMenu : MonoBehaviour
         if (audioSource != null)
             audioSource.Play();
             
-        StartCoroutine(DelayedAction(RestartGame));
+        Invoke("RestartGame",0.6f);
     }
     
     private void OnMainMenuClicked(ClickEvent evt)
     {
         if (audioSource != null)
             audioSource.Play();
-            
-        StartCoroutine(DelayedAction(GoToMainMenu));
-    }
-    
-    private IEnumerator DelayedAction(System.Action action)
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        action();
+        Invoke("GoToMainMenu",0.5f);
     }
     
     private void RestartGame()

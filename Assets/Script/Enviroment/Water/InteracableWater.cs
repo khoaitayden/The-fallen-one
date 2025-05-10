@@ -53,8 +53,7 @@ public class InteracableWater : MonoBehaviour
     
     private List<WaterPoint> waterPoints = new List<WaterPoint>();
     
-    // Exposed for debugging
-    public int WaterPointCount => waterPoints.Count;
+    private int WaterPointCount => waterPoints.Count;
     
     private void Awake()
     {
@@ -206,8 +205,6 @@ public class InteracableWater : MonoBehaviour
             CreateWaterPoints();
             return;
         }
-
-        //update all spring positions
         for (int i = 1; i < waterPoints.Count - 1; i++)
         {
             WaterPoint point = waterPoints[i];
@@ -244,7 +241,6 @@ public class InteracableWater : MonoBehaviour
     {
         if (waterPoints.Count == 0)
         {
-            Debug.LogWarning("No water points for splash effect");
             return;
         }
         
@@ -300,7 +296,6 @@ public class InteracableWater : MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        // Optionally visualize water points
         if (vertices != null && topVerticesIndex != null && Application.isPlaying)
         {
             Gizmos.color = Color.blue;
@@ -348,13 +343,6 @@ public class InteracableWaterEditor : Editor
             text = "Place Edge Collider"
         };
         root.Add(colliderButton);
-        
-        // Add debug info
-        if (Application.isPlaying)
-        {
-            var debugLabel = new Label($"Water Points: {water.WaterPointCount}");
-            root.Add(debugLabel);
-        }
 
         return root;
     }

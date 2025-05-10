@@ -11,12 +11,11 @@ public class PauseMenu : MonoBehaviour
     private Button resumeButton;
     private Button settingsButton;
     private Button mainMenuButton;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
     
     private void Awake()
     {
         pauseMenuDocument = GetComponent<UIDocument>();
-        audioSource = GetComponent<AudioSource>();
     }
     
     private void OnEnable()
@@ -49,7 +48,7 @@ public class PauseMenu : MonoBehaviour
         if (audioSource != null)
             audioSource.Play();
             
-        StartCoroutine(DelayedAction(Resume));
+        Resume();
     }
     
     private void OnSettingsClicked(ClickEvent evt)
@@ -57,21 +56,15 @@ public class PauseMenu : MonoBehaviour
         if (audioSource != null)
             audioSource.Play();
             
-        StartCoroutine(DelayedAction(OpenSettings));
+        OpenSettings();
     }
     
     private void OnMainMenuClicked(ClickEvent evt)
     {
         if (audioSource != null)
             audioSource.Play();
-            
-        StartCoroutine(DelayedAction(GoToMainMenu));
-    }
-    
-    private IEnumerator DelayedAction(System.Action action)
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        action();
+        Time.timeScale=1;    
+        Invoke("GoToMainMenu",0.5f);
     }
     
     private void Resume()

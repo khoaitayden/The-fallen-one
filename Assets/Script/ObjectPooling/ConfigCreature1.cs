@@ -16,7 +16,7 @@ public class ConfigCreature1 : ConfigObstacle
     public override void WrappReuse()
     {
         if (createCreature1 == null || createCreature1.pooledObjects == null || createCreature1.pooledObjects.Count == 0) return;
-        if (canreuse==false) Destroyall();
+        if (canreuse==false) {Destroyall();return;}
         Reuse(createCreature1.pooledObjects, createCreature1.amountToPool);
     }
     public override Vector3 GenerateRandomPosition(int i)
@@ -46,5 +46,6 @@ public class ConfigCreature1 : ConfigObstacle
             Destroy(createCreature1.pooledObjects[i]);
         }
         createCreature1.pooledObjects.Clear();
+        createCreature1.amountToPool=0;
     }
 }

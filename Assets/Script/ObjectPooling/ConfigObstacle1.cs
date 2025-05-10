@@ -21,7 +21,6 @@ public class ConfigObstacle1 : ConfigObstacle
             return;
         }
         Reuse(createObstacle1.pooledObjects, createObstacle1.amountToPool);
-        //Debug.Log("Reuse amount: " + (reuseAmount+createObstacle1.amountToPool));
     }
     public override Vector3 GenerateRandomPosition(int i)
     {
