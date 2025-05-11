@@ -14,7 +14,6 @@ public class Bossstage : MonoBehaviour
     [SerializeField] private Creature2 creature2Script;
     [SerializeField] private SpriteRenderer background2;
     [SerializeField] private SpriteRenderer background3;
-    [SerializeField] private SpriteRenderer background4;
     [SerializeField] private Animator creauture2Animator;
 
     private float alpha = 0f;
@@ -124,7 +123,7 @@ public class Bossstage : MonoBehaviour
             ceiling.transform.position -= ceilingMoveStep;
             floor.transform.position -= floorMoveStep;
 
-            alpha = Mathf.Clamp01(alpha + 0.02f);
+            alpha = Mathf.Clamp01(alpha + 0.05f);
             
             // Reuse color objects to reduce GC
             Color bgColor = background3.color;
@@ -152,12 +151,6 @@ public class Bossstage : MonoBehaviour
         while (player.transform.position.x <= 0f)
         {
             player.transform.position += playerMoveStep;
-            
-            Color bgColor = background4.color;
-            bgColor.a = alpha;
-            background4.color = bgColor;
-
-            alpha = Mathf.Clamp01(alpha + 0.02f);
             
             yield return new WaitForSeconds(0.1f);
         }
