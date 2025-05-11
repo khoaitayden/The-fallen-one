@@ -21,8 +21,7 @@ This is a personal project created to learn 2D game development fundamentals.
 
 ## 🎨 Assets Used  
 ### Backgrounds  
-- Sourced from [Craftpix.net](https://craftpix.net/)  
-- Generated 2 custom Stage 2 backgrounds using **Grok**  
+- Sourced from [Craftpix.net](https://craftpix.net/)    
 
 ### Sound Effects  
 - Downloaded from [Pixabay Sound Effects](https://pixabay.com/sound-effects/)  
