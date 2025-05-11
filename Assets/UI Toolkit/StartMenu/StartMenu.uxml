@@ -5,7 +5,9 @@
         <engine:Button text="Begin&#10;" name="BeginButton" class="button" />
         <engine:Button text="HighScore" name="HighScoreButton" class="button" style="font-size: 80px; -unity-text-align: middle-center;" />
         <engine:Label text="CHOOSE MODE" style="-unity-text-align: upper-center; margin-top: 70px; font-size: 64px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&amp;guid=e35a9129c5c2ede48a8b640f65f1413a&amp;type=3#Qaaxee-gwRl6&quot;);">
-            <engine:SliderInt value="0" high-value="2" name="ChooseHard" fill="false" style="width: 500px; height: 100px; margin-top: 60px; -unity-text-align: middle-right; white-space: normal; text-overflow: clip; justify-content: flex-start; align-self: center; font-size: 0; flex-direction: column-reverse;" />
+            <engine:SliderInt value="0" high-value="2" name="ChooseHard" fill="false" style="width: 500px; height: 100px; margin-top: 60px; -unity-text-align: middle-right; white-space: normal; text-overflow: clip; justify-content: flex-start; align-self: center; font-size: 0; flex-direction: column-reverse;">
+                <engine:Label text="Easy" name="HardToolTip" enabled="true" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/Qaaxee-gwRl6.ttf?fileID=12800000&amp;guid=e35a9129c5c2ede48a8b640f65f1413a&amp;type=3#Qaaxee-gwRl6&quot;); flex-direction: column; flex-wrap: nowrap; position: absolute; color: rgb(255, 255, 255); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0); background-color: rgba(93, 44, 41, 0); border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); font-size: 50px; -unity-font-style: bold;" />
+            </engine:SliderInt>
         </engine:Label>
         <engine:Button text="Back&#10;" name="BackButton" class="button" />
     </engine:VisualElement>

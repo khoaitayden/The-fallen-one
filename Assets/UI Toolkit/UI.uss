@@ -70,7 +70,5 @@
     margin-left: -3px;
 }
 
-.button:active {
-    transition-timing-function: ease-in;
-    transition-duration: 0.3s;
+#HardToolTip {
 }
